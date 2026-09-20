@@ -409,8 +409,6 @@ export default function QuoteEditor() {
             </div>
           </div>
           
-          </div>
-          
         </div>
       </div>
 
