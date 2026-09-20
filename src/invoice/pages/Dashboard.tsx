@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
 
 export default function Dashboard() {
   const [metrics, setMetrics] = useState({ invoiced: 0, received: 0, pending: 0, overdue: 0 });

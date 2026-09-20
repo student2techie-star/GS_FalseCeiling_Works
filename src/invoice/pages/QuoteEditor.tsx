@@ -56,7 +56,7 @@ export default function QuoteEditor() {
 
     const { data: pData } = await supabase.from('business_profile').select('default_tax_rate, terms').single();
     if (pData && isNew) {
-      setQuote(q => ({ ...q, tax_rate: pData.default_tax_rate, notes: pData.terms }));
+      setQuote((q: any) => ({ ...q, tax_rate: pData.default_tax_rate, notes: pData.terms }));
     }
   };
 
