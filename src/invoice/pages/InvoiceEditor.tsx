@@ -251,27 +251,29 @@ export default function InvoiceEditor() {
     <div className="h-[calc(100vh-6rem)] flex flex-col md:flex-row gap-6 pb-6">
       
       {/* LEFT: Editor Form */}
-      <div className="flex-1 bg-[var(--paper)] rounded-md border border-[var(--line)] flex flex-col overflow-hidden">
-        <div className="p-4 border-b border-[var(--line)] bg-[var(--plaster)] flex justify-between items-center sticky top-0 z-10">
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="bg-white rounded-2xl shadow-sm border border-[var(--line)] p-4 mb-6 flex justify-between items-center shrink-0">
           <div className="flex items-center gap-3">
-            <button onClick={() => navigate('/invoice/invoices')} className="p-1 hover:bg-gray-200 rounded-md">
+            <button onClick={() => navigate('/invoice/invoices')} className="p-2 hover:bg-gray-100 rounded-xl transition-colors">
               <ArrowLeft className="w-5 h-5" />
             </button>
-            <h2 className="font-bold font-heading text-lg">
+            <h2 className="font-bold font-heading text-xl">
               {isNew ? 'New Invoice' : invoice.number}
             </h2>
           </div>
-          <div className="flex items-center gap-2">
-            <button onClick={saveInvoice} disabled={saving} className="bg-[var(--blue)] text-[var(--paper)] px-3 py-1.5 rounded-md font-medium text-sm flex items-center gap-2 disabled:opacity-50">
+          <div className="flex items-center gap-3">
+            <button onClick={saveInvoice} disabled={saving} className="bg-[var(--ink)] hover:bg-[var(--ink)]/90 text-[var(--paper)] px-4 py-2 rounded-xl font-medium flex items-center gap-2 transition-all disabled:opacity-50">
               <Save className="w-4 h-4" /> Save
             </button>
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-6 space-y-8">
+        <div className="flex-1 overflow-y-auto space-y-6 pb-20 pr-2">
           
-          {/* Header Details */}
-          <div className="grid grid-cols-2 gap-4">
+          {/* Customer Card */}
+          <div className="bg-white p-6 rounded-2xl shadow-sm border border-[var(--line)]">
+            <h3 className="text-sm font-bold text-[var(--slate)] uppercase tracking-wider mb-4">Customer Details</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-xs font-medium mb-1">Customer</label>
               <select value={invoice.customer_id} onChange={handleCustomerChange} className="w-full border rounded-md px-3 py-2 text-sm bg-white">
@@ -290,10 +292,10 @@ export default function InvoiceEditor() {
             </div>
           </div>
 
-          {/* Rooms and Items */}
-          <div className="space-y-6 border-t border-[var(--line)] pt-6">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="font-bold text-lg">Room-wise Breakdown</h3>
+          {/* Rooms and Items Card */}
+          <div className="bg-white p-6 rounded-2xl shadow-sm border border-[var(--line)]">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-sm font-bold text-[var(--slate)] uppercase tracking-wider">Room-wise Breakdown</h3>
               <button onClick={addRoom} className="text-[var(--blue)] text-sm font-medium hover:underline flex items-center gap-1">
                 <Plus className="w-4 h-4" /> Add Room
               </button>
@@ -368,11 +370,11 @@ export default function InvoiceEditor() {
             ))}
           </div>
 
-          {/* Footer Totals */}
-          <div className="border-t border-[var(--line)] pt-6 grid grid-cols-2 gap-8">
+          {/* Footer Totals Card */}
+          <div className="bg-white p-6 rounded-2xl shadow-sm border border-[var(--line)] grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="space-y-4">
               <div>
-                <label className="block text-xs font-medium mb-1">Terms / Notes</label>
+                <label className="block text-sm font-medium mb-2">Terms / Notes</label>
                 <textarea value={invoice.notes || ''} onChange={(e) => setInvoice({...invoice, notes: e.target.value})} className="w-full border rounded-md px-3 py-2 text-sm bg-white" rows={4} />
               </div>
             </div>
@@ -449,9 +451,9 @@ export default function InvoiceEditor() {
         </div>
       </div>
 
-      {/* RIGHT: Live Preview */}
-      <div className="hidden md:flex flex-col w-[400px] lg:w-[500px] bg-white border border-[var(--line)] shadow-sm rounded-md overflow-hidden">
-        <div className="bg-[var(--ink)] text-[var(--paper)] py-2 px-4 flex justify-between items-center text-sm">
+      {/* RIGHT: Live Preview (Simplified HTML mockup of what the PDF will look like) */}
+      <div className="hidden md:flex flex-col w-[400px] lg:w-[500px] bg-white border border-[var(--line)] shadow-sm rounded-2xl overflow-hidden shrink-0">
+        <div className="bg-[var(--ink)] text-[var(--paper)] py-3 px-5 flex justify-between items-center text-sm">
           <span className="font-medium">Live Preview</span>
           <button className="flex items-center gap-1 hover:text-[var(--blue)] transition-colors">
              <Download className="w-4 h-4" /> PDF

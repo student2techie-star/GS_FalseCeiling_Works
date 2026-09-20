@@ -40,10 +40,10 @@ export default function Home() {
             <div className="flex flex-wrap gap-4">
               <Link 
                 to="/contact" 
-                className="bg-[var(--blue)] text-[var(--paper)] px-6 py-3 rounded-md font-medium hover:bg-opacity-90 transition-colors inline-flex items-center gap-2"
+                className="bg-[var(--blue)] text-[var(--paper)] px-8 py-4 rounded-full font-medium hover:bg-opacity-90 transition-all shadow-[0_4px_14px_rgba(255,184,77,0.4)] hover:shadow-[0_6px_20px_rgba(255,184,77,0.6)] hover:-translate-y-0.5 inline-flex items-center gap-2"
               >
                 Get a free quote
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-5 h-5" />
               </Link>
               <a 
                 href="https://wa.me/[WHATSAPP_NUMBER]" 
@@ -57,7 +57,7 @@ export default function Home() {
             </div>
           </div>
           
-          <div className="relative aspect-[4/3] rounded-sm overflow-hidden bg-[var(--slate)]">
+          <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-[var(--slate)] shadow-2xl shadow-black/50">
             <div className="absolute inset-0 flex items-center justify-center opacity-50">
               <span className="font-medium text-sm tracking-widest uppercase">Placeholder: Ceiling Photo</span>
             </div>
@@ -90,11 +90,12 @@ export default function Home() {
               { title: 'PVC Ceiling', desc: 'Moisture-resistant panels for specific areas.' },
               { title: 'Cove & Profile Lighting', desc: 'Custom lighting integrations.' }
             ].map((service, i) => (
-              <Link key={i} to={`/services#${service.title.replace(/\s+/g, '-').toLowerCase()}`} className="group border border-[var(--line)] p-6 rounded-md hover:border-[var(--blue)] transition-colors bg-[var(--paper)]">
-                <h3 className="font-bold text-xl mb-2 group-hover:text-[var(--blue)] transition-colors">{service.title}</h3>
-                <p className="text-[var(--slate)] text-sm mb-4">{service.desc}</p>
-                <span className="text-sm font-medium text-[var(--blue)] flex items-center gap-1">
-                  Learn more <ArrowRight className="w-3 h-3" />
+              <Link key={i} to={`/services#${service.title.replace(/\s+/g, '-').toLowerCase()}`} className="group border border-[var(--line)] p-8 rounded-2xl hover:border-[var(--blue)] hover:shadow-xl transition-all hover:-translate-y-1 bg-[var(--paper)] relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--plaster)] rounded-full blur-[40px] group-hover:bg-[var(--blue)]/10 transition-colors" />
+                <h3 className="font-bold text-xl mb-3 group-hover:text-[var(--blue)] transition-colors relative z-10">{service.title}</h3>
+                <p className="text-[var(--slate)] mb-6 relative z-10">{service.desc}</p>
+                <span className="text-sm font-medium text-[var(--blue)] flex items-center gap-1 relative z-10">
+                  Learn more <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </span>
               </Link>
             ))}
