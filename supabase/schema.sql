@@ -5,8 +5,7 @@
 create table public.app_owner (
   user_id uuid primary key references auth.users(id)
 );
--- Replace this with your actual user UUID after signing up
--- insert into public.app_owner values ('YOUR-USER-UUID');
+insert into public.app_owner values ('01508f73-e350-43ff-b66a-43cec1406d25');
 
 alter table public.app_owner enable row level security;
 
