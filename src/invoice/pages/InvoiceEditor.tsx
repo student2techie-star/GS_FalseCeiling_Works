@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
-import { Plus, Download, ArrowLeft, Calculator, CreditCard } from 'lucide-react';
+import { Plus, Download, ArrowLeft, CreditCard } from 'lucide-react';
 
 export default function InvoiceEditor() {
   const { id } = useParams();

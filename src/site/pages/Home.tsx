@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, CheckCircle2, ChevronRight, Phone, MessageCircle } from 'lucide-react';
+import { ArrowRight, ChevronRight, Phone, MessageCircle } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { useEffect, useState } from 'react';
 
