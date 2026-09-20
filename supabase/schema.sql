@@ -223,6 +223,7 @@ create table public.enquiries (
 alter table public.enquiries enable row level security;
 
 create policy "public can send enquiries" on public.enquiries for insert to anon with check (true);
+create policy "owner can also test send enquiries" on public.enquiries for insert to authenticated with check (true);
 create policy "owner reads enquiries" on public.enquiries for select to authenticated using (public.is_owner());
 create policy "owner updates enquiries" on public.enquiries for update to authenticated using (public.is_owner()) with check (public.is_owner());
 create policy "owner deletes enquiries" on public.enquiries for delete to authenticated using (public.is_owner());
