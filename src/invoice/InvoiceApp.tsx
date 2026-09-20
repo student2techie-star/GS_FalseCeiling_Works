@@ -85,7 +85,7 @@ export default function InvoiceApp() {
 
       {/* Sidebar Navigation */}
       <aside className={cn(
-        "w-full md:w-64 bg-[var(--paper)] border-r border-[var(--line)] flex-col md:sticky md:top-0 md:h-screen transition-transform z-40 fixed inset-y-0 left-0",
+        "w-full md:w-72 bg-[var(--paper)] border-r-0 md:shadow-[4px_0_24px_rgba(0,0,0,0.02)] flex-col md:sticky md:top-0 md:h-screen transition-transform z-40 fixed inset-y-0 left-0",
         mobileMenuOpen ? "translate-x-0 pt-16 md:pt-0" : "-translate-x-full md:translate-x-0"
       )}>
         <div className="p-6 hidden md:block">
@@ -102,9 +102,9 @@ export default function InvoiceApp() {
                 to={item.path}
                 onClick={() => setMobileMenuOpen(false)}
                 className={cn(
-                  "flex items-center gap-3 px-4 py-3 rounded-md text-sm font-medium transition-colors",
+                  "flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium transition-all duration-200",
                   isActive 
-                    ? "bg-[var(--plaster)] text-[var(--blue)] font-bold" 
+                    ? "bg-[var(--plaster)] text-[var(--blue)] font-bold shadow-sm" 
                     : "text-[var(--slate)] hover:bg-[var(--plaster)] hover:text-[var(--ink)]"
                 )}
               >
@@ -115,10 +115,10 @@ export default function InvoiceApp() {
           })}
         </nav>
 
-        <div className="p-4 border-t border-[var(--line)]">
+        <div className="p-4 border-t border-[var(--line)]/50 mt-4">
           <button 
             onClick={handleLogout}
-            className="flex w-full items-center gap-3 px-4 py-3 text-sm font-medium text-[var(--slate)] hover:text-red-600 transition-colors"
+            className="flex w-full items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-[var(--slate)] hover:bg-red-50 hover:text-red-600 transition-colors"
           >
             <LogOut className="w-5 h-5" />
             Sign Out
@@ -127,7 +127,7 @@ export default function InvoiceApp() {
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 overflow-x-hidden p-6 md:p-8">
+      <main className="flex-1 overflow-x-hidden p-6 md:p-10 max-w-[1600px] mx-auto w-full">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/quotes" element={<Quotes />} />

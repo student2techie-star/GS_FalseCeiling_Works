@@ -43,13 +43,16 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--plaster)] flex items-center justify-center p-6 text-[var(--ink)] font-body">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-[var(--plaster)] flex items-center justify-center p-6 text-[var(--ink)] font-body relative overflow-hidden">
+      {/* Decorative background blobs */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[var(--blue)]/5 rounded-full blur-[100px]" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[var(--cove)]/10 rounded-full blur-[100px]" />
       <Helmet>
         <title>Login | GS False Ceiling Works</title>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
-      <div className="bg-[var(--paper)] max-w-md w-full p-8 rounded-md border border-[var(--line)] shadow-sm">
+      <div className="bg-white/70 backdrop-blur-xl max-w-md w-full p-10 rounded-[2rem] border border-white/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative z-10">
         <h1 className="text-2xl font-heading font-bold tracking-tight mb-2 text-center">
           GS False Ceiling Works
         </h1>
@@ -76,7 +79,7 @@ export default function Login() {
               <input 
                 type="email" 
                 required
-                className="w-full border border-[var(--line)] rounded-md px-3 py-2 focus:outline-none focus:border-[var(--blue)] focus:ring-1 focus:ring-[var(--blue)]"
+                className="w-full border-0 bg-white/60 shadow-inner rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[var(--blue)]/30 transition-all"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
               />
@@ -91,7 +94,7 @@ export default function Login() {
               <input 
                 type="password" 
                 required
-                className="w-full border border-[var(--line)] rounded-md px-3 py-2 focus:outline-none focus:border-[var(--blue)] focus:ring-1 focus:ring-[var(--blue)]"
+                className="w-full border-0 bg-white/60 shadow-inner rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[var(--blue)]/30 transition-all"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
               />
@@ -99,7 +102,7 @@ export default function Login() {
             <button 
               type="submit" 
               disabled={loading}
-              className="w-full bg-[var(--ink)] text-[var(--paper)] py-2 rounded-md font-medium hover:bg-opacity-90 transition-colors disabled:opacity-70 mt-2"
+              className="w-full bg-[var(--ink)] text-[var(--paper)] py-3 rounded-xl font-medium hover:bg-[var(--ink)]/90 hover:shadow-md hover:-translate-y-0.5 transition-all disabled:opacity-70 disabled:hover:translate-y-0 mt-4"
             >
               {loading ? 'Signing in...' : 'Sign In'}
             </button>
@@ -111,7 +114,7 @@ export default function Login() {
               <input 
                 type="email" 
                 required
-                className="w-full border border-[var(--line)] rounded-md px-3 py-2 focus:outline-none focus:border-[var(--blue)] focus:ring-1 focus:ring-[var(--blue)]"
+                className="w-full border-0 bg-white/60 shadow-inner rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[var(--blue)]/30 transition-all"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
               />
@@ -119,7 +122,7 @@ export default function Login() {
             <button 
               type="submit" 
               disabled={loading}
-              className="w-full bg-[var(--ink)] text-[var(--paper)] py-2 rounded-md font-medium hover:bg-opacity-90 transition-colors disabled:opacity-70 mt-2"
+              className="w-full bg-[var(--ink)] text-[var(--paper)] py-3 rounded-xl font-medium hover:bg-[var(--ink)]/90 hover:shadow-md hover:-translate-y-0.5 transition-all disabled:opacity-70 disabled:hover:translate-y-0 mt-4"
             >
               {loading ? 'Sending...' : 'Send Reset Link'}
             </button>
