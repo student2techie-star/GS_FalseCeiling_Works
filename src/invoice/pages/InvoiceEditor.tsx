@@ -523,7 +523,5 @@ export default function InvoiceEditor() {
         </div>
       </div>
     </div>
-      </div>
-    </div>
   );
 }
