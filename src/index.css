@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --plaster: #F4F6F8;
+    --paper: #FFFFFF;
+    --ink: #0E1A2B;
+    --slate: #5B6675;
+    --line: #DDE2E8;
+    --blue: #1E40AF;
+    --cove: #FFB84D;
+  }
+
+  body {
+    @apply bg-[var(--plaster)] text-[var(--ink)] font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight;
+  }
+}
