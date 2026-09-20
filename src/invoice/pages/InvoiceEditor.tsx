@@ -290,6 +290,7 @@ export default function InvoiceEditor() {
               <label className="block text-xs font-medium mb-1">Due Date</label>
               <input type="date" value={invoice.due_date || ''} onChange={(e) => setInvoice({...invoice, due_date: e.target.value})} className="w-full border rounded-md px-3 py-2 text-sm" />
             </div>
+            </div>
           </div>
 
           {/* Rooms and Items Card */}
