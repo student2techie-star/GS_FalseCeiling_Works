@@ -149,8 +149,8 @@ export default function QuoteEditor() {
   const grandTotal = subtotal - quote.discount + taxAmount;
 
   const saveQuote = async () => {
-    if (!quote.customer_id || !quote.site_id) {
-      alert("Please select a customer and site.");
+    if (!quote.customer_id) {
+      alert("Please select a customer.");
       return;
     }
 

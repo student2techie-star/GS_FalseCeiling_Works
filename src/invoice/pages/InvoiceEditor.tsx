@@ -154,8 +154,8 @@ export default function InvoiceEditor() {
   const balanceDue = grandTotal - totalPaid;
 
   const saveInvoice = async () => {
-    if (!invoice.customer_id || !invoice.site_id) {
-      alert("Please select a customer and site.");
+    if (!invoice.customer_id) {
+      alert("Please select a customer.");
       return;
     }
 
