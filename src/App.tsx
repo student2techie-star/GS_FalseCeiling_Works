@@ -14,7 +14,7 @@ const InvoiceApp = lazy(() => import('./invoice/InvoiceApp'));
 export default function App() {
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <Routes>
           <Route path="/" element={<PublicLayout />}>
             <Route index element={<Home />} />
