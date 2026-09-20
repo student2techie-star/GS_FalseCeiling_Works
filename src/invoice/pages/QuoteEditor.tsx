@@ -263,13 +263,7 @@ export default function QuoteEditor() {
                 {customers.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
               </select>
             </div>
-            <div>
-              <label className="block text-xs font-medium mb-1">Site</label>
-              <select value={quote.site_id} onChange={(e) => setQuote({...quote, site_id: e.target.value})} className="w-full border rounded-md px-3 py-2 text-sm bg-white" disabled={!quote.customer_id}>
-                <option value="">Select Site</option>
-                {sites.map(s => <option key={s.id} value={s.id}>{s.project_name}</option>)}
-              </select>
-            </div>
+
             <div>
               <label className="block text-xs font-medium mb-1">Date</label>
               <input type="date" value={quote.date} onChange={(e) => setQuote({...quote, date: e.target.value})} className="w-full border rounded-md px-3 py-2 text-sm" />

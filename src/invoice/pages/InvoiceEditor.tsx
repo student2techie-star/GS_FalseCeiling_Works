@@ -278,13 +278,7 @@ export default function InvoiceEditor() {
                 {customers.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
               </select>
             </div>
-            <div>
-              <label className="block text-xs font-medium mb-1">Site</label>
-              <select value={invoice.site_id} onChange={(e) => setInvoice({...invoice, site_id: e.target.value})} className="w-full border rounded-md px-3 py-2 text-sm bg-white" disabled={!invoice.customer_id}>
-                <option value="">Select Site</option>
-                {sites.map(s => <option key={s.id} value={s.id}>{s.project_name}</option>)}
-              </select>
-            </div>
+
             <div>
               <label className="block text-xs font-medium mb-1">Date</label>
               <input type="date" value={invoice.date} onChange={(e) => setInvoice({...invoice, date: e.target.value})} className="w-full border rounded-md px-3 py-2 text-sm" />
