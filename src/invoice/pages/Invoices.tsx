@@ -39,71 +39,72 @@ export default function Invoices() {
   };
 
   const getComputedStatus = (invoice: any) => {
-    // This is a naive computation. We'd need actual totals to compute PAID/OVERDUE accurately.
     const paidAmount = invoice.payments?.reduce((sum: number, p: any) => sum + p.amount, 0) || 0;
     
-    if (paidAmount > 0) return { label: 'PARTIAL', color: 'bg-orange-100 text-orange-800 border-orange-200' };
+    if (paidAmount > 0) return { label: 'PARTIAL', color: 'bg-amber-50 text-amber-700 border-amber-200' };
     
     const isOverdue = invoice.due_date && new Date(invoice.due_date) < new Date();
-    if (isOverdue) return { label: 'OVERDUE', color: 'bg-red-100 text-red-800 border-red-200' };
+    if (isOverdue) return { label: 'OVERDUE', color: 'bg-rose-50 text-rose-700 border-rose-200' };
     
-    return { label: 'DUE', color: 'bg-blue-100 text-blue-800 border-blue-200' };
+    return { label: 'DUE', color: 'bg-blue-50 text-blue-700 border-blue-200' };
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold font-heading">Invoices</h1>
+    <div className="max-w-6xl mx-auto space-y-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 md:p-8 rounded-3xl border border-[var(--line)] shadow-sm">
+        <div>
+          <h1 className="text-3xl font-bold font-heading text-[var(--ink)]">Tax Invoices</h1>
+          <p className="text-[var(--slate)] text-sm mt-1">Track billing, payment receipts, and outstanding balances.</p>
+        </div>
         <button 
           onClick={() => navigate('/invoice/invoices/new')}
-          className="bg-[var(--blue)] text-[var(--paper)] px-4 py-2 rounded-md font-medium text-sm flex items-center gap-2"
+          className="bg-[var(--blue)] text-[var(--paper)] px-5 py-2.5 rounded-2xl font-medium text-sm flex items-center gap-2 hover:bg-[var(--blue)]/90 transition-all shadow-sm shrink-0"
         >
           <Plus className="w-4 h-4" /> New Invoice
         </button>
       </div>
 
-      <div className="flex gap-4">
+      <div className="flex gap-3">
         <div className="relative flex-1">
-          <Search className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--slate)]" />
+          <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-[var(--slate)]" />
           <input 
             type="text" 
             placeholder="Search by invoice number or customer name..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && fetchInvoices()}
-            className="w-full pl-10 pr-4 py-2 border border-[var(--line)] rounded-md focus:outline-none focus:border-[var(--blue)]"
+            className="w-full pl-11 pr-4 py-3 bg-white border border-[var(--line)] rounded-2xl focus:outline-none focus:ring-2 focus:ring-[var(--blue)]/20 shadow-sm text-sm"
           />
         </div>
-        <button onClick={fetchInvoices} className="px-4 py-2 bg-[var(--plaster)] border border-[var(--line)] rounded-md text-sm font-medium hover:bg-gray-100">
+        <button onClick={fetchInvoices} className="px-6 py-3 bg-white border border-[var(--line)] rounded-2xl text-sm font-medium hover:bg-gray-50 shadow-sm transition-colors">
           Search
         </button>
       </div>
 
-      <div className="bg-[var(--paper)] rounded-md border border-[var(--line)] overflow-hidden">
+      <div className="bg-white rounded-3xl border border-[var(--line)] shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-[var(--plaster)] text-[var(--slate)] text-sm border-b border-[var(--line)]">
-                <th className="px-6 py-4 font-medium">Invoice #</th>
-                <th className="px-6 py-4 font-medium">Date</th>
-                <th className="px-6 py-4 font-medium">Customer & Site</th>
-                <th className="px-6 py-4 font-medium">Status</th>
-                <th className="px-6 py-4 font-medium text-right">Amount</th>
-                <th className="px-6 py-4 font-medium text-right">Actions</th>
+              <tr className="bg-[var(--plaster)] text-[var(--slate)] text-xs uppercase tracking-wider border-b border-[var(--line)]">
+                <th className="px-6 py-4 font-bold">Invoice #</th>
+                <th className="px-6 py-4 font-bold">Date</th>
+                <th className="px-6 py-4 font-bold">Customer & Site</th>
+                <th className="px-6 py-4 font-bold">Status</th>
+                <th className="px-6 py-4 font-bold text-right">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-[var(--line)]">
               {loading ? (
-                <tr><td colSpan={6} className="px-6 py-8 text-center text-[var(--slate)]">Loading...</td></tr>
+                <tr><td colSpan={5} className="px-6 py-12 text-center text-[var(--slate)]">Loading...</td></tr>
               ) : invoices.length === 0 ? (
-                <tr><td colSpan={6} className="px-6 py-12 text-center text-[var(--slate)]">No invoices found.</td></tr>
+                <tr><td colSpan={5} className="px-6 py-16 text-center text-[var(--slate)]">No invoices found. Click "New Invoice" to create one.</td></tr>
               ) : (
                 invoices.map(inv => {
                   const status = getComputedStatus(inv);
                   return (
-                    <tr key={inv.id} className="border-b border-[var(--line)] hover:bg-gray-50 last:border-0 transition-colors">
-                      <td className="px-6 py-4 font-medium text-[var(--ink)]">
-                        <Link to={`/invoice/invoices/${inv.id}`} className="hover:text-[var(--blue)] hover:underline">
+                    <tr key={inv.id} className="hover:bg-blue-50/30 transition-colors">
+                      <td className="px-6 py-4 font-bold text-[var(--ink)]">
+                        <Link to={`/invoice/invoices/${inv.id}`} className="hover:text-[var(--blue)] transition-colors">
                           {inv.number}
                         </Link>
                       </td>
@@ -111,24 +112,21 @@ export default function Invoices() {
                         {format(new Date(inv.date), 'dd MMM yyyy')}
                       </td>
                       <td className="px-6 py-4">
-                        <div className="font-medium text-sm text-[var(--ink)]">{inv.customers?.name}</div>
+                        <div className="font-bold text-sm text-[var(--ink)]">{inv.customers?.name || 'Unassigned'}</div>
                         <div className="text-xs text-[var(--slate)]">{inv.sites?.project_name}</div>
                       </td>
                       <td className="px-6 py-4">
-                        <span className={`px-2 py-1 text-xs font-medium border rounded-full ${status.color}`}>
+                        <span className={`px-3 py-1 text-xs font-semibold border rounded-full ${status.color}`}>
                           {status.label}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-right tabular-nums font-medium text-[var(--ink)]">
-                        -
-                      </td>
                       <td className="px-6 py-4 text-right">
-                        <Link to={`/invoice/invoices/${inv.id}`} className="text-[var(--blue)] text-sm font-medium hover:underline flex items-center justify-end gap-1">
-                          <Receipt className="w-4 h-4" /> View/Edit
+                        <Link to={`/invoice/invoices/${inv.id}`} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-[var(--blue)] hover:bg-blue-50 transition-colors">
+                          <Receipt className="w-3.5 h-3.5" /> Edit / View
                         </Link>
                       </td>
                     </tr>
-                  )
+                  );
                 })
               )}
             </tbody>
