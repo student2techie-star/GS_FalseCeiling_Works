@@ -32,13 +32,13 @@ export async function generateDocumentPDF(docType: 'Quotation' | 'Invoice' | 'Re
 
   // 2. Bill To
   doc.text('Bill To:', 14, 55);
-  doc.setFont(undefined, 'bold');
+  doc.setFont('helvetica', 'bold');
   doc.text(data.customer_name || 'Customer Name', 14, 61);
-  doc.setFont(undefined, 'normal');
+  doc.setFont('helvetica', 'normal');
   doc.text(data.site_name || 'Site Address', 14, 67);
 
   // 3. Table
-  const tableData = [];
+  const tableData: any[] = [];
   // Example loop if data.rooms exists:
   // for (const room of data.rooms) {
   //   tableData.push([{ content: room.name, colSpan: 5, styles: { fontStyle: 'bold', fillColor: [240, 240, 240] } }]);
@@ -59,9 +59,9 @@ export async function generateDocumentPDF(docType: 'Quotation' | 'Invoice' | 'Re
   const finalY = (doc as any).lastAutoTable.finalY + 10;
   doc.text(`Subtotal: ${data.subtotal || 0}`, 150, finalY);
   doc.text(`Tax: ${data.tax_amount || 0}`, 150, finalY + 6);
-  doc.setFont(undefined, 'bold');
+  doc.setFont('helvetica', 'bold');
   doc.text(`Grand Total: ${data.grand_total || 0}`, 150, finalY + 12);
-  doc.setFont(undefined, 'normal');
+  doc.setFont('helvetica', 'normal');
 
   // 5. Payment details (QR Code)
   if (profile.upi_id) {

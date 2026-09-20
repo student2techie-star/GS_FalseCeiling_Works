@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { MapPin, Phone, MessageCircle, Mail, Clock } from 'lucide-react';
+import { MapPin, Phone, MessageCircle, Mail, Clock, CheckCircle2 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 
 const contactSchema = z.object({
@@ -67,7 +67,7 @@ export default function Contact() {
           phone: data.phone,
           service: data.service,
           message: data.message
-        }], { returning: 'minimal' });
+        }]);
 
       if (error) throw error;
 
