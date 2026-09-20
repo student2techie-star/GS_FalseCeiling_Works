@@ -52,7 +52,7 @@ export default function InvoiceEditor() {
           <ArrowLeft className="w-5 h-5" />
         </button>
         <h2 className="font-bold font-heading text-2xl">
-          {isNew ? 'New Invoice' : \`Invoice \${invoice.number}\`}
+          {isNew ? 'New Invoice' : `Invoice ${invoice.number}`}
         </h2>
       </div>
 

@@ -163,7 +163,7 @@ export default function QuoteEditor() {
         const fy = '2026-27'; // Hardcoded for this mockup
         const { data: numData, error: rpcErr } = await supabase.rpc('get_next_doc_number', { doc_kind: 'QUOTATION', fy: fy });
         if (rpcErr) throw rpcErr;
-        const formattedNum = \`GSFC/QT/\${fy}/\${numData.toString().padStart(3, '0')}\`;
+        const formattedNum = `GSFC/QT/${fy}/${numData.toString().padStart(3, '0')}`;
         
         // Insert quote
         const { data: newQ, error: insErr } = await supabase.from('quotations').insert([{
@@ -216,7 +216,7 @@ export default function QuoteEditor() {
       }
 
       alert("Quotation saved successfully!");
-      if (isNew) navigate(\`/invoice/quotes/\${qId}\`, { replace: true });
+      if (isNew) navigate(`/invoice/quotes/${qId}`, { replace: true });
 
     } catch (err: any) {
       console.error(err);
@@ -243,7 +243,7 @@ export default function QuoteEditor() {
             </h2>
           </div>
           <div className="flex items-center gap-2">
-            <span className={\`px-2 py-1 text-xs font-medium border rounded-full bg-white\`}>
+            <span className={`px-2 py-1 text-xs font-medium border rounded-full bg-white`}>
               {quote.status}
             </span>
             <button onClick={saveQuote} disabled={saving} className="bg-[var(--blue)] text-[var(--paper)] px-3 py-1.5 rounded-md font-medium text-sm flex items-center gap-2 disabled:opacity-50">

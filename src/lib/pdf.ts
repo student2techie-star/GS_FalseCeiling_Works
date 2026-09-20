@@ -17,9 +17,9 @@ export async function generateDocumentPDF(docType: 'Quotation' | 'Invoice' | 'Re
   
   doc.setFontSize(10);
   doc.text(profile.address || '', 14, 28);
-  doc.text(\`Phone: \${profile.contact || ''}\`, 14, 34);
+  doc.text(`Phone: ${profile.contact || ''}`, 14, 34);
   if (profile.gstin) {
-    doc.text(\`GSTIN: \${profile.gstin}\`, 14, 40);
+    doc.text(`GSTIN: ${profile.gstin}`, 14, 40);
   }
 
   // Document Title
@@ -27,8 +27,8 @@ export async function generateDocumentPDF(docType: 'Quotation' | 'Invoice' | 'Re
   doc.text(docType.toUpperCase(), 150, 20);
   
   doc.setFontSize(10);
-  doc.text(\`No: \${data.number || 'DRAFT'}\`, 150, 28);
-  doc.text(\`Date: \${data.date}\`, 150, 34);
+  doc.text(`No: ${data.number || 'DRAFT'}`, 150, 28);
+  doc.text(`Date: ${data.date}`, 150, 34);
 
   // 2. Bill To
   doc.text('Bill To:', 14, 55);
@@ -57,19 +57,19 @@ export async function generateDocumentPDF(docType: 'Quotation' | 'Invoice' | 'Re
 
   // 4. Totals
   const finalY = (doc as any).lastAutoTable.finalY + 10;
-  doc.text(\`Subtotal: \${data.subtotal || 0}\`, 150, finalY);
-  doc.text(\`Tax: \${data.tax_amount || 0}\`, 150, finalY + 6);
+  doc.text(`Subtotal: ${data.subtotal || 0}`, 150, finalY);
+  doc.text(`Tax: ${data.tax_amount || 0}`, 150, finalY + 6);
   doc.setFont(undefined, 'bold');
-  doc.text(\`Grand Total: \${data.grand_total || 0}\`, 150, finalY + 12);
+  doc.text(`Grand Total: ${data.grand_total || 0}`, 150, finalY + 12);
   doc.setFont(undefined, 'normal');
 
   // 5. Payment details (QR Code)
   if (profile.upi_id) {
     try {
-      const upiUrl = \`upi://pay?pa=\${profile.upi_id}&pn=\${encodeURIComponent(profile.name)}&am=\${data.grand_total}&cu=INR\`;
+      const upiUrl = `upi://pay?pa=${profile.upi_id}&pn=${encodeURIComponent(profile.name)}&am=${data.grand_total}&cu=INR`;
       const qrDataUrl = await QRCode.toDataURL(upiUrl, { width: 100, margin: 1 });
       doc.addImage(qrDataUrl, 'PNG', 14, finalY, 30, 30);
-      doc.text(\`Scan to pay via UPI (\${profile.upi_id})\`, 14, finalY + 35);
+      doc.text(`Scan to pay via UPI (${profile.upi_id})`, 14, finalY + 35);
     } catch (err) {
       console.error("QR Code generation failed", err);
     }
@@ -81,5 +81,5 @@ export async function generateDocumentPDF(docType: 'Quotation' | 'Invoice' | 'Re
   const splitTerms = doc.splitTextToSize(profile.terms || '', 180);
   doc.text(splitTerms, 14, 275);
 
-  doc.save(\`\${docType.toLowerCase()}-\${data.number || 'draft'}.pdf\`);
+  doc.save(`${docType.toLowerCase()}-${data.number || 'draft'}.pdf`);
 }
