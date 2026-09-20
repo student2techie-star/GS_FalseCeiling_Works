@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import { Plus, Trash2, Save, Download, ArrowLeft, Calculator } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { toWords } from 'number-to-words'; // We would need a custom Indian system converter, but let's mock it for now.
 
 // Simple Indian number to words (mock implementation for brevity)
@@ -150,7 +151,7 @@ export default function QuoteEditor() {
 
   const saveQuote = async () => {
     if (!quote.customer_id) {
-      alert("Please select a customer.");
+      toast.error("Please select a customer.");
       return;
     }
 
@@ -215,12 +216,12 @@ export default function QuoteEditor() {
         await supabase.from('quotation_items').insert(itemsToInsert);
       }
 
-      alert("Quotation saved successfully!");
+      toast.success("Quotation saved successfully!");
       if (isNew) navigate(`/invoice/quotes/${qId}`, { replace: true });
 
     } catch (err: any) {
       console.error(err);
-      alert("Failed to save: " + err.message);
+      toast.error("Failed to save: " + err.message);
     } finally {
       setSaving(false);
     }

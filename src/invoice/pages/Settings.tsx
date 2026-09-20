@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { Save, Plus, Trash2, Download, Upload } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 export default function Settings() {
   const [profile, setProfile] = useState<any>({});
@@ -50,9 +51,15 @@ export default function Settings() {
 
   const saveProfile = async () => {
     setSaving(true);
-    await supabase.from('business_profile').update(profile).eq('id', 1);
-    setSaving(false);
-    alert('Profile saved!');
+    try {
+      await supabase.from('business_profile').update(profile).eq('id', 1);
+      toast.success('Profile saved!');
+    } catch (err) {
+      console.error(err);
+      toast.error('Failed to save profile');
+    } finally {
+      setSaving(false);
+    }
   };
 
   const addTemplate = async () => {
@@ -191,10 +198,10 @@ export default function Settings() {
           Export your entire database to a JSON file. Keep this safe as Supabase free tier does not have automatic backups.
         </p>
         <div className="flex gap-4">
-          <button onClick={() => alert('Export functionality to be connected to Supabase edge function or bulk fetch script.')} className="bg-[var(--ink)] text-[var(--paper)] px-4 py-2 rounded-md font-medium text-sm flex items-center gap-2">
+          <button onClick={() => toast.error('Export functionality to be connected to Supabase edge function or bulk fetch script.')} className="bg-[var(--ink)] text-[var(--paper)] px-4 py-2 rounded-md font-medium text-sm flex items-center gap-2">
             <Download className="w-4 h-4" /> Export All Data
           </button>
-          <button onClick={() => alert('Restore functionality to be implemented.')} className="bg-[var(--plaster)] border border-[var(--line)] text-[var(--ink)] px-4 py-2 rounded-md font-medium text-sm flex items-center gap-2 hover:bg-gray-100">
+          <button onClick={() => toast.error('Restore functionality to be implemented.')} className="bg-[var(--plaster)] border border-[var(--line)] text-[var(--ink)] px-4 py-2 rounded-md font-medium text-sm flex items-center gap-2 hover:bg-gray-100">
             <Upload className="w-4 h-4" /> Restore from File
           </button>
         </div>

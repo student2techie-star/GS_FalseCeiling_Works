@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import { Plus, Trash2, Save, Download, ArrowLeft, Calculator, CreditCard } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { toWords } from 'number-to-words';
 
 // Simple Indian number to words
@@ -155,7 +156,7 @@ export default function InvoiceEditor() {
 
   const saveInvoice = async () => {
     if (!invoice.customer_id) {
-      alert("Please select a customer.");
+      toast.error("Please select a customer.");
       return;
     }
 
@@ -216,12 +217,12 @@ export default function InvoiceEditor() {
         await supabase.from('invoice_items').insert(itemsToInsert);
       }
 
-      alert("Invoice saved successfully!");
+      toast.success("Invoice saved successfully!");
       if (isNew) navigate(`/invoice/invoices/${invId}`, { replace: true });
 
     } catch (err: any) {
       console.error(err);
-      alert("Failed to save: " + err.message);
+      toast.error("Failed to save: " + err.message);
     } finally {
       setSaving(false);
     }

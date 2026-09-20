@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
+import { Toaster } from 'react-hot-toast';
 import PublicLayout from './site/PublicLayout';
 import Home from './site/pages/Home';
 import About from './site/pages/About';
@@ -35,6 +36,7 @@ export default function App() {
           />
         </Routes>
       </BrowserRouter>
+      <Toaster position="bottom-right" />
     </HelmetProvider>
   );
 }
