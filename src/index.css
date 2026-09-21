@@ -8,36 +8,66 @@
   --color-line: var(--line);
   --color-blue: var(--blue);
   --color-cove: var(--cove);
+  --color-primary: var(--primary);
+  --color-accent: var(--accent);
 
   --font-heading: "Bricolage Grotesque", sans-serif;
-  --font-body: Figtree, sans-serif;
+  --font-body: "Inter", "Figtree", sans-serif;
 
   --radius-none: 0;
-  --radius-sm: 2px;
-  --radius-md: 8px;
+  --radius-sm: 4px;
+  --radius-md: 12px;
+  --radius-lg: 24px;
+  
+  --animate-fade-in: fade-in 0.5s ease-out;
+  --animate-slide-up: slide-up 0.5s ease-out;
+  
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 }
 
 @layer base {
   :root {
-    --plaster: #F4F6F8;
+    --plaster: #F8FAFC; /* Softer, modern light background */
     --paper: #FFFFFF;
-    --ink: #0E1A2B;
-    --slate: #5B6675;
-    --line: #DDE2E8;
-    --blue: #1E40AF;
-    --cove: #FFB84D;
+    --ink: #0F172A; /* Sleek, dark slate */
+    --slate: #64748B;
+    --line: #E2E8F0;
+    --blue: #2563EB; /* Vibrant blue */
+    --cove: #F59E0B; /* Amber accent */
+    --primary: #0F172A; /* Primary brand color */
+    --accent: #3B82F6; /* Accent blue */
   }
 
   body {
     background-color: var(--plaster);
     color: var(--ink);
-    font-family: Figtree, sans-serif;
+    font-family: "Inter", "Figtree", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: "Bricolage Grotesque", sans-serif;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-sm;
+  }
+  .glass-dark {
+    @apply bg-ink/80 backdrop-blur-md border border-white/10 shadow-lg text-white;
+  }
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue to-accent;
   }
 }

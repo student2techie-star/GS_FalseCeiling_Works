@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { MapPin, Phone, MessageCircle, Mail, Clock, CheckCircle2 } from 'lucide-react';
+import { Phone, MessageCircle, Mail, CheckCircle2 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 
 const contactSchema = z.object({
@@ -88,84 +88,75 @@ export default function Contact() {
         <meta name="description" content="Get in touch with GS False Ceiling Works for a free site visit and quote." />
       </Helmet>
 
-      <section className="py-24 px-6 max-w-[1200px] mx-auto">
-        <div className="grid md:grid-cols-2 gap-16">
+      <section className="py-24 px-6 relative overflow-hidden">
+        {/* Background Decorative Elements */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 z-0" />
+        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-500/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 z-0" />
+        
+        <div className="max-w-[1200px] mx-auto grid md:grid-cols-2 gap-16 relative z-10">
           
           {/* Contact Details */}
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
-            <p className="text-lg text-[var(--slate)] mb-12">
-              Have a project in mind? Reach out to us for a free consultation and estimate. 
-              We'll get back to you as soon as possible.
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 text-primary text-sm font-semibold mb-6">
+              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" /> Let's Connect
+            </div>
+            <h1 className="text-4xl md:text-6xl font-heading font-extrabold mb-6 text-primary">
+              Get in <span className="text-gradient">Touch</span>
+            </h1>
+            <p className="text-lg text-slate-500 mb-12 max-w-md font-body leading-relaxed">
+              Have a premium project in mind? Reach out to us for a personalized consultation and estimate. 
+              We're ready to bring your vision to life.
             </p>
 
-            <div className="space-y-8">
-              <a href="tel:[BUSINESS_PHONE]" className="flex items-start gap-4 group">
-                <div className="w-12 h-12 bg-[var(--plaster)] flex items-center justify-center rounded-full text-[var(--ink)] group-hover:bg-[var(--ink)] group-hover:text-[var(--paper)] transition-colors shrink-0">
-                  <Phone className="w-5 h-5" />
+            <div className="space-y-6">
+              <a href="tel:[BUSINESS_PHONE]" className="flex items-center gap-6 group p-4 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-300 border border-transparent hover:border-line">
+                <div className="w-14 h-14 bg-gradient-to-br from-primary to-accent flex items-center justify-center rounded-full text-white shadow-md group-hover:scale-110 transition-transform shrink-0">
+                  <Phone className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg mb-1">Call Us</h3>
-                  <p className="text-[var(--slate)] group-hover:text-[var(--blue)] transition-colors">[BUSINESS_PHONE]</p>
+                  <h3 className="font-heading font-bold text-lg mb-1 text-primary">Call Us directly</h3>
+                  <p className="text-slate-500 group-hover:text-accent transition-colors font-medium">[BUSINESS_PHONE]</p>
                 </div>
               </a>
 
-              <a href="https://wa.me/[WHATSAPP_NUMBER]?text=Hi,%20I'm%20looking%20for%20a%20ceiling%20quote." target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 group">
-                <div className="w-12 h-12 bg-[var(--plaster)] flex items-center justify-center rounded-full text-[var(--ink)] group-hover:bg-[#25D366] group-hover:text-white transition-colors shrink-0">
-                  <MessageCircle className="w-5 h-5" />
+              <a href="https://wa.me/[WHATSAPP_NUMBER]?text=Hi,%20I'm%20looking%20for%20a%20ceiling%20quote." target="_blank" rel="noopener noreferrer" className="flex items-center gap-6 group p-4 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-300 border border-transparent hover:border-line">
+                <div className="w-14 h-14 bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center rounded-full text-white shadow-md group-hover:scale-110 transition-transform shrink-0">
+                  <MessageCircle className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg mb-1">WhatsApp</h3>
-                  <p className="text-[var(--slate)] group-hover:text-[#25D366] transition-colors">[WHATSAPP_NUMBER]</p>
+                  <h3 className="font-heading font-bold text-lg mb-1 text-primary">Chat on WhatsApp</h3>
+                  <p className="text-slate-500 group-hover:text-emerald-500 transition-colors font-medium">[WHATSAPP_NUMBER]</p>
                 </div>
               </a>
 
-              <a href="mailto:[BUSINESS_EMAIL]" className="flex items-start gap-4 group">
-                <div className="w-12 h-12 bg-[var(--plaster)] flex items-center justify-center rounded-full text-[var(--ink)] group-hover:bg-[var(--ink)] group-hover:text-[var(--paper)] transition-colors shrink-0">
-                  <Mail className="w-5 h-5" />
+              <a href="mailto:[BUSINESS_EMAIL]" className="flex items-center gap-6 group p-4 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-300 border border-transparent hover:border-line">
+                <div className="w-14 h-14 bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center rounded-full text-primary shadow-sm group-hover:scale-110 transition-transform shrink-0">
+                  <Mail className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg mb-1">Email</h3>
-                  <p className="text-[var(--slate)] group-hover:text-[var(--blue)] transition-colors">[BUSINESS_EMAIL]</p>
+                  <h3 className="font-heading font-bold text-lg mb-1 text-primary">Email Us</h3>
+                  <p className="text-slate-500 group-hover:text-accent transition-colors font-medium">[BUSINESS_EMAIL]</p>
                 </div>
               </a>
-
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[var(--plaster)] flex items-center justify-center rounded-full text-[var(--ink)] shrink-0">
-                  <Clock className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg mb-1">Working Hours</h3>
-                  <p className="text-[var(--slate)]">[WORKING_HOURS]</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[var(--plaster)] flex items-center justify-center rounded-full text-[var(--ink)] shrink-0">
-                  <MapPin className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg mb-1">Office</h3>
-                  <p className="text-[var(--slate)]">[ADDRESS]</p>
-                </div>
-              </div>
             </div>
           </div>
 
           {/* Enquiry Form */}
-          <div className="bg-[var(--paper)] p-8 border border-[var(--line)] rounded-sm h-fit">
-            <h2 className="text-2xl font-bold mb-6">Send an Enquiry</h2>
+          <div className="glass rounded-[2rem] p-8 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] h-fit relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary to-accent" />
+            
+            <h2 className="text-3xl font-heading font-bold mb-8 text-primary">Send an Enquiry</h2>
             
             {isSuccess ? (
-              <div className="bg-green-50 border border-green-200 p-6 rounded-md text-center">
-                <div className="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle2 className="w-6 h-6" />
+              <div className="bg-emerald-50 border border-emerald-100 p-8 rounded-2xl text-center animate-fade-in">
+                <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-emerald-600 text-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-md">
+                  <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <h3 className="text-xl font-bold text-green-800 mb-2">Thanks. We'll call you back soon.</h3>
-                <p className="text-green-700 mb-6">Your message has been received.</p>
+                <h3 className="text-2xl font-heading font-bold text-emerald-900 mb-3">Message Received</h3>
+                <p className="text-emerald-700 mb-8 font-medium">Thank you for reaching out. We will contact you shortly.</p>
                 <button 
                   onClick={() => setIsSuccess(false)}
-                  className="px-6 py-2 bg-green-600 text-white rounded-md font-medium hover:bg-green-700 transition-colors"
+                  className="px-8 py-3 bg-white text-emerald-700 border border-emerald-200 rounded-full font-bold hover:bg-emerald-50 transition-colors shadow-sm"
                 >
                   Send another message
                 </button>
@@ -174,7 +165,7 @@ export default function Contact() {
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 
                 {errorMsg && (
-                  <div className="bg-red-50 border border-red-200 p-4 rounded-md text-red-700 text-sm">
+                  <div className="bg-red-50 border border-red-100 p-4 rounded-xl text-red-700 text-sm animate-fade-in">
                     {errorMsg}
                     <p className="mt-2 font-medium">Please call us directly at [BUSINESS_PHONE].</p>
                   </div>
@@ -187,37 +178,37 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium mb-2">Your Name *</label>
+                  <label htmlFor="name" className="block text-sm font-bold text-slate-700 mb-2">Your Name *</label>
                   <input 
                     type="text" 
                     id="name"
-                    className="w-full border border-[var(--line)] rounded-md px-4 py-3 focus:outline-none focus:border-[var(--blue)] focus:ring-1 focus:ring-[var(--blue)] transition-all bg-[var(--plaster)]"
+                    className="w-full border-0 bg-slate-100/50 rounded-xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-accent focus:bg-white transition-all shadow-inner"
                     placeholder="John Doe"
                     {...register('name')}
                   />
-                  {errors.name && <p className="text-red-600 text-sm mt-1">{errors.name.message}</p>}
+                  {errors.name && <p className="text-red-500 text-sm mt-2 font-medium">{errors.name.message}</p>}
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium mb-2">Phone Number *</label>
+                  <label htmlFor="phone" className="block text-sm font-bold text-slate-700 mb-2">Phone Number *</label>
                   <input 
                     type="tel" 
                     id="phone"
-                    className="w-full border border-[var(--line)] rounded-md px-4 py-3 focus:outline-none focus:border-[var(--blue)] focus:ring-1 focus:ring-[var(--blue)] transition-all bg-[var(--plaster)]"
+                    className="w-full border-0 bg-slate-100/50 rounded-xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-accent focus:bg-white transition-all shadow-inner"
                     placeholder="Your contact number"
                     {...register('phone')}
                   />
-                  {errors.phone && <p className="text-red-600 text-sm mt-1">{errors.phone.message}</p>}
+                  {errors.phone && <p className="text-red-500 text-sm mt-2 font-medium">{errors.phone.message}</p>}
                 </div>
 
                 <div>
-                  <label htmlFor="service" className="block text-sm font-medium mb-2">Service (Optional)</label>
+                  <label htmlFor="service" className="block text-sm font-bold text-slate-700 mb-2">Service of Interest</label>
                   <select 
                     id="service"
-                    className="w-full border border-[var(--line)] rounded-md px-4 py-3 focus:outline-none focus:border-[var(--blue)] focus:ring-1 focus:ring-[var(--blue)] transition-all bg-[var(--plaster)] appearance-none"
+                    className="w-full border-0 bg-slate-100/50 rounded-xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-accent focus:bg-white transition-all shadow-inner appearance-none cursor-pointer"
                     {...register('service')}
                   >
-                    <option value="">Select a service</option>
+                    <option value="">Select a service (Optional)</option>
                     <option value="gypsum-false-ceiling">Gypsum False Ceiling</option>
                     <option value="grid-tile-ceiling">Grid / Tile Ceiling</option>
                     <option value="pvc-ceiling">PVC Ceiling</option>
@@ -230,23 +221,23 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium mb-2">Message (Optional)</label>
+                  <label htmlFor="message" className="block text-sm font-bold text-slate-700 mb-2">Project Details</label>
                   <textarea 
                     id="message"
                     rows={4}
-                    className="w-full border border-[var(--line)] rounded-md px-4 py-3 focus:outline-none focus:border-[var(--blue)] focus:ring-1 focus:ring-[var(--blue)] transition-all bg-[var(--plaster)] resize-y"
-                    placeholder="Tell us a bit about your project or area size..."
+                    className="w-full border-0 bg-slate-100/50 rounded-xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-accent focus:bg-white transition-all shadow-inner resize-y"
+                    placeholder="Tell us a bit about your space or requirements..."
                     {...register('message')}
                   />
-                  {errors.message && <p className="text-red-600 text-sm mt-1">{errors.message.message}</p>}
+                  {errors.message && <p className="text-red-500 text-sm mt-2 font-medium">{errors.message.message}</p>}
                 </div>
 
                 <button 
                   type="submit" 
                   disabled={isSubmitting}
-                  className="w-full bg-[var(--ink)] text-[var(--paper)] py-4 rounded-md font-medium hover:bg-opacity-90 transition-colors disabled:opacity-70 flex justify-center"
+                  className="w-full bg-gradient-to-r from-primary to-accent text-white py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-accent/30 transition-all hover:-translate-y-0.5 disabled:opacity-70 disabled:hover:translate-y-0 disabled:shadow-none flex justify-center items-center gap-2"
                 >
-                  {isSubmitting ? 'Sending...' : 'Send Enquiry'}
+                  {isSubmitting ? 'Sending Request...' : 'Send Enquiry Request'}
                 </button>
 
               </form>
