@@ -109,7 +109,7 @@ export default function QuoteEditor() {
     if (templateId) {
       const tmpl = templates.find(t => t.id === templateId);
       if (tmpl) {
-        newItem = { ...newItem, description: tmpl.name, unit: tmpl.unit, rate: tmpl.default_rate };
+        newItem = { ...newItem, description: tmpl.name, unit: tmpl.unit, rate: tmpl.default_rate, quantity: 1 };
       }
     }
     const newRooms = [...rooms];
@@ -234,20 +234,20 @@ export default function QuoteEditor() {
       
       {/* LEFT: Editor Form */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        <div className="bg-white rounded-2xl shadow-sm border border-[var(--line)] p-4 mb-6 flex justify-between items-center shrink-0">
+        <div className="glass rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/60 p-4 mb-6 flex justify-between items-center shrink-0">
           <div className="flex items-center gap-3">
-            <button onClick={() => navigate('/invoice/quotes')} className="p-2 hover:bg-gray-100 rounded-xl transition-colors">
+            <button onClick={() => navigate('/invoice/quotes')} className="p-2 hover:bg-white rounded-xl transition-colors text-slate-500">
               <ArrowLeft className="w-5 h-5" />
             </button>
-            <h2 className="font-bold font-heading text-xl">
+            <h2 className="font-bold font-heading text-xl text-primary">
               {isNew ? 'New Quotation' : quote.number}
             </h2>
           </div>
           <div className="flex items-center gap-3">
-            <span className={`px-3 py-1 text-sm font-medium border rounded-full bg-[var(--plaster)]`}>
+            <span className={`px-4 py-1 text-xs font-bold uppercase tracking-wider border border-white/50 rounded-full bg-white shadow-sm text-primary`}>
               {quote.status}
             </span>
-            <button onClick={saveQuote} disabled={saving} className="bg-[var(--ink)] hover:bg-[var(--ink)]/90 text-[var(--paper)] px-4 py-2 rounded-xl font-medium flex items-center gap-2 transition-all disabled:opacity-50">
+            <button onClick={saveQuote} disabled={saving} className="bg-gradient-to-r from-primary to-accent text-white px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 hover:shadow-lg hover:shadow-accent/20 hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:hover:translate-y-0">
               <Save className="w-4 h-4" /> Save
             </button>
           </div>
@@ -256,8 +256,8 @@ export default function QuoteEditor() {
         <div className="flex-1 overflow-y-auto space-y-6 pb-20 pr-2">
           
           {/* Customer Card */}
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-[var(--line)]">
-            <h3 className="text-sm font-bold text-[var(--slate)] uppercase tracking-wider mb-4">Customer Details</h3>
+          <div className="glass p-6 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/60">
+            <h3 className="text-sm font-extrabold text-slate-400 uppercase tracking-widest mb-4">Customer Details</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-xs font-medium mb-1">Customer</label>
@@ -290,24 +290,24 @@ export default function QuoteEditor() {
           </div>
 
           {/* Rooms and Items Card */}
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-[var(--line)]">
+          <div className="glass p-6 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/60">
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-sm font-bold text-[var(--slate)] uppercase tracking-wider">Room-wise Breakdown</h3>
-              <button onClick={addRoom} className="text-[var(--blue)] text-sm font-medium hover:underline flex items-center gap-1">
+              <h3 className="text-sm font-extrabold text-slate-400 uppercase tracking-widest">Room-wise Breakdown</h3>
+              <button onClick={addRoom} className="text-accent text-sm font-bold hover:text-primary transition-colors flex items-center gap-1 bg-white px-3 py-1.5 rounded-lg shadow-sm border border-slate-100">
                 <Plus className="w-4 h-4" /> Add Room
               </button>
             </div>
 
             {rooms.map((room, rIndex) => (
-              <div key={rIndex} className="bg-[var(--plaster)] p-4 rounded-md border border-[var(--line)]">
+              <div key={rIndex} className="bg-white/50 p-4 rounded-xl border border-white mb-6 shadow-sm">
                 <div className="flex justify-between items-center mb-4">
-                  <h4 className="font-bold text-[var(--ink)]">{room.name}</h4>
+                  <h4 className="font-bold text-primary text-lg">{room.name}</h4>
                   <div className="flex gap-2">
-                    <select onChange={(e) => addItem(rIndex, e.target.value)} value="" className="text-xs border rounded-md px-2 py-1 bg-white">
+                    <select onChange={(e) => addItem(rIndex, e.target.value)} value="" className="text-xs font-bold text-slate-600 border border-slate-200 rounded-lg px-2 py-1.5 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-accent">
                       <option value="" disabled>+ from Template</option>
                       {templates.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
                     </select>
-                    <button onClick={() => addItem(rIndex)} className="text-xs bg-white border border-[var(--line)] px-2 py-1 rounded-md hover:bg-gray-50 flex items-center gap-1">
+                    <button onClick={() => addItem(rIndex)} className="text-xs font-bold bg-white border border-slate-200 px-3 py-1.5 rounded-lg hover:bg-slate-50 text-slate-600 shadow-sm flex items-center gap-1 transition-colors">
                       <Plus className="w-3 h-3" /> Custom Row
                     </button>
                   </div>
@@ -368,18 +368,18 @@ export default function QuoteEditor() {
           </div>
 
           {/* Footer Totals Card */}
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-[var(--line)] grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="glass p-6 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/60 grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-2">Terms / Notes</label>
+                <label className="block text-sm font-bold text-slate-700 mb-2">Terms / Notes</label>
                 <textarea value={quote.notes || ''} onChange={(e) => setQuote({...quote, notes: e.target.value})} className="w-full border rounded-md px-3 py-2 text-sm bg-white" rows={4} />
               </div>
             </div>
             
-            <div className="bg-[var(--plaster)] p-4 rounded-md border border-[var(--line)] space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-[var(--slate)]">Subtotal</span>
-                <span className="tabular-nums">₹ {subtotal.toFixed(2)}</span>
+            <div className="bg-white/80 p-5 rounded-xl border border-white shadow-sm space-y-3 text-sm font-medium">
+              <div className="flex justify-between items-center">
+                <span className="text-slate-500">Subtotal</span>
+                <span className="tabular-nums font-bold text-base">₹ {subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-[var(--slate)]">Discount Overall (₹)</span>
