@@ -453,21 +453,27 @@ export default function InvoiceEditor() {
       </div>
 
       {/* RIGHT: Live Preview (Simplified HTML mockup of what the PDF will look like) */}
-      <div className="hidden md:flex flex-col w-[400px] lg:w-[500px] bg-white border border-[var(--line)] shadow-sm rounded-2xl overflow-hidden shrink-0">
-        <div className="bg-[var(--ink)] text-[var(--paper)] py-3 px-5 flex justify-between items-center text-sm">
+      <div className="hidden md:flex flex-col w-[400px] lg:w-[500px] bg-white border border-[var(--line)] shadow-sm rounded-2xl overflow-hidden shrink-0 pdf-preview-container">
+        <div className="bg-[var(--ink)] text-[var(--paper)] py-3 px-5 flex justify-between items-center text-sm hide-on-print">
           <span className="font-medium">Live Preview</span>
-          <button className="flex items-center gap-1 hover:text-[var(--blue)] transition-colors">
+          <button onClick={() => window.print()} className="flex items-center gap-1 hover:text-[var(--blue)] transition-colors cursor-pointer">
              <Download className="w-4 h-4" /> PDF
           </button>
         </div>
-        <div className="flex-1 overflow-y-auto p-8 text-[11px] font-body bg-white text-black" style={{ zoom: 0.8 }}>
-           {/* Mock PDF Document */}
-           <div className="text-center border-b pb-4 mb-4">
-             <h1 className="text-xl font-bold uppercase tracking-widest mb-1">Tax Invoice</h1>
-             <p className="font-bold text-base">GS False Ceiling Works</p>
+        <div className="flex-1 overflow-y-auto p-8 text-[11px] font-body bg-white text-black relative" style={{ zoom: 0.8 }}>
+           {/* Watermark Logo */}
+           <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.05] z-0">
+             <img src="/GS_FalseCeiling_Works/logo.png" alt="Watermark" className="w-[80%] max-w-md grayscale" />
            </div>
-           
-           <div className="flex justify-between mb-6">
+
+           <div className="relative z-10">
+             {/* Mock PDF Document */}
+             <div className="text-center border-b border-gray-200 pb-4 mb-4 flex flex-col items-center">
+               <img src="/GS_FalseCeiling_Works/logo.png" alt="G S Decors & Enterprises" className="h-10 w-auto mb-2" />
+               <h1 className="text-xl font-bold uppercase tracking-widest mb-1">Tax Invoice</h1>
+             </div>
+             
+             <div className="flex justify-between mb-6">
              <div>
                <p className="text-gray-500 uppercase text-[9px] font-bold">Bill To</p>
                <p className="font-bold">{customers.find(c => c.id === invoice.customer_id)?.name || 'Customer Name'}</p>
@@ -521,6 +527,12 @@ export default function InvoiceEditor() {
              </div>
            )}
 
+           <div className="mt-8 text-center text-gray-500 text-[9px] border-t border-gray-200 pt-4">
+             Thank you for your business! <br/>
+             G S Decors & Enterprises &bull; Koranad, Mayiladuthurai
+           </div>
+
+           </div>
         </div>
       </div>
     </div>

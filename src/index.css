@@ -71,3 +71,54 @@
     @apply bg-clip-text text-transparent bg-gradient-to-r from-blue to-accent;
   }
 }
+
+@media print {
+  /* Hide everything by default */
+  body * {
+    visibility: hidden;
+  }
+  
+  /* Show only the PDF container and its children */
+  .pdf-preview-container, .pdf-preview-container * {
+    visibility: visible;
+  }
+  
+  /* Position the PDF container at the top left of the page */
+  .pdf-preview-container {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background-color: white !important;
+  }
+
+  /* CRITICAL: override any layout wrappers that might clip the printed page (like h-screen or overflow-hidden) */
+  html, body, #root, 
+  [class*="h-screen"], [class*="min-h-screen"], 
+  [class*="overflow-hidden"], [class*="overflow-y-auto"],
+  [class*="flex"] {
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    position: static !important;
+    display: block !important;
+  }
+
+  /* Reset the inner scrollable div of the preview to allow multi-page printing */
+  .pdf-preview-container > div {
+    overflow: visible !important;
+    height: auto !important;
+    position: static !important;
+    zoom: 1 !important; 
+    padding: 2cm !important;
+  }
+
+  .hide-on-print, .hide-on-print * {
+    display: none !important;
+  }
+}

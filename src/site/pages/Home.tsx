@@ -22,8 +22,29 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        <title>GS False Ceiling Works | Premium Interior Finishes</title>
-        <meta name="description" content="Quality false ceilings, partitions, and interior finishes. Built to finish the room with unparalleled quality." />
+        <title>G S Decors & Enterprises | Ceiling & Interior Materials in Mayiladuthurai</title>
+        <meta name="description" content="G S Decors & Enterprises in Koranad, Mayiladuthurai offers ceiling and interior decoration materials for residential, commercial and professional requirements." />
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              "name": "G S Decors & Enterprises",
+              "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800",
+              "@id": "",
+              "url": "",
+              "telephone": "+919159523147",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "No. 3/74, Main Road, Mungil Thottam, Opposite Palpannai, Koranad",
+                "addressLocality": "Mayiladuthurai",
+                "addressRegion": "Tamil Nadu",
+                "postalCode": "609001",
+                "addressCountry": "IN"
+              }
+            }
+          `}
+        </script>
       </Helmet>
 
       {/* Hero Section */}
@@ -37,40 +58,46 @@ export default function Home() {
           <div className={cn("transition-all duration-1000", isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10")}>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 backdrop-blur-md border border-white/40 shadow-sm mb-8">
               <span className="w-2 h-2 rounded-full bg-accent animate-ping" />
-              <span className="text-sm font-semibold text-primary">Premium Quality Ceilings</span>
+              <span className="text-sm font-semibold text-primary">Interior Decoration Solutions</span>
             </div>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading font-extrabold mb-8 leading-[1.1] text-primary">
-              Elevate your <br/>
+              G S Decors & <br/>
               <span className="text-gradient relative">
-                space design.
+                Enterprises
                 <span className={cn("absolute -bottom-2 left-0 h-1 bg-accent transition-all duration-[2000ms] ease-out", isLoaded ? "w-full" : "w-0")}></span>
               </span>
             </h1>
             <p className="text-lg md:text-xl text-slate-600 mb-10 max-w-lg leading-relaxed font-body">
-              Expert installation of gypsum, PVC, and grid false ceilings. We bring architectural vision to life with precision and style.
+              Explore quality ceiling and interior decoration materials for residential, commercial and professional projects in Mayiladuthurai.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link 
-                to="/contact" 
+                to="/products" 
                 className="bg-primary text-white px-8 py-4 rounded-full font-semibold hover:shadow-xl hover:shadow-primary/20 transition-all hover:-translate-y-1 inline-flex items-center gap-2 group"
               >
-                Get a free quote
+                Explore Products
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
+              <Link 
+                to="/contact" 
+                className="bg-white/50 backdrop-blur-md border border-slate-200 text-primary px-8 py-4 rounded-full font-semibold hover:bg-white transition-all shadow-sm hover:shadow-md inline-flex items-center gap-2"
+              >
+                Get a Quote
+              </Link>
               <a 
-                href="https://wa.me/[WHATSAPP_NUMBER]" 
+                href="https://wa.me/919159523147?text=Hello%20G%20S%20Decors%20%26%20Enterprises%2C%20I%20would%20like%20to%20know%20more%20about%20your%20ceiling%20and%20interior%20decoration%20products." 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="bg-white/50 backdrop-blur-md border border-white text-primary px-8 py-4 rounded-full font-semibold hover:bg-white transition-all shadow-sm hover:shadow-md inline-flex items-center gap-2 group"
               >
                 <MessageCircle className="w-5 h-5 group-hover:scale-110 transition-transform text-accent" />
-                WhatsApp us
+                WhatsApp Us
               </a>
             </div>
             
             <div className="mt-12 flex items-center gap-6 text-sm font-medium text-slate-500">
-              <div className="flex items-center gap-2"><Star className="w-5 h-5 text-cove" /> 5-Star Rated</div>
-              <div className="flex items-center gap-2"><Shield className="w-5 h-5 text-accent" /> 10+ Years Exp.</div>
+              <div className="flex items-center gap-2"><Star className="w-5 h-5 text-cove" /> Established in 1996</div>
+              <div className="flex items-center gap-2"><Shield className="w-5 h-5 text-accent" /> Premium Materials</div>
             </div>
           </div>
           
@@ -97,39 +124,44 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services Section */}
+      {/* Business Intro & Product Categories */}
       <section className="py-32 px-6 bg-white relative">
         <div className="max-w-[1200px] mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-16">
-            <div className="max-w-2xl">
-              <h2 className="text-4xl md:text-5xl font-heading font-extrabold mb-6 text-primary">Our Expertise</h2>
+            <div className="max-w-3xl">
+              <h2 className="text-4xl md:text-5xl font-heading font-extrabold mb-6 text-primary">Your Partner for Ceiling & Interior Solutions</h2>
               <p className="text-slate-500 text-lg leading-relaxed">
-                We supply and install a complete range of premium interior finishing solutions for residential and commercial spaces, ensuring durability and aesthetic excellence.
+                G S Decors & Enterprises provides ceiling and interior-decoration materials for a wide range of residential and commercial requirements. We help customers, contractors, builders and interior professionals find suitable materials for their projects.
               </p>
             </div>
-            <Link to="/services" className="text-accent font-semibold inline-flex items-center gap-1 hover:text-blue transition-colors group px-6 py-3 rounded-full bg-accent/5 hover:bg-accent/10">
-              View all services 
+            <Link to="/products" className="text-accent font-semibold inline-flex items-center gap-1 hover:text-blue transition-colors group px-6 py-3 rounded-full bg-accent/5 hover:bg-accent/10">
+              View all products 
               <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { title: 'Gypsum Ceiling', desc: 'Seamless, smooth finishes for elegant, modern interiors.', color: 'from-blue-500 to-cyan-500' },
-              { title: 'Grid & Tile', desc: 'Practical acoustic solutions ideal for office environments.', color: 'from-purple-500 to-pink-500' },
-              { title: 'PVC Panels', desc: 'Moisture-resistant, durable panels for specialized areas.', color: 'from-amber-500 to-orange-500' },
-              { title: 'Cove Lighting', desc: 'Custom integrated lighting to set the perfect mood.', color: 'from-emerald-500 to-teal-500' }
+              { title: 'PVC False Ceiling', desc: 'Practical ceiling solution suitable for a variety of interior applications.', color: 'from-blue-500 to-cyan-500', link: 'pvc-false-ceiling' },
+              { title: 'Gypsum Boards', desc: 'High-quality gypsum boards for seamless, elegant ceilings.', color: 'from-purple-500 to-pink-500', link: 'gypsum-ceiling' },
+              { title: 'Armstrong Systems', desc: 'Premium modular ceiling systems offering superior acoustics.', color: 'from-amber-500 to-orange-500', link: 'armstrong-ceiling' },
+              { title: 'Interior Materials', desc: 'Complete range of grid systems and decorative interior materials.', color: 'from-emerald-500 to-teal-500', link: 'interior-materials' }
             ].map((service, i) => (
-              <Link key={i} to={`/services#${service.title.replace(/\s+/g, '-').toLowerCase()}`} className="group relative p-8 rounded-3xl bg-plaster hover:bg-white transition-all duration-300 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border border-transparent hover:border-line overflow-hidden flex flex-col h-full">
+              <Link key={i} to={`/products`} className="group relative p-8 rounded-3xl bg-plaster hover:bg-white transition-all duration-300 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border border-transparent hover:border-line overflow-hidden flex flex-col h-full">
                 <div className={cn("absolute top-0 left-0 w-full h-1 bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity", service.color)} />
                 <div className="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-6 group-hover:-translate-y-2 transition-transform duration-300 border border-slate-100">
                   <span className={cn("w-6 h-6 rounded-full bg-gradient-to-br", service.color)} />
                 </div>
                 <h3 className="font-heading font-bold text-xl mb-4 text-primary group-hover:text-accent transition-colors">{service.title}</h3>
                 <p className="text-slate-500 mb-8 flex-grow">{service.desc}</p>
-                <span className="text-sm font-semibold text-primary flex items-center gap-2 group-hover:text-accent transition-colors mt-auto">
-                  Learn more <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
-                </span>
+                <a 
+                  href={`https://wa.me/919159523147?text=Hello%20G%20S%20Decors%20%26%20Enterprises%2C%20I%20am%20interested%20in%20${encodeURIComponent(service.title)}.%20Please%20share%20the%20available%20options%20and%20price%20details.`}
+                  target="_blank" rel="noopener noreferrer"
+                  className="text-sm font-semibold text-primary flex items-center gap-2 group-hover:text-accent transition-colors mt-auto z-20 relative"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <MessageCircle className="w-4 h-4" /> Enquire on WhatsApp
+                </a>
               </Link>
             ))}
           </div>
@@ -208,27 +240,27 @@ export default function Home() {
         
         <div className="max-w-[800px] mx-auto text-center relative z-10">
           <h2 className="text-4xl md:text-6xl font-heading font-extrabold mb-8 text-white leading-tight">
-            Ready to transform <br/>your space?
+            Need Ceiling or <br/>Interior Materials?
           </h2>
           <p className="text-xl text-slate-300 mb-12 max-w-2xl mx-auto font-body">
-            Contact us today for a complimentary site visit and professional consultation. Let's create something beautiful together.
+            Contact G S Decors & Enterprises for product information and enquiries.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-6">
             <a 
-              href="tel:[BUSINESS_PHONE]" 
+              href="tel:+919159523147" 
               className="bg-white text-primary px-8 py-4 rounded-full font-bold hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] transition-all inline-flex items-center justify-center gap-3 group text-lg"
             >
               <Phone className="w-5 h-5 group-hover:animate-bounce text-accent" />
-              Call [BUSINESS_PHONE]
+              Call Now
             </a>
             <a 
-              href="https://wa.me/[WHATSAPP_NUMBER]" 
+              href="https://wa.me/919159523147?text=Hello%20G%20S%20Decors%20%26%20Enterprises%2C%20I%20would%20like%20to%20know%20more%20about%20your%20ceiling%20and%20interior%20decoration%20products." 
               target="_blank" 
               rel="noopener noreferrer"
               className="glass border border-white/20 text-white px-8 py-4 rounded-full font-bold hover:bg-white/10 transition-all inline-flex items-center justify-center gap-3 group text-lg"
             >
               <MessageCircle className="w-5 h-5 group-hover:scale-110 transition-transform" />
-              WhatsApp us
+              WhatsApp Us
             </a>
           </div>
         </div>

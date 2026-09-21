@@ -84,8 +84,8 @@ export default function Contact() {
   return (
     <>
       <Helmet>
-        <title>Contact Us | GS False Ceiling</title>
-        <meta name="description" content="Get in touch with GS False Ceiling Works for a free site visit and quote." />
+        <title>Contact G S Decors & Enterprises | Mayiladuthurai</title>
+        <meta name="description" content="Contact G S Decors & Enterprises in Koranad, Mayiladuthurai for ceiling and interior decoration product enquiries." />
       </Helmet>
 
       <section className="py-24 px-6 relative overflow-hidden">
@@ -109,33 +109,35 @@ export default function Contact() {
             </p>
 
             <div className="space-y-6">
-              <a href="tel:[BUSINESS_PHONE]" className="flex items-center gap-6 group p-4 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-300 border border-transparent hover:border-line">
+              <a href="tel:+919159523147" className="flex items-center gap-6 group p-4 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-300 border border-transparent hover:border-line">
                 <div className="w-14 h-14 bg-gradient-to-br from-primary to-accent flex items-center justify-center rounded-full text-white shadow-md group-hover:scale-110 transition-transform shrink-0">
                   <Phone className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-heading font-bold text-lg mb-1 text-primary">Call Us directly</h3>
-                  <p className="text-slate-500 group-hover:text-accent transition-colors font-medium">[BUSINESS_PHONE]</p>
+                  <h3 className="font-heading font-bold text-lg mb-1 text-primary">Call Now</h3>
+                  <p className="text-slate-500 group-hover:text-accent transition-colors font-medium">+91 91595 23147</p>
                 </div>
               </a>
 
-              <a href="https://wa.me/[WHATSAPP_NUMBER]?text=Hi,%20I'm%20looking%20for%20a%20ceiling%20quote." target="_blank" rel="noopener noreferrer" className="flex items-center gap-6 group p-4 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-300 border border-transparent hover:border-line">
+              <a href="https://wa.me/919159523147?text=Hello%20G%20S%20Decors%20%26%20Enterprises%2C%20I%20would%20like%20to%20know%20more%20about%20your%20ceiling%20and%20interior%20decoration%20products." target="_blank" rel="noopener noreferrer" className="flex items-center gap-6 group p-4 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-300 border border-transparent hover:border-line">
                 <div className="w-14 h-14 bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center rounded-full text-white shadow-md group-hover:scale-110 transition-transform shrink-0">
                   <MessageCircle className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-heading font-bold text-lg mb-1 text-primary">Chat on WhatsApp</h3>
-                  <p className="text-slate-500 group-hover:text-emerald-500 transition-colors font-medium">[WHATSAPP_NUMBER]</p>
+                  <h3 className="font-heading font-bold text-lg mb-1 text-primary">WhatsApp Us</h3>
+                  <p className="text-slate-500 group-hover:text-emerald-500 transition-colors font-medium">+91 91595 23147</p>
                 </div>
               </a>
 
-              <a href="mailto:[BUSINESS_EMAIL]" className="flex items-center gap-6 group p-4 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-300 border border-transparent hover:border-line">
-                <div className="w-14 h-14 bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center rounded-full text-primary shadow-sm group-hover:scale-110 transition-transform shrink-0">
-                  <Mail className="w-6 h-6" />
+              <a href="https://maps.google.com/?q=G+S+Decors+%26+Enterprises,+Koranad,+Mayiladuthurai,+Tamil+Nadu" target="_blank" rel="noopener noreferrer" className="flex items-center gap-6 group p-4 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-300 border border-transparent hover:border-line">
+                <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center rounded-full text-white shadow-sm group-hover:scale-110 transition-transform shrink-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                 </div>
                 <div>
-                  <h3 className="font-heading font-bold text-lg mb-1 text-primary">Email Us</h3>
-                  <p className="text-slate-500 group-hover:text-accent transition-colors font-medium">[BUSINESS_EMAIL]</p>
+                  <h3 className="font-heading font-bold text-lg mb-1 text-primary">Get Directions</h3>
+                  <p className="text-slate-500 group-hover:text-accent transition-colors text-sm">
+                    No. 3/74, Main Road, Mungil Thottam,<br/>Opposite Palpannai, Koranad
+                  </p>
                 </div>
               </a>
             </div>
@@ -167,7 +169,7 @@ export default function Contact() {
                 {errorMsg && (
                   <div className="bg-red-50 border border-red-100 p-4 rounded-xl text-red-700 text-sm animate-fade-in">
                     {errorMsg}
-                    <p className="mt-2 font-medium">Please call us directly at [BUSINESS_PHONE].</p>
+                    <p className="mt-2 font-medium">Please call us directly at +91 91595 23147.</p>
                   </div>
                 )}
 
@@ -209,13 +211,11 @@ export default function Contact() {
                     {...register('service')}
                   >
                     <option value="">Select a service (Optional)</option>
-                    <option value="gypsum-false-ceiling">Gypsum False Ceiling</option>
-                    <option value="grid-tile-ceiling">Grid / Tile Ceiling</option>
-                    <option value="pvc-ceiling">PVC Ceiling</option>
-                    <option value="pop-work">POP Work</option>
-                    <option value="cove-and-profile-lighting">Cove & Profile Lighting</option>
-                    <option value="partitions">Partitions</option>
-                    <option value="painting">Painting</option>
+                    <option value="pvc-false-ceiling">PVC False Ceiling</option>
+                    <option value="gypsum-ceiling">Gypsum Ceiling Boards</option>
+                    <option value="armstrong-ceiling">Armstrong Ceiling Systems</option>
+                    <option value="mineral-fibre-ceiling">Mineral Fibre Ceiling</option>
+                    <option value="interior-materials">Interior Decoration Materials</option>
                     <option value="other">Other</option>
                   </select>
                 </div>

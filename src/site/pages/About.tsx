@@ -5,17 +5,16 @@ export default function About() {
   return (
     <>
       <Helmet>
-        <title>About Us | GS False Ceiling Works</title>
-        <meta name="description" content="Learn about GS False Ceiling Works, our materials, and how we operate in [SERVICE_AREAS]." />
+        <title>About G S Decors & Enterprises | Mayiladuthurai</title>
+        <meta name="description" content="Learn about G S Decors & Enterprises, an established ceiling and interior decoration materials business in Koranad, Mayiladuthurai." />
       </Helmet>
 
       {/* Hero */}
       <section className="bg-[var(--ink)] text-[var(--paper)] py-20 px-6">
         <div className="max-w-[800px] mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">About Us</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">About G S Decors & Enterprises</h1>
           <p className="text-lg md:text-xl opacity-80 leading-relaxed">
-            We are dedicated to providing high-quality false ceiling and interior finishing solutions. 
-            With [YEARS_IN_BUSINESS] years of experience, we bring precision and care to every project.
+            G S Decors & Enterprises is an established business based in Koranad, Mayiladuthurai, offering ceiling and interior-decoration materials for residential, commercial and professional requirements. Established in 1996, the business has served customers in the interior and ceiling-materials segment over the years.
           </p>
         </div>
       </section>
@@ -25,27 +24,19 @@ export default function About() {
         <div className="grid md:grid-cols-2 gap-16 items-start">
           
           <div>
-            <h2 className="text-3xl font-bold mb-6">Our Approach</h2>
+            <h2 className="text-3xl font-bold mb-6">What We Offer</h2>
             <p className="text-lg text-[var(--slate)] leading-relaxed mb-6">
-              A ceiling is more than just a cover—it defines the lighting, acoustics, and aesthetic of a room. 
-              Our team focuses on clean lines, proper levelling, and secure framing to ensure that your ceiling 
-              looks flawless and lasts for years.
+              We provide an extensive selection of ceiling and interior decoration materials suited for a variety of applications, whether residential or commercial.
             </p>
-            <p className="text-lg text-[var(--slate)] leading-relaxed mb-8">
-              We manage the process from the initial site measurement to the final coat of paint, keeping the 
-              site organized and communicating clearly throughout the project.
-            </p>
-
-            <h3 className="text-xl font-bold mb-4">What to expect</h3>
-            <ul className="space-y-3">
+            <ul className="space-y-4 mb-8">
               {[
-                'Transparent, room-wise quotations without hidden costs.',
-                'Skilled craftsmen specializing in modern ceiling techniques.',
-                'Adherence to project timelines.',
-                'Clean and respectful work practices on site.'
+                'Ceiling materials (PVC, Gypsum, Mineral Fibre)',
+                'Interior decoration materials',
+                'Product enquiries and consultations',
+                'Project-related material requirements'
               ].map((item, i) => (
-                <li key={i} className="flex gap-3 text-[var(--slate)]">
-                  <CheckCircle2 className="w-6 h-6 text-[var(--blue)] shrink-0" />
+                <li key={i} className="flex gap-3 text-[var(--slate)] items-center">
+                  <CheckCircle2 className="w-5 h-5 text-[var(--blue)] shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -53,26 +44,25 @@ export default function About() {
           </div>
 
           <div className="bg-[var(--paper)] p-8 border border-[var(--line)] rounded-sm">
-            <h2 className="text-2xl font-bold mb-6">Materials & Finishes</h2>
+            <h2 className="text-2xl font-bold mb-6">Why Customers Contact Us</h2>
             <p className="text-[var(--slate)] leading-relaxed mb-6">
-              The quality of a false ceiling depends entirely on the materials behind it. We use standardized 
-              metal framing and premium boards to prevent sagging and cracking.
+              Our commitment to providing quality interior materials has made us a reliable local choice.
             </p>
             
-            <div className="space-y-6">
-              <div>
-                <h4 className="font-bold text-[var(--ink)] mb-1">Gypsum Boards</h4>
-                <p className="text-sm text-[var(--slate)]">Standard and moisture-resistant boards from trusted brands, finished with jointing compound for a seamless look.</p>
-              </div>
-              <div>
-                <h4 className="font-bold text-[var(--ink)] mb-1">Grid Systems</h4>
-                <p className="text-sm text-[var(--slate)]">Durable T-grid frameworks with acoustic or mineral fiber tiles for commercial spaces.</p>
-              </div>
-              <div>
-                <h4 className="font-bold text-[var(--ink)] mb-1">Lighting Integration</h4>
-                <p className="text-sm text-[var(--slate)]">Precision cutouts for downlights and custom ledges for ambient cove lighting.</p>
-              </div>
-            </div>
+            <ul className="space-y-4">
+              {[
+                'Wide range of ceiling-related materials under one roof',
+                'Established local business presence in Mayiladuthurai',
+                'Dedicated product enquiry support',
+                'Convenient phone and WhatsApp communication',
+                'Suitable solutions for homeowners, contractors, and professionals'
+              ].map((item, i) => (
+                <li key={i} className="flex gap-3 text-[var(--slate)] items-center">
+                  <CheckCircle2 className="w-5 h-5 text-[var(--cove)] shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
 
         </div>
@@ -81,12 +71,17 @@ export default function About() {
       {/* Service Areas */}
       <section className="py-24 px-6 bg-[var(--paper)] border-t border-[var(--line)]">
         <div className="max-w-[800px] mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-6">Service Areas</h2>
-          <p className="text-lg text-[var(--slate)] leading-relaxed max-w-2xl mx-auto">
-            We are based in India and actively take on residential and commercial projects across:
+          <h2 className="text-3xl font-bold mb-6">Based in Mayiladuthurai</h2>
+          <p className="text-lg text-[var(--slate)] leading-relaxed max-w-2xl mx-auto mb-8">
+            We are proud to serve customers, contractors, and interior professionals across Mayiladuthurai and surrounding areas.
           </p>
-          <div className="mt-8 p-6 bg-[var(--plaster)] border border-[var(--line)] rounded-md inline-block">
-            <p className="font-medium text-lg">[SERVICE_AREAS]</p>
+          <div className="inline-flex flex-col items-center justify-center p-8 bg-[var(--plaster)] border border-[var(--line)] rounded-xl">
+            <h3 className="font-bold text-xl mb-2 text-[var(--primary)]">G S Decors & Enterprises</h3>
+            <p className="text-[var(--slate)] text-center">
+              No. 3/74, Main Road, Mungil Thottam,<br />
+              Opposite Palpannai, Koranad,<br />
+              Mayiladuthurai, Tamil Nadu – 609001
+            </p>
           </div>
         </div>
       </section>

@@ -1,49 +1,36 @@
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
+import { clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+function cn(...inputs: (string | undefined | null | false)[]) {
+  return twMerge(clsx(inputs));
+}
 
 const SERVICES = [
   {
-    id: 'gypsum-false-ceiling',
-    title: 'Gypsum False Ceiling',
-    desc: 'The industry standard for residential and premium commercial spaces. Gypsum boards offer a seamless, smooth finish that can be painted to match any decor. They provide excellent fire resistance and sound insulation.',
-    bestFor: 'Living rooms, bedrooms, retail stores, and boardrooms.',
+    id: 'false-ceiling-materials',
+    title: 'False Ceiling Materials',
+    desc: 'Supply of suitable false-ceiling materials for different project requirements. We offer gypsum boards, PVC panels, Armstrong grids, and mineral fibre tiles.',
+    color: 'from-blue-500 to-cyan-500'
   },
   {
-    id: 'grid-tile-ceiling',
-    title: 'Grid / Tile Ceiling',
-    desc: 'A highly practical drop ceiling system utilizing a metal grid and acoustic or mineral fiber tiles. This system allows easy access to plumbing, electrical wiring, and HVAC systems hidden above.',
-    bestFor: 'Offices, hospitals, schools, and commercial kitchens.',
+    id: 'interior-decoration-materials',
+    title: 'Interior Decoration Materials',
+    desc: 'Materials for interior decoration and finishing requirements. Explore our range of decorative panels and accessories to elevate your space.',
+    color: 'from-purple-500 to-pink-500'
   },
   {
-    id: 'pvc-ceiling',
-    title: 'PVC Ceiling',
-    desc: 'Lightweight, durable, and completely moisture-resistant. PVC panels are quick to install, require zero painting, and are extremely easy to clean.',
-    bestFor: 'Bathrooms, balconies, damp areas, and budget-friendly renovations.',
+    id: 'project-material-support',
+    title: 'Project Material Support',
+    desc: 'We help customers and professionals identify suitable materials for their project needs, ensuring you get the right product for your specific application.',
+    color: 'from-amber-500 to-orange-500'
   },
   {
-    id: 'pop-work',
-    title: 'POP Work',
-    desc: 'Plaster of Paris offers ultimate flexibility for creating intricate cornices, decorative moldings, and custom ceiling patterns that add a touch of classic elegance.',
-    bestFor: 'Traditional interiors, custom decorative borders, and heritage renovations.',
-  },
-  {
-    id: 'cove-and-profile-lighting',
-    title: 'Cove & Profile Lighting',
-    desc: 'We design and build custom recessed ledges and integrated aluminum profiles to house LED strips, creating soft, ambient, indirect lighting that elevates the mood of any room.',
-    bestFor: 'Living spaces, home theaters, and modern bedrooms.',
-  },
-  {
-    id: 'partitions',
-    title: 'Partitions',
-    desc: 'Quickly divide spaces without the mess of wet masonry work. Our drywall partitions use sturdy metal tracks and gypsum boards, offering excellent soundproofing when packed with acoustic insulation.',
-    bestFor: 'Office cabins, studio apartments, and commercial layout changes.',
-  },
-  {
-    id: 'painting',
-    title: 'Painting',
-    desc: 'We offer professional painting services to perfectly finish our ceiling and partition work, ensuring a flawless, uniform look across the entire space.',
-    bestFor: 'New ceiling installations and complete room makeovers.',
+    id: 'contractor-enquiries',
+    title: 'Contractor / Professional Enquiries',
+    desc: 'Dedicated enquiry flow and support for contractors, builders and interior professionals. Partner with us for reliable material supply.',
+    color: 'from-emerald-500 to-teal-500'
   }
 ];
 
@@ -51,47 +38,43 @@ export default function Services() {
   return (
     <>
       <Helmet>
-        <title>Our Services | GS False Ceiling</title>
-        <meta name="description" content="Gypsum ceilings, grid ceilings, PVC, POP work, lighting, and partitions." />
+        <title>Ceiling & Interior Services | G S Decors & Enterprises</title>
+        <meta name="description" content="Explore ceiling and interior material solutions from G S Decors & Enterprises in Mayiladuthurai." />
       </Helmet>
 
-      <section className="bg-[var(--ink)] text-[var(--paper)] py-16 px-6">
+      {/* Page Header */}
+      <section className="pt-24 pb-16 px-6 bg-[var(--ink)] text-[var(--paper)]">
         <div className="max-w-[1200px] mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Services</h1>
+          <h1 className="text-4xl md:text-5xl font-heading font-extrabold mb-6">Our Services</h1>
           <p className="text-lg opacity-80 max-w-2xl mx-auto">
-            Comprehensive interior finishing solutions, executed with precision and care.
+            Providing comprehensive material solutions and support for ceiling and interior projects.
           </p>
         </div>
       </section>
 
-      <section className="py-16 px-6 max-w-[1000px] mx-auto">
-        <div className="space-y-24">
-          {SERVICES.map((svc, index) => (
-            <div key={svc.id} id={svc.id} className="scroll-mt-32 grid md:grid-cols-2 gap-12 items-center">
-              <div className={`order-2 ${index % 2 !== 0 ? 'md:order-1' : 'md:order-2'}`}>
-                <h2 className="text-3xl font-bold mb-4">{svc.title}</h2>
-                <p className="text-[var(--slate)] text-lg leading-relaxed mb-6">
+      {/* Services Grid */}
+      <section className="py-24 px-6 bg-[var(--plaster)] min-h-screen">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {SERVICES.map((svc) => (
+              <div key={svc.id} id={svc.id} className="scroll-mt-32 group relative p-10 rounded-3xl bg-white transition-all duration-300 hover:shadow-xl border border-transparent hover:border-[var(--line)] overflow-hidden flex flex-col h-full">
+                <div className={cn("absolute top-0 left-0 w-full h-2 bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity", svc.color)} />
+                
+                <h2 className="text-2xl font-bold mb-4 text-[var(--primary)] group-hover:text-[var(--accent)] transition-colors">{svc.title}</h2>
+                <p className="text-[var(--slate)] text-lg leading-relaxed mb-8 flex-grow">
                   {svc.desc}
                 </p>
-                <div className="bg-[var(--plaster)] p-4 rounded-md mb-8 border border-[var(--line)]">
-                  <span className="font-semibold text-[var(--ink)] block mb-1">Where it works best:</span>
-                  <span className="text-[var(--slate)]">{svc.bestFor}</span>
-                </div>
                 
-                <Link 
-                  to={`/contact?service=${svc.id}`}
-                  className="inline-flex items-center gap-2 text-[var(--blue)] font-medium hover:underline group"
+                <a 
+                  href={`https://wa.me/919159523147?text=Hello%20G%20S%20Decors%20%26%20Enterprises%2C%20I%20would%20like%20to%20know%20more%20about%20your%20${encodeURIComponent(svc.title)}%20services.`}
+                  target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-[var(--plaster)] text-[var(--primary)] font-semibold px-6 py-3 rounded-full hover:bg-[var(--line)] transition-colors self-start mt-auto"
                 >
-                  Ask about this
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
+                  <MessageCircle className="w-5 h-5 text-[#25D366]" /> Enquire Now
+                </a>
               </div>
-              
-              <div className={`order-1 ${index % 2 !== 0 ? 'md:order-2' : 'md:order-1'} aspect-[4/3] bg-slate-200 rounded-sm flex items-center justify-center`}>
-                <span className="text-[var(--slate)] font-medium text-sm tracking-widest uppercase">Photo: {svc.title}</span>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
     </>

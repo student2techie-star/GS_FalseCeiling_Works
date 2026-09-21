@@ -5,6 +5,7 @@ import { Toaster } from 'react-hot-toast';
 import PublicLayout from './site/PublicLayout';
 import Home from './site/pages/Home';
 import About from './site/pages/About';
+import Products from './site/pages/Products';
 import Works from './site/pages/Works';
 import Services from './site/pages/Services';
 import Contact from './site/pages/Contact';
@@ -20,6 +21,7 @@ export default function App() {
           <Route path="/" element={<PublicLayout />}>
             <Route index element={<Home />} />
             <Route path="about" element={<About />} />
+            <Route path="products" element={<Products />} />
             <Route path="works" element={<Works />} />
             <Route path="services" element={<Services />} />
             <Route path="contact" element={<Contact />} />
