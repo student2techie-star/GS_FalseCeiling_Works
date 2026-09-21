@@ -107,7 +107,7 @@ export default function QuoteEditor() {
   const addItem = (roomIndex: number, templateId?: string) => {
     let newItem = { description: '', unit: 'sq ft', quantity: 0, rate: 0, discount: 0, note: '' };
     if (templateId) {
-      const tmpl = templates.find(t => t.id === templateId);
+      const tmpl = templates.find(t => String(t.id) === String(templateId));
       if (tmpl) {
         newItem = { ...newItem, description: tmpl.name, unit: tmpl.unit, rate: tmpl.default_rate, quantity: 1 };
       }
