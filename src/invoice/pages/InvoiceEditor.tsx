@@ -373,7 +373,7 @@ export default function InvoiceEditor() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [calcModal, setCalcModal] = useState<{rIndex: number, iIndex: number, l: string, w: string} | null>(null);
-  const [paymentModal, setPaymentModal] = useState<{amount: string, mode: string} | null>(null);
+  const [paymentModal, setPaymentModal] = useState<{amount: string, mode: string, date: string} | null>(null);
   const isNew = id === 'new';
 
   const [loading, setLoading] = useState(!isNew);
@@ -504,6 +504,19 @@ export default function InvoiceEditor() {
         }
       }
       if (itemsToInsert.length > 0) await supabase.from('invoice_items').insert(itemsToInsert);
+
+      // Save new payments
+      const newPayments = payments.filter((p: any) => p.isNew);
+      if (newPayments.length > 0) {
+        const paymentsToInsert = newPayments.map((p: any) => ({
+          invoice_id: invId,
+          amount: p.amount,
+          mode: p.mode,
+          date: p.date
+        }));
+        await supabase.from('payments').insert(paymentsToInsert);
+      }
+
       toast.success('Invoice saved successfully!');
       if (isNew) navigate(`/invoice/invoices/${invId}`, { replace: true });
     } catch (err: any) {
@@ -518,11 +531,16 @@ export default function InvoiceEditor() {
     if (!paymentModal) return;
     const amount = parseFloat(paymentModal.amount);
     if (amount > 0) {
-      const { data } = await supabase.from('payments').insert([{
-        invoice_id: id, amount, mode: paymentModal.mode, date: new Date().toISOString().split('T')[0]
-      }]).select().single();
-      if (data) setPayments([...payments, data]);
-      toast.success('Payment recorded!');
+      const newPayment = {
+        id: crypto.randomUUID(),
+        invoice_id: id,
+        amount,
+        mode: paymentModal.mode,
+        date: paymentModal.date,
+        isNew: true
+      };
+      setPayments([...payments, newPayment]);
+      toast.success('Payment added locally. Click Save to confirm.');
     }
     setPaymentModal(null);
   };
@@ -704,14 +722,13 @@ export default function InvoiceEditor() {
           </div>
 
           {/* Payments Section */}
-          {!isNew && (
-            <div className="glass p-5 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/60">
+          <div className="glass p-5 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/60">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="font-heading font-extrabold text-lg text-primary flex items-center gap-2">
                   <CreditCard className="w-5 h-5 text-accent" /> Payments Received
                 </h3>
                 {balanceDue > 0 ? (
-                  <button onClick={() => setPaymentModal({ amount: balanceDue.toFixed(2), mode: 'UPI' })} className="text-white bg-emerald-500 hover:bg-emerald-600 px-4 py-2 rounded-lg text-sm font-bold shadow-sm flex items-center gap-2 transition-colors">
+                  <button onClick={() => setPaymentModal({ amount: balanceDue.toFixed(2), mode: 'UPI', date: new Date().toISOString().split('T')[0] })} className="text-white bg-emerald-500 hover:bg-emerald-600 px-4 py-2 rounded-lg text-sm font-bold shadow-sm flex items-center gap-2 transition-colors">
                     <Plus className="w-4 h-4" /> Record Payment
                   </button>
                 ) : (
@@ -737,7 +754,6 @@ export default function InvoiceEditor() {
                 )}
               </div>
             </div>
-          )}
           {/* Customer Card */}
           <div className="glass p-5 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/60 mt-4">
             <h3 className="text-xs font-extrabold text-slate-400 uppercase tracking-widest mb-4">Customer Details</h3>
@@ -959,6 +975,15 @@ export default function InvoiceEditor() {
                   type="number" step="0.01" required autoFocus
                   value={paymentModal.amount}
                   onChange={e => setPaymentModal({...paymentModal, amount: e.target.value})}
+                  className="w-full border border-[var(--line)] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[var(--blue)]"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-[var(--ink)] mb-1.5">Date</label>
+                <input 
+                  type="date" required
+                  value={paymentModal.date}
+                  onChange={e => setPaymentModal({...paymentModal, date: e.target.value})}
                   className="w-full border border-[var(--line)] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[var(--blue)]"
                 />
               </div>
