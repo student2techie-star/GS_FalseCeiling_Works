@@ -86,7 +86,7 @@ export default function InvoiceApp() {
   ];
 
   return (
-    <div className="min-h-screen bg-[var(--plaster)] text-[var(--ink)] font-body flex flex-col">
+    <div className="min-h-screen bg-[var(--plaster)] text-[var(--ink)] font-body flex flex-col print:min-h-0 print:block print:bg-white">
       <Helmet>
         <title>Dashboard | GS Admin</title>
         <meta name="robots" content="noindex, nofollow" />
@@ -216,7 +216,7 @@ export default function InvoiceApp() {
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-1 overflow-x-hidden p-4 md:p-8 max-w-[1600px] mx-auto w-full">
+      <main className="flex-1 overflow-x-hidden p-4 md:p-8 max-w-[1600px] mx-auto w-full print:p-0 print:overflow-visible print:block print:max-w-none">
         <div className="animate-fade-in">
           <Routes>
             <Route path="/" element={<Dashboard />} />

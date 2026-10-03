@@ -530,7 +530,7 @@ export default function InvoiceEditor() {
   if (loading) return <div className="p-6">Loading...</div>;
 
   return (
-    <div className="h-[calc(100vh-6rem)] flex flex-col md:flex-row gap-6 pb-6">
+    <div className="h-[calc(100vh-6rem)] flex flex-col md:flex-row gap-6 pb-6 print:h-auto print:block print:pb-0 print:gap-0">
 
       {/* LEFT: Editor Form */}
       <div className="flex-1 flex flex-col overflow-hidden hide-on-print">
@@ -791,14 +791,14 @@ export default function InvoiceEditor() {
       </div>
 
       {/* RIGHT: Live Preview */}
-      <div className="hidden md:flex flex-col w-[400px] lg:w-[480px] bg-white border border-[var(--line)] shadow-sm rounded-2xl overflow-hidden shrink-0">
+      <div className="hidden md:flex flex-col w-[400px] lg:w-[480px] bg-white border border-[var(--line)] shadow-sm rounded-2xl overflow-hidden shrink-0 print:flex print:w-full print:max-w-none print:border-none print:shadow-none print:rounded-none print:overflow-visible">
         <div className="bg-[var(--ink)] text-[var(--paper)] py-3 px-5 flex justify-between items-center text-sm hide-on-print">
           <span className="font-medium">Live Preview</span>
           <button onClick={() => window.print()} className="flex items-center gap-1 hover:text-[var(--blue)] transition-colors">
             <Download className="w-4 h-4" /> PDF
           </button>
         </div>
-        <div className="flex-1 overflow-y-auto p-8 text-[11px] font-body bg-white text-black relative pdf-preview-container" style={{ zoom: 0.8 }}>
+        <div className="flex-1 overflow-y-auto p-8 text-[11px] font-body bg-white text-black relative pdf-preview-container print:overflow-visible print:p-0" style={{ zoom: 0.8 }}>
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.05] z-0">
             <img src="/GS_FalseCeiling_Works/logo.png" alt="Watermark" className="w-[80%] max-w-md grayscale" />
           </div>
@@ -821,12 +821,12 @@ export default function InvoiceEditor() {
             </div>
 
             {rooms.map((room, rIndex) => (
-              <div key={rIndex} className="mb-4">
+              <div key={rIndex} className="mb-4 break-inside-avoid">
                 {room.items.length > 0 && <h3 className="font-bold bg-gray-100 p-1 mb-1">{room.name}</h3>}
                 <table className="w-full text-left border-collapse">
                   <tbody>
                     {room.items.map((item, iIndex) => (
-                      <tr key={iIndex} className="border-b border-gray-100 last:border-0">
+                      <tr key={iIndex} className="border-b border-gray-100 last:border-0 break-inside-avoid">
                         <td className="py-1 w-1/2">{item.description}</td>
                         <td className="py-1 w-[15%]">{item.quantity} {item.unit}</td>
                         <td className="py-1 w-[15%]">&#8377;{item.rate}</td>
@@ -838,7 +838,7 @@ export default function InvoiceEditor() {
               </div>
             ))}
 
-            <div className="border-t-2 border-black pt-2 mt-4 ml-auto w-64 space-y-1 text-[12px]">
+            <div className="border-t-2 border-black pt-2 mt-4 ml-auto w-64 space-y-1 text-[12px] break-inside-avoid">
               <div className="flex justify-between"><span className="text-gray-500">Subtotal:</span><span>&#8377; {subtotal.toFixed(2)}</span></div>
               {discountAmt > 0 && <div className="flex justify-between"><span className="text-gray-500">Discount:</span><span>- &#8377; {discountAmt.toFixed(2)}</span></div>}
               {(invoice.tax_rate > 0) && <div className="flex justify-between"><span className="text-gray-500">{invoice.tax_type} ({invoice.tax_rate}%):</span><span>+ &#8377; {taxAmount.toFixed(2)}</span></div>}
@@ -846,7 +846,7 @@ export default function InvoiceEditor() {
             </div>
 
             {payments.length > 0 && (
-              <div className="mt-6 pt-4 border-t">
+              <div className="mt-6 pt-4 border-t break-inside-avoid">
                 <h4 className="font-bold text-[10px] text-gray-500 uppercase mb-2">Payment History</h4>
                 {payments.map(p => (
                   <div key={p.id} className="flex justify-between text-[10px]">

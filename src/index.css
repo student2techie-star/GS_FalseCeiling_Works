@@ -73,35 +73,35 @@
 }
 
 @media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
   .hide-on-print {
     display: none !important;
   }
-  
+
   body, html, #root {
     background-color: white !important;
     height: auto !important;
     min-height: auto !important;
     overflow: visible !important;
-    display: block !important;
   }
 
-  /* Ensure the pdf container can expand fully */
   .pdf-preview-container {
-    zoom: 1 !important;
+    zoom: 1 !important; /* Revert the inline zoom for printing */
     width: 100% !important;
-    max-width: 100% !important;
+    padding: 15mm !important; /* Margins for the printed page */
     margin: 0 !important;
-    padding: 0 !important;
     border: none !important;
     box-shadow: none !important;
     background: white !important;
-  }
-
-  /* Force ancestors to block so they don't cut off pages */
-  main, .flex, .flex-col, .min-h-screen, .overflow-hidden, .overflow-y-auto, .overflow-x-hidden {
-    display: block !important;
-    height: auto !important;
-    min-height: auto !important;
     overflow: visible !important;
   }
 }
