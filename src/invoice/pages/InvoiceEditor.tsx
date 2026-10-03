@@ -531,16 +531,33 @@ export default function InvoiceEditor() {
     if (!paymentModal) return;
     const amount = parseFloat(paymentModal.amount);
     if (amount > 0) {
-      const newPayment = {
-        id: crypto.randomUUID(),
-        invoice_id: id,
-        amount,
-        mode: paymentModal.mode,
-        date: paymentModal.date,
-        isNew: true
-      };
-      setPayments([...payments, newPayment]);
-      toast.success('Payment added locally. Click Save to confirm.');
+      if (isNew) {
+        const newPayment = {
+          id: crypto.randomUUID(),
+          invoice_id: id,
+          amount,
+          mode: paymentModal.mode,
+          date: paymentModal.date,
+          isNew: true
+        };
+        setPayments([...payments, newPayment]);
+        toast.success('Payment added locally. Click Save Invoice to confirm.');
+      } else {
+        try {
+          const { data, error } = await supabase.from('payments').insert([{
+            invoice_id: id,
+            amount,
+            mode: paymentModal.mode,
+            date: paymentModal.date
+          }]).select().single();
+          
+          if (error) throw error;
+          if (data) setPayments([...payments, data]);
+          toast.success('Payment recorded successfully!');
+        } catch (err: any) {
+          toast.error('Failed to record payment: ' + err.message);
+        }
+      }
     }
     setPaymentModal(null);
   };

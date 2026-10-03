@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import { Plus, Search, Receipt } from 'lucide-react';
 import { format } from 'date-fns';
@@ -9,10 +9,23 @@ export default function Invoices() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
+  const filter = new URLSearchParams(location.search).get('filter');
+
+  const getComputedTotals = (invoice: any) => {
+    const paidAmount = invoice.payments?.reduce((sum: number, p: any) => sum + p.amount, 0) || 0;
+    const subtotal = invoice.invoice_items?.reduce((sum: number, i: any) => sum + ((i.quantity || 0) * (i.rate || 0)), 0) || 0;
+    const discountAmt = invoice.discount || 0;
+    const taxable = subtotal - discountAmt;
+    const tax = taxable * ((invoice.tax_rate || 0) / 100);
+    const grandTotal = taxable + tax;
+    const balance = grandTotal - paidAmount;
+    return { grandTotal, paidAmount, balance };
+  };
 
   useEffect(() => {
     fetchInvoices();
-  }, []);
+  }, [filter]);
 
   const fetchInvoices = async () => {
     setLoading(true);
@@ -21,27 +34,39 @@ export default function Invoices() {
       *,
       customers ( name ),
       sites ( project_name ),
-      payments ( amount )
+      payments ( amount ),
+      invoice_items ( quantity, rate )
     `).order('created_at', { ascending: false });
     
     const { data } = await q;
     if (data) {
+      let filteredData = data;
+      
       if (search) {
-        setInvoices(data.filter(inv => 
+        filteredData = filteredData.filter(inv => 
           inv.number.toLowerCase().includes(search.toLowerCase()) || 
           inv.customers?.name?.toLowerCase().includes(search.toLowerCase())
-        ));
-      } else {
-        setInvoices(data);
+        );
       }
+      
+      if (filter === 'pending') {
+        filteredData = filteredData.filter(inv => getComputedTotals(inv).balance > 0);
+      } else if (filter === 'paid') {
+        filteredData = filteredData.filter(inv => {
+          const t = getComputedTotals(inv);
+          return t.balance <= 0 && t.grandTotal > 0;
+        });
+      }
+
+      setInvoices(filteredData);
     }
     setLoading(false);
   };
 
-  const getComputedStatus = (invoice: any) => {
-    const paidAmount = invoice.payments?.reduce((sum: number, p: any) => sum + p.amount, 0) || 0;
-    
-    if (paidAmount > 0) return { label: 'PARTIAL', color: 'bg-amber-50 text-amber-700 border-amber-200' };
+  // getComputedTotals hoisted up
+  const getComputedStatus = (invoice: any, balance: number, grandTotal: number) => {
+    if (grandTotal > 0 && balance <= 0) return { label: 'PAID', color: 'bg-emerald-50 text-emerald-700 border-emerald-200' };
+    if (invoice.payments?.length > 0 && balance > 0) return { label: 'PARTIAL', color: 'bg-amber-50 text-amber-700 border-amber-200' };
     
     const isOverdue = invoice.due_date && new Date(invoice.due_date) < new Date();
     if (isOverdue) return { label: 'OVERDUE', color: 'bg-rose-50 text-rose-700 border-rose-200' };
@@ -89,18 +114,20 @@ export default function Invoices() {
                 <th className="px-6 py-4 font-bold">Invoice #</th>
                 <th className="px-6 py-4 font-bold">Date</th>
                 <th className="px-6 py-4 font-bold">Customer & Site</th>
+                <th className="px-6 py-4 font-bold text-right">Amount (&#8377;)</th>
                 <th className="px-6 py-4 font-bold">Status</th>
                 <th className="px-6 py-4 font-bold text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[var(--line)]">
               {loading ? (
-                <tr><td colSpan={5} className="px-6 py-12 text-center text-[var(--slate)]">Loading...</td></tr>
+                <tr><td colSpan={6} className="px-6 py-12 text-center text-[var(--slate)]">Loading...</td></tr>
               ) : invoices.length === 0 ? (
-                <tr><td colSpan={5} className="px-6 py-16 text-center text-[var(--slate)]">No invoices found. Click "New Invoice" to create one.</td></tr>
+                <tr><td colSpan={6} className="px-6 py-16 text-center text-[var(--slate)]">No invoices found. Click "New Invoice" to create one.</td></tr>
               ) : (
                 invoices.map(inv => {
-                  const status = getComputedStatus(inv);
+                  const totals = getComputedTotals(inv);
+                  const status = getComputedStatus(inv, totals.balance, totals.grandTotal);
                   return (
                     <tr key={inv.id} className="hover:bg-blue-50/30 transition-colors">
                       <td className="px-6 py-4 font-bold text-[var(--ink)]">
@@ -114,6 +141,10 @@ export default function Invoices() {
                       <td className="px-6 py-4">
                         <div className="font-bold text-sm text-[var(--ink)]">{inv.customers?.name || 'Unassigned'}</div>
                         <div className="text-xs text-[var(--slate)]">{inv.sites?.project_name}</div>
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        <div className="font-bold text-sm text-[var(--ink)]">&#8377; {totals.grandTotal.toFixed(2)}</div>
+                        {totals.balance > 0 && <div className="text-xs text-rose-600">Due: &#8377; {totals.balance.toFixed(2)}</div>}
                       </td>
                       <td className="px-6 py-4">
                         <span className={`px-3 py-1 text-xs font-semibold border rounded-full ${status.color}`}>

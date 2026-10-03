@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react';
-import { TrendingUp, CheckCircle, Clock, AlertCircle, Plus, FileText } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { TrendingUp, CheckCircle, Clock, AlertCircle, Plus } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const [metrics, setMetrics] = useState({ invoiced: 0, received: 0, pending: 0, overdue: 0 });
+  const [monthlyData, setMonthlyData] = useState<{month: string, amount: number}[]>([]);
 
   useEffect(() => {
     const fetchMetrics = async () => {
       const { data: invoices } = await supabase.from('invoices').select('id, discount, tax_rate, due_date');
       const { data: items } = await supabase.from('invoice_items').select('invoice_id, quantity, rate');
-      const { data: payments } = await supabase.from('payments').select('invoice_id, amount');
+      const { data: payments } = await supabase.from('payments').select('invoice_id, amount, date, created_at');
 
       let invoiced = 0;
       let received = 0;
@@ -51,6 +53,25 @@ export default function Dashboard() {
 
       const pending = invoiced - received;
       setMetrics({ invoiced, received, pending, overdue });
+
+      // Generate last 6 months data for chart
+      const months: Record<string, number> = {};
+      for (let i = 5; i >= 0; i--) {
+        const d = new Date();
+        d.setMonth(d.getMonth() - i);
+        months[d.toLocaleString('default', { month: 'short' })] = 0;
+      }
+
+      if (payments) {
+        payments.forEach(p => {
+          const pDate = new Date(p.date || p.created_at);
+          const m = pDate.toLocaleString('default', { month: 'short' });
+          if (months[m] !== undefined) {
+            months[m] += Number(p.amount);
+          }
+        });
+      }
+      setMonthlyData(Object.keys(months).map(k => ({ month: k, amount: months[k] })));
     };
 
     fetchMetrics();
@@ -87,7 +108,10 @@ export default function Dashboard() {
           <p className="text-xs text-[var(--slate)] mt-2">FY 2026-27 total billed</p>
         </div>
 
-        <div className="bg-white p-6 rounded-3xl border border-[var(--line)] shadow-sm hover:shadow-md transition-shadow">
+        <div 
+          onClick={() => navigate('/invoice/invoices?filter=paid')}
+          className="bg-white p-6 rounded-3xl border border-[var(--line)] shadow-sm hover:shadow-md transition-shadow cursor-pointer hover:border-emerald-200"
+        >
           <div className="flex items-center justify-between mb-4">
             <span className="text-emerald-600 text-xs font-bold uppercase tracking-wider">Total Received</span>
             <div className="p-2.5 bg-emerald-50 text-emerald-600 rounded-2xl">
@@ -98,7 +122,10 @@ export default function Dashboard() {
           <p className="text-xs text-emerald-600/80 mt-2">Payments collected</p>
         </div>
 
-        <div className="bg-white p-6 rounded-3xl border border-[var(--line)] shadow-sm hover:shadow-md transition-shadow">
+        <div 
+          onClick={() => navigate('/invoice/invoices?filter=pending')}
+          className="bg-white p-6 rounded-3xl border border-[var(--line)] shadow-sm hover:shadow-md transition-shadow cursor-pointer hover:border-amber-200"
+        >
           <div className="flex items-center justify-between mb-4">
             <span className="text-amber-600 text-xs font-bold uppercase tracking-wider">Pending Balance</span>
             <div className="p-2.5 bg-amber-50 text-amber-600 rounded-2xl">
@@ -121,13 +148,30 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Analytics Placeholder Card */}
-      <div className="bg-white p-8 rounded-3xl border border-[var(--line)] shadow-sm min-h-[320px] flex flex-col items-center justify-center text-center">
-        <div className="p-4 bg-[var(--plaster)] text-[var(--slate)] rounded-full mb-4">
-          <FileText className="w-8 h-8" />
+      {/* Analytics Chart */}
+      <div className="bg-white p-8 rounded-3xl border border-[var(--line)] shadow-sm">
+        <h3 className="text-lg font-bold font-heading mb-8 text-[var(--ink)]">Revenue (Last 6 Months)</h3>
+        <div className="flex items-end justify-between h-48 gap-4 px-2">
+          {monthlyData.map(d => {
+            const max = Math.max(...monthlyData.map(m => m.amount), 1);
+            const heightPct = (d.amount / max) * 100;
+            return (
+              <div key={d.month} className="flex-1 flex flex-col items-center gap-3 group">
+                <div className="w-full relative flex-1 flex items-end justify-center">
+                  <div 
+                    className="w-full max-w-[48px] bg-blue-100 rounded-t-xl relative group-hover:bg-[var(--blue)] transition-colors"
+                    style={{ height: `${Math.max(heightPct, 4)}%` }}
+                  >
+                    <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-[var(--ink)] text-white text-[11px] py-1.5 px-3 rounded-lg font-bold whitespace-nowrap pointer-events-none z-10 shadow-lg">
+                      ₹ {d.amount.toLocaleString('en-IN')}
+                    </div>
+                  </div>
+                </div>
+                <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{d.month}</div>
+              </div>
+            );
+          })}
         </div>
-        <h3 className="text-lg font-bold font-heading mb-1 text-[var(--ink)]">Monthly Revenue Analytics</h3>
-        <p className="text-sm text-[var(--slate)] max-w-sm">Detailed charts and revenue breakdown will populate automatically as quotes and invoices are created.</p>
       </div>
     </div>
   );
