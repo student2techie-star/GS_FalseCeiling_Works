@@ -790,11 +790,12 @@ export default function QuoteEditor() {
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.05] z-0">
             <img src="/GS_FalseCeiling_Works/logo.png" alt="Watermark" className="w-[80%] max-w-md grayscale" />
           </div>
-          <div className="relative z-10">
-          <div className="text-center border-b border-gray-200 pb-4 mb-4">
-            <img src="/GS_FalseCeiling_Works/logo.png" alt="GS Decors" className="h-10 w-auto mb-2 mx-auto" />
-            <h1 className="text-xl font-bold uppercase tracking-widest">Quotation</h1>
-          </div>
+          <div className="relative z-10 min-h-[270mm] flex flex-col">
+            <div>
+              <div className="text-center border-b border-gray-200 pb-4 mb-4">
+                <img src="/GS_FalseCeiling_Works/logo.png" alt="GS Decors" className="h-10 w-auto mb-2 mx-auto" />
+                <h1 className="text-xl font-bold uppercase tracking-widest">Quotation</h1>
+              </div>
           <div className="flex justify-between mb-6">
             <div>
               <p className="text-gray-500 uppercase text-[9px] font-bold">To</p>
@@ -830,6 +831,54 @@ export default function QuoteEditor() {
             {discountAmt > 0 && <div className="flex justify-between"><span className="text-gray-500">Discount:</span><span>- &#8377; {discountAmt.toFixed(2)}</span></div>}
             {(quote.tax_rate > 0) && <div className="flex justify-between"><span className="text-gray-500">{quote.tax_type} ({quote.tax_rate}%):</span><span>+ &#8377; {taxAmount.toFixed(2)}</span></div>}
             <div className="flex justify-between font-bold text-sm border-t pt-1 mt-1"><span>Total:</span><span>&#8377; {grandTotal.toFixed(2)}</span></div>
+          </div>
+          </div>
+
+          {/* Footer Section - Pushed to bottom via mt-auto if 1 page */}
+          <div className="mt-auto pt-8 break-inside-avoid">
+            <div className="border-t border-gray-200 pt-4 grid grid-cols-12 gap-4 text-[10px]">
+              <div className="col-span-4 space-y-3">
+                <div>
+                  <h4 className="font-bold text-gray-700 uppercase mb-1 text-[9px]">Bank Details</h4>
+                  <p className="text-gray-600 leading-tight">
+                    Bank Name: <span className="font-medium text-black">State Bank of India</span><br />
+                    A/C No: <span className="font-medium text-black">XXXXXXXXXXXX</span><br />
+                    IFSC Code: <span className="font-medium text-black">SBIN000XXXX</span>
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-700 uppercase mb-1 text-[9px]">Contact Info</h4>
+                  <p className="text-gray-600 leading-tight">
+                    Phone: <span className="font-medium text-black">+91 91595 23147</span><br />
+                    Address: <span className="font-medium text-black">Koranad, Mayiladuthurai</span>
+                  </p>
+                </div>
+              </div>
+
+              <div className="col-span-2 flex flex-col items-center pt-1">
+                <h4 className="font-bold text-gray-700 uppercase mb-2 text-[9px]">Scan to Pay</h4>
+                <img src={`https://quickchart.io/qr?text=${encodeURIComponent(`upi://pay?pa=gsdecors@sbi&pn=G S Decors&am=${grandTotal.toFixed(2)}`)}&size=150`} alt="UPI QR" className="w-16 h-16 border border-gray-200 rounded p-1 object-contain" />
+                <p className="text-[7px] text-gray-500 mt-1 uppercase">Any UPI App</p>
+              </div>
+
+              <div className="col-span-3">
+                <h4 className="font-bold text-gray-700 uppercase mb-1 text-[9px]">Terms & Conditions</h4>
+                <p className="text-gray-500 text-[8px] leading-tight">
+                  1. Quote valid for 15 days.<br />
+                  2. Payment terms: 50% advance, balance upon completion.<br />
+                  3. Jurisdiction: Mayiladuthurai.
+                </p>
+              </div>
+
+              <div className="col-span-3 flex flex-col items-end justify-end text-center pb-2">
+                <div className="w-32 border-b border-gray-400 mb-2"></div>
+                <p className="font-bold text-gray-700">Authorized Signatory</p>
+                <p className="text-gray-500 text-[8px]">G S Decors & Enterprises</p>
+              </div>
+            </div>
+            <div className="mt-6 text-center text-gray-400 text-[8px]">
+              Thank you for your business! &bull; G S Decors & Enterprises, Koranad, Mayiladuthurai
+            </div>
           </div>
           </div>
         </div>
