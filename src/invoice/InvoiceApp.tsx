@@ -12,7 +12,8 @@ import Invoices from './pages/Invoices';
 import InvoiceEditor from './pages/InvoiceEditor';
 import Dashboard from './pages/Dashboard';
 import Enquiries from './pages/Enquiries';
-import { LayoutDashboard, FileText, Receipt, Users, MessageSquare, Settings as SettingsIcon, LogOut, Menu, X } from 'lucide-react';
+import Products from './pages/Products';
+import { LayoutDashboard, FileText, Receipt, Users, MessageSquare, Settings as SettingsIcon, LogOut, Menu, X, Package, AlertTriangle } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -24,6 +25,8 @@ export default function InvoiceApp() {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [pendingEnqCount, setPendingEnqCount] = useState(0);
+  const [outOfStockCount, setOutOfStockCount] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -41,6 +44,19 @@ export default function InvoiceApp() {
 
     return () => subscription.unsubscribe();
   }, []);
+
+  useEffect(() => {
+    if (session) {
+      const fetchCounts = async () => {
+        const { count: eCount } = await supabase.from('enquiries').select('*', { count: 'exact', head: true }).eq('handled', false);
+        if (eCount !== null) setPendingEnqCount(eCount);
+        
+        const { count: pCount, error } = await supabase.from('item_templates').select('*', { count: 'exact', head: true }).eq('in_stock', false);
+        if (!error && pCount !== null) setOutOfStockCount(pCount);
+      };
+      fetchCounts();
+    }
+  }, [session, location.pathname]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -64,91 +80,143 @@ export default function InvoiceApp() {
     { name: 'Quotes', path: '/invoice/quotes', icon: FileText },
     { name: 'Invoices', path: '/invoice/invoices', icon: Receipt },
     { name: 'Customers', path: '/invoice/customers', icon: Users },
+    { name: 'Products', path: '/invoice/products', icon: Package },
     { name: 'Enquiries', path: '/invoice/enquiries', icon: MessageSquare },
     { name: 'Settings', path: '/invoice/settings', icon: SettingsIcon },
   ];
 
   return (
-    <div className="min-h-screen bg-[var(--plaster)] text-[var(--ink)] font-body flex flex-col md:flex-row">
+    <div className="min-h-screen bg-[var(--plaster)] text-[var(--ink)] font-body flex flex-col">
       <Helmet>
         <title>Dashboard | GS Admin</title>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
-      {/* Mobile Header - Glassmorphism */}
-      <div className="md:hidden glass-dark text-white p-4 flex justify-between items-center sticky top-0 z-50">
-        <div className="flex items-center gap-2">
-          <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center text-sm font-bold shadow-md">
-            GS
-          </span>
-          <span className="font-heading font-bold text-lg">Admin</span>
-        </div>
-        <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 hover:bg-white/10 rounded-lg transition-colors">
-          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
-      </div>
+      {/* Top Navigation Bar */}
+      <header className="bg-primary text-white sticky top-0 z-50 shadow-[0_4px_24px_rgba(0,0,0,0.18)]">
+        <div className="max-w-[1600px] mx-auto px-4 md:px-8">
+          <div className="flex items-center justify-between h-16">
 
-      {/* Sidebar Navigation - Premium Dark Mode */}
-      <aside className={cn(
-        "w-full md:w-[280px] bg-primary text-white border-r-0 md:shadow-[4px_0_24px_rgba(0,0,0,0.1)] flex-col md:sticky md:top-0 md:h-screen transition-transform z-40 fixed inset-y-0 left-0 overflow-y-auto",
-        mobileMenuOpen ? "translate-x-0 pt-20 md:pt-0" : "-translate-x-full md:translate-x-0"
-      )}>
-        <div className="p-8 hidden md:flex items-center gap-3">
-          <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-blue-500 flex items-center justify-center text-white font-heading font-extrabold text-xl shadow-lg shadow-accent/20">
-            GS
-          </span>
-          <span className="font-heading font-extrabold text-2xl tracking-tight text-white">Admin</span>
-        </div>
+            {/* Logo */}
+            <div className="flex items-center gap-3 shrink-0">
+              <span className="w-9 h-9 rounded-xl bg-gradient-to-br from-accent to-blue-500 flex items-center justify-center text-white font-heading font-extrabold text-lg shadow-lg shadow-accent/20">
+                GS
+              </span>
+              <span className="font-heading font-extrabold text-xl tracking-tight text-white hidden sm:block">
+                Admin
+              </span>
+            </div>
 
-        <nav className="flex-1 px-4 py-6 md:py-2 space-y-2">
-          <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 px-4">Menu</div>
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = location.pathname === item.path || (item.path !== '/invoice' && location.pathname.startsWith(item.path));
-            return (
-              <Link
-                key={item.name}
-                to={item.path}
-                onClick={() => setMobileMenuOpen(false)}
-                className={cn(
-                  "flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-semibold transition-all duration-300 relative group",
-                  isActive 
-                    ? "bg-white/10 text-white shadow-inner border border-white/5" 
-                    : "text-slate-400 hover:bg-white/5 hover:text-white"
-                )}
+            {/* Desktop Nav Links */}
+            <nav className="hidden md:flex items-center gap-1">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const isActive =
+                  location.pathname === item.path ||
+                  (item.path !== '/invoice' && location.pathname.startsWith(item.path));
+                return (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    className={cn(
+                      'flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 relative',
+                      isActive
+                        ? 'bg-white/15 text-white shadow-inner border border-white/10'
+                        : 'text-slate-300 hover:bg-white/10 hover:text-white'
+                    )}
+                  >
+                    <Icon className={cn('w-4 h-4', isActive ? 'text-accent' : '')} />
+                    {item.name}
+                    {item.name === 'Enquiries' && pendingEnqCount > 0 && (
+                      <span className="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[1.25rem] text-center ml-1">
+                        {pendingEnqCount}
+                      </span>
+                    )}
+                    {item.name === 'Products' && outOfStockCount > 0 && (
+                      <AlertTriangle className="w-4 h-4 text-orange-400 ml-1" />
+                    )}
+                  </Link>
+                );
+              })}
+            </nav>
+
+            {/* Right: User chip + Logout */}
+            <div className="hidden md:flex items-center gap-3">
+              <div className="flex items-center gap-2 bg-white/10 rounded-xl px-3 py-1.5 border border-white/10">
+                <div className="w-7 h-7 rounded-full bg-slate-600 flex items-center justify-center text-white font-bold text-xs">
+                  A
+                </div>
+                <span className="text-sm font-semibold text-white">Admin</span>
+              </div>
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-bold text-slate-300 border border-slate-600 hover:bg-red-500/15 hover:text-red-400 hover:border-red-500/30 transition-all"
               >
-                {isActive && (
-                  <span className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-1/2 bg-accent rounded-r-full" />
-                )}
-                <Icon className={cn("w-5 h-5 transition-colors", isActive ? "text-accent" : "group-hover:text-slate-200")} />
-                {item.name}
-              </Link>
-            );
-          })}
-        </nav>
+                <LogOut className="w-4 h-4" />
+                <span className="hidden lg:inline">Sign Out</span>
+              </button>
+            </div>
 
-        <div className="p-6 mt-auto border-t border-white/10">
-          <div className="bg-white/5 rounded-2xl p-4 mb-4 flex items-center gap-3 border border-white/5">
-             <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-white font-bold">
-               A
-             </div>
-             <div>
-               <div className="text-sm font-bold text-white">Admin User</div>
-               <div className="text-xs text-slate-400">Manage Account</div>
-             </div>
+            {/* Mobile Hamburger */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 hover:bg-white/10 rounded-lg transition-colors"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
           </div>
-          <button 
-            onClick={handleLogout}
-            className="flex w-full items-center justify-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-400 border border-slate-700 hover:bg-red-500/10 hover:text-red-400 hover:border-red-500/20 transition-all"
-          >
-            <LogOut className="w-5 h-5" />
-            Sign Out
-          </button>
         </div>
-      </aside>
+
+        {/* Mobile Dropdown Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-white/10 bg-primary">
+            <nav className="px-4 py-3 space-y-1">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const isActive =
+                  location.pathname === item.path ||
+                  (item.path !== '/invoice' && location.pathname.startsWith(item.path));
+                return (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={cn(
+                      'flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all',
+                      isActive
+                        ? 'bg-white/15 text-white border border-white/10'
+                        : 'text-slate-300 hover:bg-white/10 hover:text-white'
+                    )}
+                  >
+                    <Icon className={cn('w-4 h-4', isActive ? 'text-accent' : '')} />
+                    {item.name}
+                    {item.name === 'Enquiries' && pendingEnqCount > 0 && (
+                      <span className="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-auto">
+                        {pendingEnqCount}
+                      </span>
+                    )}
+                    {item.name === 'Products' && outOfStockCount > 0 && (
+                      <AlertTriangle className="w-4 h-4 text-orange-400 ml-auto" />
+                    )}
+                  </Link>
+                );
+              })}
+            </nav>
+            <div className="px-4 pb-4 pt-2 border-t border-white/10">
+              <button
+                onClick={handleLogout}
+                className="flex w-full items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-bold text-slate-300 border border-slate-600 hover:bg-red-500/15 hover:text-red-400 transition-all"
+              >
+                <LogOut className="w-4 h-4" />
+                Sign Out
+              </button>
+            </div>
+          </div>
+        )}
+      </header>
 
       {/* Main Content Area */}
-      <main className="flex-1 overflow-x-hidden p-6 md:p-12 max-w-[1600px] mx-auto w-full">
+      <main className="flex-1 overflow-x-hidden p-4 md:p-8 max-w-[1600px] mx-auto w-full">
         <div className="animate-fade-in">
           <Routes>
             <Route path="/" element={<Dashboard />} />
@@ -157,19 +225,12 @@ export default function InvoiceApp() {
             <Route path="/invoices" element={<Invoices />} />
             <Route path="/invoices/:id" element={<InvoiceEditor />} />
             <Route path="/customers/*" element={<Customers />} />
+            <Route path="/products" element={<Products />} />
             <Route path="/enquiries" element={<Enquiries />} />
             <Route path="/settings/*" element={<Settings />} />
           </Routes>
         </div>
       </main>
-      
-      {/* Mobile Overlay */}
-      {mobileMenuOpen && (
-        <div 
-          className="fixed inset-0 bg-primary/80 backdrop-blur-sm z-30 md:hidden"
-          onClick={() => setMobileMenuOpen(false)}
-        />
-      )}
     </div>
   );
 }

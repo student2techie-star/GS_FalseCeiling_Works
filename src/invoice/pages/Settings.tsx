@@ -8,6 +8,7 @@ export default function Settings() {
   const [templates, setTemplates] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [deleteTemplateId, setDeleteTemplateId] = useState<string | null>(null);
 
   useEffect(() => {
     fetchData();
@@ -75,9 +76,10 @@ export default function Settings() {
   };
 
   const deleteTemplate = async (id: string) => {
-    if (!confirm('Delete this template?')) return;
     setTemplates(templates.filter(t => t.id !== id));
     await supabase.from('item_templates').delete().eq('id', id);
+    toast.success('Template deleted');
+    setDeleteTemplateId(null);
   };
 
   if (loading) return <div className="p-6">Loading...</div>;
@@ -183,9 +185,17 @@ export default function Settings() {
                 className="w-32 border rounded-md px-3 py-2 text-sm"
                 placeholder="Rate"
               />
-              <button onClick={() => deleteTemplate(tmpl.id)} className="p-2 text-red-500 hover:bg-red-50 rounded-md">
-                <Trash2 className="w-4 h-4" />
-              </button>
+              {deleteTemplateId === tmpl.id ? (
+                <div className="flex items-center gap-1">
+                  <span className="text-xs text-red-500 font-bold px-1">Delete?</span>
+                  <button onClick={() => deleteTemplate(tmpl.id)} className="p-1.5 bg-red-500 text-white rounded hover:bg-red-600 transition-colors">Yes</button>
+                  <button onClick={() => setDeleteTemplateId(null)} className="p-1.5 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors">No</button>
+                </div>
+              ) : (
+                <button onClick={() => setDeleteTemplateId(tmpl.id)} className="p-2 text-red-500 hover:bg-red-50 rounded-md">
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              )}
             </div>
           ))}
         </div>

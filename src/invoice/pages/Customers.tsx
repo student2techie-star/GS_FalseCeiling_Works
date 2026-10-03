@@ -31,6 +31,9 @@ export default function Customers() {
     setLoading(false);
   };
 
+  const [addSiteToCust, setAddSiteToCust] = useState<string | null>(null);
+  const [siteForm, setSiteForm] = useState({ name: '', address: '' });
+
   const addCustomer = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newCust.name) return;
@@ -47,22 +50,23 @@ export default function Customers() {
     }
   };
 
-  const addSite = async (customerId: string) => {
-    const projectName = prompt('Project/Site Name:');
-    if (!projectName) return;
-    const siteAddress = prompt('Site Address:');
+  const executeAddSite = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!siteForm.name || !addSiteToCust) return;
     
     const { data } = await supabase.from('sites').insert([{
-      customer_id: customerId,
-      project_name: projectName,
-      site_address: siteAddress
+      customer_id: addSiteToCust,
+      project_name: siteForm.name,
+      site_address: siteForm.address
     }]).select().single();
     
     if (data) {
       setCustomers(customers.map(c => 
-        c.id === customerId ? { ...c, sites: [...(c.sites || []), data] } : c
+        c.id === addSiteToCust ? { ...c, sites: [...(c.sites || []), data] } : c
       ));
     }
+    setAddSiteToCust(null);
+    setSiteForm({ name: '', address: '' });
   };
 
   return (
@@ -140,7 +144,7 @@ export default function Customers() {
                 <div className="md:w-1/2 bg-[var(--plaster)] p-4 rounded-md">
                   <div className="flex justify-between items-center mb-3">
                     <h4 className="font-semibold text-sm">Sites / Projects</h4>
-                    <button onClick={() => addSite(cust.id)} className="text-[var(--blue)] text-xs font-medium hover:underline flex items-center gap-1">
+                    <button onClick={() => setAddSiteToCust(cust.id)} className="text-[var(--blue)] text-xs font-medium hover:underline flex items-center gap-1">
                       <Plus className="w-3 h-3"/> Add Site
                     </button>
                   </div>
@@ -162,6 +166,43 @@ export default function Customers() {
               </div>
             </div>
           ))}
+        </div>
+      )}
+
+      {/* Add Site Modal */}
+      {addSiteToCust && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" onClick={() => setAddSiteToCust(null)}>
+          <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 animate-fade-in" onClick={e => e.stopPropagation()}>
+            <h3 className="text-xl font-bold font-heading text-[var(--ink)] mb-6">Add Site to Customer</h3>
+            <form onSubmit={executeAddSite} className="space-y-4">
+              <div>
+                <label className="block text-sm font-bold text-[var(--ink)] mb-1.5">Project / Site Name *</label>
+                <input 
+                  type="text" required autoFocus
+                  value={siteForm.name}
+                  onChange={e => setSiteForm({...siteForm, name: e.target.value})}
+                  className="w-full border border-[var(--line)] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[var(--blue)]"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-[var(--ink)] mb-1.5">Site Address</label>
+                <input 
+                  type="text" 
+                  value={siteForm.address}
+                  onChange={e => setSiteForm({...siteForm, address: e.target.value})}
+                  className="w-full border border-[var(--line)] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[var(--blue)]"
+                />
+              </div>
+              <div className="flex gap-3 pt-4">
+                <button type="button" onClick={() => setAddSiteToCust(null)} className="flex-1 py-2.5 rounded-xl border border-[var(--line)] font-bold text-sm text-[var(--slate)] hover:bg-gray-50">
+                  Cancel
+                </button>
+                <button type="submit" disabled={!siteForm.name} className="flex-1 py-2.5 rounded-xl bg-[var(--blue)] text-white font-bold text-sm hover:bg-[var(--blue)]/90 disabled:opacity-50">
+                  Add Site
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       )}
     </div>

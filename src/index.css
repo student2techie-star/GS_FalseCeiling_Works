@@ -95,13 +95,20 @@
     box-shadow: none !important;
     border-radius: 0 !important;
     background-color: white !important;
+    height: auto !important;
+    overflow: visible !important;
   }
 
-  /* CRITICAL: override any layout wrappers that might clip the printed page (like h-screen or overflow-hidden) */
-  html, body, #root, 
-  [class*="h-screen"], [class*="min-h-screen"], 
-  [class*="overflow-hidden"], [class*="overflow-y-auto"],
-  [class*="flex"] {
+  /* Force all elements outside the preview to allow overflow and act as static anchors */
+  body *:not(.pdf-preview-container):not(.pdf-preview-container *) {
+    overflow: visible !important;
+    position: static !important;
+    height: auto !important;
+    min-height: auto !important;
+    transform: none !important;
+  }
+
+  html, body, #root {
     height: auto !important;
     min-height: auto !important;
     overflow: visible !important;
@@ -109,13 +116,9 @@
     display: block !important;
   }
 
-  /* Reset the inner scrollable div of the preview to allow multi-page printing */
-  .pdf-preview-container > div {
-    overflow: visible !important;
-    height: auto !important;
-    position: static !important;
+  /* Ensure we zoom back to normal for print */
+  .pdf-preview-container {
     zoom: 1 !important; 
-    padding: 2cm !important;
   }
 
   .hide-on-print, .hide-on-print * {

@@ -1,12 +1,59 @@
 import { useState, useEffect } from 'react';
 import { TrendingUp, CheckCircle, Clock, AlertCircle, Plus, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { supabase } from '../../lib/supabase';
 
 export default function Dashboard() {
-  const [metrics] = useState({ invoiced: 450000, received: 300000, pending: 150000, overdue: 2 });
+  const [metrics, setMetrics] = useState({ invoiced: 0, received: 0, pending: 0, overdue: 0 });
 
   useEffect(() => {
-    // In production, fetch from Supabase
+    const fetchMetrics = async () => {
+      const { data: invoices } = await supabase.from('invoices').select('id, discount, tax_rate, due_date');
+      const { data: items } = await supabase.from('invoice_items').select('invoice_id, quantity, rate');
+      const { data: payments } = await supabase.from('payments').select('invoice_id, amount');
+
+      let invoiced = 0;
+      let received = 0;
+      let overdue = 0;
+
+      if (payments) {
+        received = payments.reduce((sum, p) => sum + Number(p.amount), 0);
+      }
+
+      if (invoices && items) {
+        const today = new Date();
+        today.setHours(0,0,0,0);
+
+        invoices.forEach(inv => {
+          const invItems = items.filter(i => i.invoice_id === inv.id);
+          const subtotal = invItems.reduce((sum, i) => sum + (Number(i.quantity) * Number(i.rate)), 0);
+          const discount = Number(inv.discount) || 0;
+          const taxRate = Number(inv.tax_rate) || 0;
+          
+          const discounted = Math.max(0, subtotal - discount);
+          const taxAmt = discounted * (taxRate / 100);
+          const invTotal = discounted + taxAmt;
+          
+          invoiced += invTotal;
+
+          if (inv.due_date) {
+            const dueDate = new Date(inv.due_date);
+            if (dueDate < today) {
+              const invPayments = payments?.filter(p => p.invoice_id === inv.id) || [];
+              const invPaid = invPayments.reduce((sum, p) => sum + Number(p.amount), 0);
+              if (invPaid < invTotal - 0.01) {
+                overdue++;
+              }
+            }
+          }
+        });
+      }
+
+      const pending = invoiced - received;
+      setMetrics({ invoiced, received, pending, overdue });
+    };
+
+    fetchMetrics();
   }, []);
 
   return (
