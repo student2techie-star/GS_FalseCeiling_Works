@@ -64,8 +64,8 @@ export default function Invoices() {
         </button>
       </div>
 
-      <div className="flex gap-3">
-        <div className="relative flex-1">
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="relative flex-1 w-full">
           <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-[var(--slate)]" />
           <input 
             type="text" 
@@ -76,7 +76,7 @@ export default function Invoices() {
             className="w-full pl-11 pr-4 py-3 bg-white border border-[var(--line)] rounded-2xl focus:outline-none focus:ring-2 focus:ring-[var(--blue)]/20 shadow-sm text-sm"
           />
         </div>
-        <button onClick={fetchInvoices} className="px-6 py-3 bg-white border border-[var(--line)] rounded-2xl text-sm font-medium hover:bg-gray-50 shadow-sm transition-colors">
+        <button onClick={fetchInvoices} className="px-6 py-3 w-full sm:w-auto bg-white border border-[var(--line)] rounded-2xl text-sm font-medium hover:bg-gray-50 shadow-sm transition-colors">
           Search
         </button>
       </div>

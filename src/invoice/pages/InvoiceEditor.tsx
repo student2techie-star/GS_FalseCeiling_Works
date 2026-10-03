@@ -568,6 +568,8 @@ export default function InvoiceEditor() {
                 </div>
 
                 {/* Column headers */}
+                <div className="overflow-x-auto">
+                  <div className="min-w-[600px]">
                 {room.items.length > 0 && (
                   <div className="px-3 pt-2 grid grid-cols-[1fr_64px_88px_84px_76px_32px] gap-2 text-[10px] font-bold uppercase text-slate-400 tracking-wider">
                     <span>Description</span><span>Qty</span><span>Unit</span><span>Rate (&#8377;)</span><span className="text-right">Amount</span><span></span>
@@ -618,8 +620,10 @@ export default function InvoiceEditor() {
                     <p className="text-xs text-center text-slate-400 italic py-2">No items yet — add below</p>
                   )}
                 </div>
+              </div>
+            </div>
 
-                {/* Add row controls — BELOW each room */}
+            {/* Add row controls — BELOW each room */}
                 <div className="px-3 pb-3 flex items-center gap-2 flex-wrap">
                   <TemplateSearch
                     templates={templates}

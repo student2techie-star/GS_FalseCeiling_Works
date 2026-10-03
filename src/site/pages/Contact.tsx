@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Phone, MessageCircle, CheckCircle2 } from 'lucide-react';
+import { Phone, MessageCircle, CheckCircle2, Map } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 
 const contactSchema = z.object({
@@ -140,6 +140,18 @@ export default function Contact() {
                   </p>
                 </div>
               </a>
+
+              <a href="https://maps.app.goo.gl/4dnXb7RrKDXPKb2D6" target="_blank" rel="noopener noreferrer" className="flex items-center gap-6 group p-4 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-300 border border-transparent hover:border-line">
+                <div className="w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center rounded-full text-white shadow-sm group-hover:scale-110 transition-transform shrink-0">
+                  <Map className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="font-heading font-bold text-lg mb-1 text-primary">Street View</h3>
+                  <p className="text-slate-500 group-hover:text-accent transition-colors text-sm">
+                    Explore our store location in 360&deg;
+                  </p>
+                </div>
+              </a>
             </div>
           </div>
 
@@ -244,6 +256,13 @@ export default function Contact() {
             )}
           </div>
 
+        </div>
+        
+        {/* Map Section */}
+        <div className="max-w-[1200px] mx-auto mt-16 relative z-10">
+          <div className="glass rounded-[2rem] p-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] h-[400px] relative overflow-hidden">
+             <iframe src="https://www.google.com/maps/embed?pb=!4v1791037018475!6m8!1m7!1seWIsVwotswYnj1cE_7ZZRA!2m2!1d11.10272492073596!2d79.68045848822395!3f3.549838!4f0!5f0.7820865974627469" width="100%" height="100%" style={{ border: 0, borderRadius: '1.5rem' }} allowFullScreen loading="lazy" referrerPolicy="strict-origin-when-cross-origin" className="w-full h-full"></iframe>
+          </div>
         </div>
       </section>
     </>

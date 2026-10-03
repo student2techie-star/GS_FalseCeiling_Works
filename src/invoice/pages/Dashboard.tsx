@@ -64,11 +64,11 @@ export default function Dashboard() {
           <h1 className="text-3xl font-bold font-heading text-[var(--ink)]">Overview & Metrics</h1>
           <p className="text-[var(--slate)] text-sm mt-1">Welcome back. Here is your financial snapshot for the current financial year.</p>
         </div>
-        <div className="flex gap-3">
-          <Link to="/invoice/quotes/new" className="bg-[var(--ink)] text-white px-5 py-2.5 rounded-2xl text-sm font-medium hover:bg-[var(--ink)]/90 transition-all shadow-sm flex items-center gap-2">
+        <div className="flex flex-wrap gap-3 w-full md:w-auto mt-4 md:mt-0">
+          <Link to="/invoice/quotes/new" className="flex-1 md:flex-none justify-center bg-[var(--ink)] text-white px-5 py-2.5 rounded-2xl text-sm font-medium hover:bg-[var(--ink)]/90 transition-all shadow-sm flex items-center gap-2">
             <Plus className="w-4 h-4" /> New Quote
           </Link>
-          <Link to="/invoice/invoices/new" className="bg-[var(--blue)] text-white px-5 py-2.5 rounded-2xl text-sm font-medium hover:bg-[var(--blue)]/90 transition-all shadow-sm flex items-center gap-2">
+          <Link to="/invoice/invoices/new" className="flex-1 md:flex-none justify-center bg-[var(--blue)] text-white px-5 py-2.5 rounded-2xl text-sm font-medium hover:bg-[var(--blue)]/90 transition-all shadow-sm flex items-center gap-2">
             <Plus className="w-4 h-4" /> New Invoice
           </Link>
         </div>
