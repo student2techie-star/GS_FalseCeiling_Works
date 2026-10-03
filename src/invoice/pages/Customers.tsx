@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
-import { Plus, Search, MapPin, Phone, Mail } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Plus, Search, MapPin, Phone, Mail, BookOpen } from 'lucide-react';
 
 export default function Customers() {
   const [customers, setCustomers] = useState<any[]>([]);
@@ -128,7 +129,12 @@ export default function Customers() {
               <div className="flex flex-col md:flex-row justify-between gap-4">
                 
                 <div>
-                  <h3 className="font-bold text-lg">{cust.name}</h3>
+                  <div className="flex items-center gap-4">
+                    <h3 className="font-bold text-lg">{cust.name}</h3>
+                    <Link to={`/invoice/customers/${cust.id}`} className="text-xs font-bold text-blue-600 bg-blue-50 px-3 py-1.5 rounded-lg flex items-center gap-1.5 hover:bg-blue-100 transition-colors">
+                      <BookOpen className="w-3.5 h-3.5" /> View Ledger
+                    </Link>
+                  </div>
                   <div className="flex flex-wrap gap-x-6 gap-y-2 mt-2 text-sm text-[var(--slate)]">
                     {cust.phone && <span className="flex items-center gap-1"><Phone className="w-3 h-3"/> {cust.phone}</span>}
                     {cust.email && <span className="flex items-center gap-1"><Mail className="w-3 h-3"/> {cust.email}</span>}

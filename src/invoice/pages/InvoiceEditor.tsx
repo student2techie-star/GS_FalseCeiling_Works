@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import { supabase } from '../../lib/supabase';
-import { Plus, Trash2, Save, Download, ArrowLeft, Calculator, CreditCard, Search, CheckCircle2 } from 'lucide-react';
+import { Plus, Trash2, Save, Download, ArrowLeft, Calculator, CreditCard, Search, CheckCircle2, MessageCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { toWords } from 'number-to-words';
 
@@ -372,6 +372,8 @@ function AddRoomMenu({ onAdd }: { onAdd: (name: string) => void }) {
 export default function InvoiceEditor() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const fromQuoteId = new URLSearchParams(location.search).get('from_quote');
   const [calcModal, setCalcModal] = useState<{rIndex: number, iIndex: number, l: string, w: string} | null>(null);
   const [paymentModal, setPaymentModal] = useState<{amount: string, mode: string, date: string} | null>(null);
   const isNew = id === 'new';
@@ -394,8 +396,42 @@ export default function InvoiceEditor() {
 
   useEffect(() => {
     fetchInitialData();
-    if (!isNew) fetchInvoiceData();
-  }, [id]);
+    if (!isNew) {
+      fetchInvoiceData();
+    } else if (fromQuoteId) {
+      fetchQuoteData();
+    }
+  }, [id, fromQuoteId]);
+
+  const fetchQuoteData = async () => {
+    setLoading(true);
+    const { data: qData } = await supabase.from('quotations').select('*').eq('id', fromQuoteId).single();
+    if (qData) {
+      setInvoice((prev: any) => ({
+        ...prev,
+        customer_id: qData.customer_id,
+        site_id: qData.site_id,
+        discount: qData.discount,
+        tax_rate: qData.tax_rate,
+        tax_type: qData.tax_type,
+        notes: qData.notes
+      }));
+      const { data: sData } = await supabase.from('sites').select('*').eq('customer_id', qData.customer_id);
+      if (sData) setSites(sData);
+
+      const { data: iData } = await supabase.from('quotation_items').select('*').eq('quotation_id', fromQuoteId).order('sort_order');
+      if (iData) {
+        const grouped = iData.reduce((acc: any, item: any) => {
+          if (!acc[item.room]) acc[item.room] = [];
+          acc[item.room].push(item);
+          return acc;
+        }, {});
+        const roomArray = Object.keys(grouped).map(n => ({ name: n, items: grouped[n] }));
+        setRooms(roomArray.length ? roomArray : [{ name: 'Hall', items: [] }]);
+      }
+    }
+    setLoading(false);
+  };
 
   const fetchInitialData = async () => {
     const { data: cData } = await supabase.from('customers').select('*').order('name');
@@ -470,6 +506,16 @@ export default function InvoiceEditor() {
   const grandTotal = taxableAmount + taxAmount;
   const totalPaid = payments.reduce((acc, p) => acc + parseFloat(p.amount), 0);
   const balanceDue = grandTotal - totalPaid;
+
+  const handleWhatsApp = () => {
+    const cust = customers.find(c => c.id === invoice.customer_id);
+    if (!cust || !cust.phone) {
+      toast.error('Customer phone number is missing!');
+      return;
+    }
+    const text = `Hello ${cust.name},\n\nHere is your invoice ${invoice.number} for ₹ ${grandTotal.toFixed(2)}.\n\nPlease find the detailed copy attached.\n\nThank you for choosing GS Decors & Enterprises.`;
+    window.open(`https://wa.me/91${cust.phone}?text=${encodeURIComponent(text)}`, '_blank');
+  };
 
   const saveInvoice = async () => {
     if (!invoice.customer_id) { toast.error('Please select a customer.'); return; }
@@ -570,7 +616,7 @@ export default function InvoiceEditor() {
       {/* LEFT: Editor Form */}
       <div className="flex-1 flex flex-col overflow-hidden hide-on-print">
         {/* Topbar */}
-        <div className="glass rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/60 p-4 mb-4 flex justify-between items-center shrink-0">
+        <div className="glass rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/60 p-4 mb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shrink-0">
           <div className="flex items-center gap-3">
             <button onClick={() => navigate('/invoice/invoices')} className="p-2 hover:bg-white rounded-xl transition-colors text-slate-500">
               <ArrowLeft className="w-5 h-5" />
@@ -579,9 +625,21 @@ export default function InvoiceEditor() {
               {isNew ? 'New Invoice' : invoice.number}
             </h2>
           </div>
-          <button onClick={saveInvoice} disabled={saving} className="bg-gradient-to-r from-primary to-accent text-white px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 hover:shadow-lg hover:shadow-accent/20 hover:-translate-y-0.5 transition-all disabled:opacity-50">
-            <Save className="w-4 h-4" /> Save
-          </button>
+          <div className="flex flex-wrap items-center gap-2 md:gap-3 w-full md:w-auto">
+            {!isNew && (
+              <>
+                <button onClick={() => window.print()} className="bg-white border border-[var(--line)] text-slate-600 px-3 py-1.5 text-sm rounded-lg font-bold flex items-center gap-1.5 hover:bg-slate-50 transition-all shadow-sm">
+                  <Download className="w-3.5 h-3.5" /> Print / PDF
+                </button>
+                <button onClick={handleWhatsApp} className="bg-[#25D366] text-white px-3 py-1.5 text-sm rounded-lg font-bold flex items-center gap-1.5 hover:bg-[#128C7E] transition-all shadow-sm">
+                  <MessageCircle className="w-3.5 h-3.5" /> WhatsApp
+                </button>
+              </>
+            )}
+            <button onClick={saveInvoice} disabled={saving} className="bg-gradient-to-r from-primary to-accent text-white px-4 py-1.5 text-sm rounded-lg font-bold flex items-center gap-1.5 hover:shadow-lg hover:shadow-accent/20 hover:-translate-y-0.5 transition-all disabled:opacity-50">
+              <Save className="w-3.5 h-3.5" /> Save
+            </button>
+          </div>
         </div>
 
         <div className="flex-1 overflow-y-auto space-y-4 pb-20 pr-2">

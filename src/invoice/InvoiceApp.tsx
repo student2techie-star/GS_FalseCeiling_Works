@@ -13,7 +13,9 @@ import InvoiceEditor from './pages/InvoiceEditor';
 import Dashboard from './pages/Dashboard';
 import Enquiries from './pages/Enquiries';
 import Products from './pages/Products';
-import { LayoutDashboard, FileText, Receipt, Users, MessageSquare, Settings as SettingsIcon, LogOut, Menu, X, Package, AlertTriangle } from 'lucide-react';
+import CustomerLedger from './pages/CustomerLedger';
+import Expenses from './pages/Expenses';
+import { LayoutDashboard, FileText, Receipt, Users, MessageSquare, Settings as SettingsIcon, LogOut, Menu, X, Package, AlertTriangle, TrendingDown } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -81,6 +83,7 @@ export default function InvoiceApp() {
     { name: 'Invoices', path: '/invoice/invoices', icon: Receipt },
     { name: 'Customers', path: '/invoice/customers', icon: Users },
     { name: 'Products', path: '/invoice/products', icon: Package },
+    { name: 'Expenses', path: '/invoice/expenses', icon: TrendingDown },
     { name: 'Enquiries', path: '/invoice/enquiries', icon: MessageSquare },
     { name: 'Settings', path: '/invoice/settings', icon: SettingsIcon },
   ];
@@ -224,7 +227,9 @@ export default function InvoiceApp() {
             <Route path="/quotes/:id" element={<QuoteEditor />} />
             <Route path="/invoices" element={<Invoices />} />
             <Route path="/invoices/:id" element={<InvoiceEditor />} />
-            <Route path="/customers/*" element={<Customers />} />
+            <Route path="/customers" element={<Customers />} />
+            <Route path="/customers/:id" element={<CustomerLedger />} />
+            <Route path="/expenses" element={<Expenses />} />
             <Route path="/products" element={<Products />} />
             <Route path="/enquiries" element={<Enquiries />} />
             <Route path="/settings/*" element={<Settings />} />

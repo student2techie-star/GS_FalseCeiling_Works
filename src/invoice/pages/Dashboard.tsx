@@ -5,7 +5,7 @@ import { supabase } from '../../lib/supabase';
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const [metrics, setMetrics] = useState({ invoiced: 0, received: 0, pending: 0, overdue: 0 });
+  const [metrics, setMetrics] = useState({ invoiced: 0, received: 0, pending: 0, overdue: 0, expenses: 0 });
   const [monthlyData, setMonthlyData] = useState<{month: string, amount: number}[]>([]);
 
   useEffect(() => {
@@ -51,8 +51,14 @@ export default function Dashboard() {
         });
       }
 
+      let expensesTotal = 0;
+      const { data: expData, error: expErr } = await supabase.from('expenses').select('amount');
+      if (!expErr && expData) {
+        expensesTotal = expData.reduce((sum, e) => sum + Number(e.amount), 0);
+      }
+
       const pending = invoiced - received;
-      setMetrics({ invoiced, received, pending, overdue });
+      setMetrics({ invoiced, received, pending, overdue, expenses: expensesTotal });
 
       // Generate last 6 months data for chart
       const months: Record<string, number> = {};
@@ -145,6 +151,24 @@ export default function Dashboard() {
           </div>
           <p className="text-3xl font-bold text-rose-700 tabular-nums font-heading">{metrics.overdue} Invoices</p>
           <p className="text-xs text-rose-600/80 mt-2">Action required</p>
+        </div>
+      </div>
+
+      {/* Profit Margin Section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-6 sm:p-8 rounded-3xl text-white shadow-lg flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+           <div>
+             <p className="text-slate-400 text-xs sm:text-sm font-bold uppercase tracking-wider mb-2">Total Expenses</p>
+             <p className="text-3xl sm:text-4xl font-black tabular-nums">₹ {metrics.expenses.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</p>
+           </div>
+           <Link to="/invoice/expenses" className="px-5 py-2.5 bg-white/10 hover:bg-white/20 rounded-xl text-sm font-bold transition-colors whitespace-nowrap text-center">View Ledger</Link>
+        </div>
+        
+        <div className="bg-gradient-to-br from-indigo-500 to-blue-600 p-6 sm:p-8 rounded-3xl text-white shadow-lg shadow-blue-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+           <div>
+             <p className="text-blue-200 text-xs sm:text-sm font-bold uppercase tracking-wider mb-2">Net Profit (Received - Expenses)</p>
+             <p className="text-3xl sm:text-4xl font-black tabular-nums">₹ {(metrics.received - metrics.expenses).toLocaleString('en-IN', { maximumFractionDigits: 0 })}</p>
+           </div>
         </div>
       </div>
 

@@ -4,6 +4,8 @@ import { Helmet } from 'react-helmet-async';
 import { useEffect, useState } from 'react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import BeforeAfterSlider from '../components/BeforeAfterSlider';
+import FAQAccordion from '../components/FAQAccordion';
 
 function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
@@ -124,6 +126,25 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Transformation Showcase */}
+      <section className="py-24 px-6 bg-white relative z-10">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-primary mb-4">See the <span className="text-gradient">Transformation</span></h2>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto font-body">Slide to see how our premium false ceilings completely change the look and feel of a room.</p>
+          </div>
+          
+          <div className="max-w-5xl mx-auto shadow-2xl rounded-[2.5rem] p-3 md:p-4 bg-white border border-slate-100">
+            <BeforeAfterSlider 
+              beforeImage="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1600"
+              afterImage="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1600"
+              beforeLabel="Plain Ceiling"
+              afterLabel="GS False Ceiling"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Business Intro & Product Categories */}
       <section className="py-32 px-6 bg-white relative">
         <div className="max-w-[1200px] mx-auto">
@@ -229,6 +250,17 @@ export default function Home() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-24 px-6 bg-[var(--plaster)] relative z-10">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-primary mb-4">Frequently Asked <span className="text-accent">Questions</span></h2>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto font-body">Everything you need to know about our false ceiling and interior decoration services.</p>
+          </div>
+          <FAQAccordion />
         </div>
       </section>
 

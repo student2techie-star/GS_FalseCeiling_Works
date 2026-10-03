@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import { supabase } from '../../lib/supabase';
-import { Plus, Trash2, Save, Download, ArrowLeft, Calculator, Search, CheckCircle2 } from 'lucide-react';
+import { Plus, Trash2, Save, Download, ArrowLeft, Calculator, Search, CheckCircle2, MessageCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { toWords } from 'number-to-words';
 
@@ -482,6 +482,16 @@ export default function QuoteEditor() {
   const taxAmount = taxableAmount * ((quote.tax_rate || 0) / 100);
   const grandTotal = taxableAmount + taxAmount;
 
+  const handleWhatsApp = () => {
+    const cust = customers.find(c => c.id === quote.customer_id);
+    if (!cust || !cust.phone) {
+      toast.error('Customer phone number is missing!');
+      return;
+    }
+    const text = `Hello ${cust.name},\n\nHere is your quotation ${quote.number} for ₹ ${grandTotal.toFixed(2)}.\n\nPlease find the detailed copy attached.\n\nThank you for choosing GS Decors & Enterprises.`;
+    window.open(`https://wa.me/91${cust.phone}?text=${encodeURIComponent(text)}`, '_blank');
+  };
+
   const saveQuote = async () => {
     if (!quote.customer_id) { toast.error('Please select a customer.'); return; }
     setSaving(true);
@@ -535,7 +545,7 @@ export default function QuoteEditor() {
       {/* LEFT: Editor Form */}
       <div className="flex-1 flex flex-col overflow-hidden hide-on-print">
         {/* Topbar */}
-        <div className="glass rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/60 p-4 mb-4 flex justify-between items-center shrink-0">
+        <div className="glass rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/60 p-4 mb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shrink-0">
           <div className="flex items-center gap-3">
             <button onClick={() => navigate('/invoice/quotes')} className="p-2 hover:bg-white rounded-xl transition-colors text-slate-500">
               <ArrowLeft className="w-5 h-5" />
@@ -544,12 +554,28 @@ export default function QuoteEditor() {
               {isNew ? 'New Quotation' : quote.number}
             </h2>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2 md:gap-3 w-full md:w-auto">
             <span className="px-4 py-1 text-xs font-bold uppercase tracking-wider border border-white/50 rounded-full bg-white shadow-sm text-primary">
               {quote.status}
             </span>
-            <button onClick={saveQuote} disabled={saving} className="bg-gradient-to-r from-primary to-accent text-white px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 hover:shadow-lg hover:shadow-accent/20 hover:-translate-y-0.5 transition-all disabled:opacity-50">
-              <Save className="w-4 h-4" /> Save
+            {!isNew && (
+              <>
+                <button 
+                  onClick={() => navigate(`/invoice/invoices/new?from_quote=${id}`)}
+                  className="bg-emerald-500 text-white px-3 py-1.5 text-sm rounded-lg font-bold flex items-center gap-1.5 hover:bg-emerald-600 transition-all shadow-sm"
+                >
+                  <Plus className="w-3.5 h-3.5" /> Convert to Invoice
+                </button>
+                <button onClick={() => window.print()} className="bg-white border border-[var(--line)] text-slate-600 px-3 py-1.5 text-sm rounded-lg font-bold flex items-center gap-1.5 hover:bg-slate-50 transition-all shadow-sm">
+                  <Download className="w-3.5 h-3.5" /> Print / PDF
+                </button>
+                <button onClick={handleWhatsApp} className="bg-[#25D366] text-white px-3 py-1.5 text-sm rounded-lg font-bold flex items-center gap-1.5 hover:bg-[#128C7E] transition-all shadow-sm">
+                  <MessageCircle className="w-3.5 h-3.5" /> WhatsApp
+                </button>
+              </>
+            )}
+            <button onClick={saveQuote} disabled={saving} className="bg-gradient-to-r from-primary to-accent text-white px-4 py-1.5 text-sm rounded-lg font-bold flex items-center gap-1.5 hover:shadow-lg hover:shadow-accent/20 hover:-translate-y-0.5 transition-all disabled:opacity-50">
+              <Save className="w-3.5 h-3.5" /> Save
             </button>
           </div>
         </div>
