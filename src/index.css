@@ -73,55 +73,35 @@
 }
 
 @media print {
-  /* Hide everything by default */
-  body * {
-    visibility: hidden;
+  .hide-on-print {
+    display: none !important;
   }
   
-  /* Show only the PDF container and its children */
-  .pdf-preview-container, .pdf-preview-container * {
-    visibility: visible;
+  body, html, #root {
+    background-color: white !important;
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    display: block !important;
   }
-  
-  /* Position the PDF container at the top left of the page */
+
+  /* Ensure the pdf container can expand fully */
   .pdf-preview-container {
-    position: absolute !important;
-    left: 0 !important;
-    top: 0 !important;
+    zoom: 1 !important;
     width: 100% !important;
+    max-width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
     border: none !important;
     box-shadow: none !important;
-    border-radius: 0 !important;
-    background-color: white !important;
-    height: auto !important;
-    overflow: visible !important;
+    background: white !important;
   }
 
-  /* Force all elements outside the preview to allow overflow and act as static anchors */
-  body *:not(.pdf-preview-container):not(.pdf-preview-container *) {
-    overflow: visible !important;
-    position: static !important;
-    height: auto !important;
-    min-height: auto !important;
-    transform: none !important;
-  }
-
-  html, body, #root {
-    height: auto !important;
-    min-height: auto !important;
-    overflow: visible !important;
-    position: static !important;
+  /* Force ancestors to block so they don't cut off pages */
+  main, .flex, .flex-col, .min-h-screen, .overflow-hidden, .overflow-y-auto, .overflow-x-hidden {
     display: block !important;
-  }
-
-  /* Ensure we zoom back to normal for print */
-  .pdf-preview-container {
-    zoom: 1 !important; 
-  }
-
-  .hide-on-print, .hide-on-print * {
-    display: none !important;
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
   }
 }

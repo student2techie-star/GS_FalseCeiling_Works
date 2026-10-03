@@ -533,7 +533,7 @@ export default function QuoteEditor() {
     <div className="h-[calc(100vh-6rem)] flex flex-col md:flex-row gap-6 pb-6">
 
       {/* LEFT: Editor Form */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col overflow-hidden hide-on-print">
         {/* Topbar */}
         <div className="glass rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/60 p-4 mb-4 flex justify-between items-center shrink-0">
           <div className="flex items-center gap-3">
@@ -780,7 +780,7 @@ export default function QuoteEditor() {
 
       {/* RIGHT: Live Preview */}
       <div className="hidden md:flex flex-col w-[400px] lg:w-[480px] bg-white border border-[var(--line)] shadow-sm rounded-2xl overflow-hidden shrink-0">
-        <div className="bg-[var(--ink)] text-[var(--paper)] py-3 px-5 flex justify-between items-center text-sm">
+        <div className="bg-[var(--ink)] text-[var(--paper)] py-3 px-5 flex justify-between items-center text-sm hide-on-print">
           <span className="font-medium">Live Preview</span>
           <button onClick={() => window.print()} className="flex items-center gap-1 hover:text-[var(--blue)] transition-colors">
             <Download className="w-4 h-4" /> PDF

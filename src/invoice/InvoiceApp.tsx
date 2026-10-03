@@ -93,7 +93,7 @@ export default function InvoiceApp() {
       </Helmet>
 
       {/* Top Navigation Bar */}
-      <header className="bg-primary text-white sticky top-0 z-50 shadow-[0_4px_24px_rgba(0,0,0,0.18)]">
+      <header className="bg-primary text-white sticky top-0 z-50 shadow-[0_4px_24px_rgba(0,0,0,0.18)] hide-on-print">
         <div className="max-w-[1600px] mx-auto px-4 md:px-8">
           <div className="flex items-center justify-between h-16">
 

@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Phone, MessageCircle, ArrowRight } from 'lucide-react';
+import { Phone, MessageCircle, ArrowRight, Menu, X } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -9,6 +10,7 @@ function cn(...inputs: (string | undefined | null | false)[]) {
 
 export default function PublicLayout() {
   const location = useLocation();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -24,10 +26,11 @@ export default function PublicLayout() {
       {/* Top Navigation - Floating Glass Header */}
       <div className="fixed top-0 left-0 right-0 z-50 px-4 pt-4 pb-2">
         <header className="max-w-[1200px] mx-auto glass rounded-full h-16 flex items-center justify-between px-6 transition-all duration-300 shadow-sm border border-white/40">
-          <Link to="/" className="flex items-center gap-3">
-            <img src="/GS_FalseCeiling_Works/logo.png" alt="G S Decors & Enterprises Logo" className="h-10 w-auto object-contain" />
-            <span className="font-heading font-extrabold text-xl tracking-tight text-gradient hidden sm:block">
-              G S Decors & Enterprises
+          <Link to="/" className="flex items-center gap-2 md:gap-3">
+            <img src="/GS_FalseCeiling_Works/logo.png" alt="G S Decors & Enterprises Logo" className="h-8 md:h-10 w-auto object-contain" />
+            <span className="font-heading font-extrabold text-base md:text-xl tracking-tight text-gradient">
+              <span className="md:hidden">G S Decors</span>
+              <span className="hidden md:inline">G S Decors & Enterprises</span>
             </span>
           </Link>
           
@@ -60,7 +63,36 @@ export default function PublicLayout() {
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
           </div>
+
+          {/* Mobile Hamburger */}
+          <button 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 text-[var(--primary)] hover:bg-[var(--line)] rounded-full transition-colors"
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </header>
+
+        {/* Mobile Dropdown Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden max-w-[1200px] mx-auto mt-2 glass rounded-3xl p-4 border border-white/40 shadow-lg animate-fade-in">
+            <nav className="flex flex-col gap-2">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={cn(
+                    "px-4 py-3 rounded-xl text-sm font-semibold transition-all",
+                    location.pathname === link.path ? "bg-[var(--primary)] text-white" : "text-[var(--slate)] hover:bg-white/50"
+                  )}
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </nav>
+          </div>
+        )}
       </div>
 
       {/* Main Content - Add top padding to account for fixed header */}
