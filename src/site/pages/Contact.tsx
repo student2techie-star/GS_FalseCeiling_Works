@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Phone, MessageCircle, Mail, CheckCircle2 } from 'lucide-react';
+import { Phone, MessageCircle, CheckCircle2 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 
 const contactSchema = z.object({

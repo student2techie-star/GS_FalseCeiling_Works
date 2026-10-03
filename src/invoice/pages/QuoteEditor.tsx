@@ -438,13 +438,6 @@ export default function QuoteEditor() {
     setLoading(false);
   };
 
-  const handleCustomerChange = async (e: any) => {
-    const cid = e.target.value;
-    setQuote({ ...quote, customer_id: cid, site_id: '' });
-    const { data } = await supabase.from('sites').select('*').eq('customer_id', cid);
-    setSites(data || []);
-  };
-
   const addItem = (roomIndex: number, templateId?: string) => {
     let newItem = { description: '', unit: 'sq ft', quantity: 0, rate: 0, note: '' };
     if (templateId) {
@@ -739,17 +732,17 @@ export default function QuoteEditor() {
                     const c = customers.find(x => x.id === id);
                     const cSites = c ? (c.sites || []) : [];
                     setSites(cSites);
-                    setQuote(prev => ({ ...prev, customer_id: id, site_id: cSites.length > 0 ? cSites[0].id : '' }));
+                    setQuote((prev: any) => ({ ...prev, customer_id: id, site_id: cSites.length > 0 ? cSites[0].id : '' }));
                   }}
                   onCustomerAdded={c => {
-                    setCustomers(prev => {
+                    setCustomers((prev: any[]) => {
                       const exists = prev.find(x => x.id === c.id);
                       if (exists) return prev.map(x => x.id === c.id ? c : x);
                       return [c, ...prev];
                     });
                     const cSites = c.sites || [];
                     setSites(cSites);
-                    setQuote(prev => ({ 
+                    setQuote((prev: any) => ({ 
                       ...prev, 
                       customer_id: c.id,
                       site_id: cSites.length > 0 ? cSites[0].id : prev.site_id 
