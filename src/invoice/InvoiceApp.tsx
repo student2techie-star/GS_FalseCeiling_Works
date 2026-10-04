@@ -223,16 +223,16 @@ export default function InvoiceApp() {
         <div className="animate-fade-in">
           <Routes>
             <Route path="/" element={<Dashboard />} />
-            <Route path="/quotes" element={<Quotes />} />
-            <Route path="/quotes/:id" element={<QuoteEditor />} />
-            <Route path="/invoice" element={<Invoices />} />
-            <Route path="/invoice/:id" element={<InvoiceEditor />} />
-            <Route path="/customers" element={<Customers />} />
-            <Route path="/customers/:id" element={<CustomerLedger />} />
-            <Route path="/expenses" element={<Expenses />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/enquiries" element={<Enquiries />} />
-            <Route path="/settings/*" element={<Settings />} />
+            <Route path="quotes" element={<Quotes />} />
+            <Route path="quotes/:id" element={<QuoteEditor />} />
+            <Route path="invoice" element={<Invoices />} />
+            <Route path="invoice/:id" element={<InvoiceEditor />} />
+            <Route path="customers" element={<Customers />} />
+            <Route path="customers/:id" element={<CustomerLedger />} />
+            <Route path="expenses" element={<Expenses />} />
+            <Route path="products" element={<Products />} />
+            <Route path="enquiries" element={<Enquiries />} />
+            <Route path="settings/*" element={<Settings />} />
           </Routes>
         </div>
       </main>
