@@ -55,7 +55,7 @@ export default function Expenses() {
     if (!form.amount || !form.description) return;
     
     const payload = {
-      date: form.date,
+      date: form.date || null,
       category: form.category,
       description: form.description,
       amount: parseFloat(form.amount),
@@ -68,7 +68,7 @@ export default function Expenses() {
     `).single();
 
     if (error) {
-      toast.error('Failed to add expense');
+      toast.error(`Error: ${error.message}`);
     } else if (data) {
       setExpenses([data, ...expenses].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()));
       setShowAdd(false);
