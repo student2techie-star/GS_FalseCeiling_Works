@@ -92,10 +92,10 @@ export default function Dashboard() {
           <p className="text-[var(--slate)] text-sm mt-1">Welcome back. Here is your financial snapshot for the current financial year.</p>
         </div>
         <div className="flex flex-wrap gap-3 w-full md:w-auto mt-4 md:mt-0">
-          <Link to="/invoice/quotes/new" className="flex-1 md:flex-none justify-center bg-[var(--ink)] text-white px-5 py-2.5 rounded-2xl text-sm font-medium hover:bg-[var(--ink)]/90 transition-all shadow-sm flex items-center gap-2">
+          <Link to="/admin/quotes/new" className="flex-1 md:flex-none justify-center bg-[var(--ink)] text-white px-5 py-2.5 rounded-2xl text-sm font-medium hover:bg-[var(--ink)]/90 transition-all shadow-sm flex items-center gap-2">
             <Plus className="w-4 h-4" /> New Quote
           </Link>
-          <Link to="/invoice/invoices/new" className="flex-1 md:flex-none justify-center bg-[var(--blue)] text-white px-5 py-2.5 rounded-2xl text-sm font-medium hover:bg-[var(--blue)]/90 transition-all shadow-sm flex items-center gap-2">
+          <Link to="/admin/invoice/new" className="flex-1 md:flex-none justify-center bg-[var(--blue)] text-white px-5 py-2.5 rounded-2xl text-sm font-medium hover:bg-[var(--blue)]/90 transition-all shadow-sm flex items-center gap-2">
             <Plus className="w-4 h-4" /> New Invoice
           </Link>
         </div>
@@ -115,7 +115,7 @@ export default function Dashboard() {
         </div>
 
         <div 
-          onClick={() => navigate('/invoice/invoices?filter=paid')}
+          onClick={() => navigate('/admin/invoice?filter=paid')}
           className="bg-white p-6 rounded-3xl border border-[var(--line)] shadow-sm hover:shadow-md transition-shadow cursor-pointer hover:border-emerald-200"
         >
           <div className="flex items-center justify-between mb-4">
@@ -129,7 +129,7 @@ export default function Dashboard() {
         </div>
 
         <div 
-          onClick={() => navigate('/invoice/invoices?filter=pending')}
+          onClick={() => navigate('/admin/invoice?filter=pending')}
           className="bg-white p-6 rounded-3xl border border-[var(--line)] shadow-sm hover:shadow-md transition-shadow cursor-pointer hover:border-amber-200"
         >
           <div className="flex items-center justify-between mb-4">
@@ -161,7 +161,7 @@ export default function Dashboard() {
              <p className="text-slate-400 text-xs sm:text-sm font-bold uppercase tracking-wider mb-2">Total Expenses</p>
              <p className="text-3xl sm:text-4xl font-black tabular-nums">₹ {metrics.expenses.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</p>
            </div>
-           <Link to="/invoice/expenses" className="px-5 py-2.5 bg-white/10 hover:bg-white/20 rounded-xl text-sm font-bold transition-colors whitespace-nowrap text-center">View Ledger</Link>
+           <Link to="/admin/expenses" className="px-5 py-2.5 bg-white/10 hover:bg-white/20 rounded-xl text-sm font-bold transition-colors whitespace-nowrap text-center">View Ledger</Link>
         </div>
         
         <div className="bg-gradient-to-br from-indigo-500 to-blue-600 p-6 sm:p-8 rounded-3xl text-white shadow-lg shadow-blue-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
