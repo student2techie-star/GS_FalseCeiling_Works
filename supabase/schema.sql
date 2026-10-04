@@ -250,5 +250,18 @@ alter table public.works enable row level security;
 create policy "public reads works" on public.works for select to anon, authenticated using (true);
 create policy "owner all works" on public.works for all to authenticated using (public.is_owner()) with check (public.is_owner());
 
+-- 15. Expenses
+create table public.expenses (
+  id uuid primary key default gen_random_uuid(),
+  created_at timestamptz not null default now(),
+  date date not null,
+  category text not null,
+  description text not null,
+  amount numeric not null,
+  site_id uuid references public.sites(id) on delete set null
+);
+alter table public.expenses enable row level security;
+create policy "owner all expenses" on public.expenses for all to authenticated using (public.is_owner()) with check (public.is_owner());
+
 -- Storage
 -- create bucket 'logos' and 'works' via Supabase dashboard manually, or using SQL if storage schema is exposed.

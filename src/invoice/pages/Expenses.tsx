@@ -107,7 +107,13 @@ export default function Expenses() {
   description text NOT NULL,
   amount numeric NOT NULL,
   site_id uuid REFERENCES sites(id) ON DELETE SET NULL
-);`}
+);
+
+ALTER TABLE expenses ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "owner all expenses" ON expenses FOR ALL TO authenticated USING (public.is_owner()) WITH CHECK (public.is_owner());
+
+-- Run this to force Supabase to refresh its schema cache:
+NOTIFY pgrst, 'reload schema';`}
             </pre>
           </div>
           <button onClick={fetchExpenses} className="mt-8 bg-blue-600 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-blue-700 transition-colors">
