@@ -534,14 +534,15 @@ export default function QuoteEditor() {
         if (rpcErr) throw rpcErr;
         const formattedNum = `GSFC/QT/${fy}/${numData.toString().padStart(3, '0')}`;
         const { site_id, ...quoteToInsert } = quote;
-        const { data: newQ, error: insErr } = await supabase.from('quotations').insert([{ ...quoteToInsert, number: formattedNum }]).select().single();
+        const payload = { ...quoteToInsert, valid_until: quote.valid_until || null, number: formattedNum };
+        const { data: newQ, error: insErr } = await supabase.from('quotations').insert([payload]).select().single();
         if (insErr) throw insErr;
         qId = newQ.id;
         localStorage.removeItem('quote_draft');
       } else {
         await supabase.from('quotations').update({
           customer_id: quote.customer_id, date: quote.date,
-          valid_until: quote.valid_until, status: quote.status, discount: quote.discount,
+          valid_until: quote.valid_until || null, status: quote.status, discount: quote.discount,
           tax_rate: quote.tax_rate, tax_type: quote.tax_type, notes: quote.notes
         }).eq('id', id);
       }

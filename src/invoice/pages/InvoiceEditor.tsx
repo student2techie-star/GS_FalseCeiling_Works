@@ -559,14 +559,15 @@ export default function InvoiceEditor() {
         if (rpcErr) throw rpcErr;
         const formattedNum = `GSFC/INV/${fy}/${numData.toString().padStart(3, '0')}`;
         const { site_id, ...invoiceToInsert } = invoice;
-        const { data: newInv, error: insErr } = await supabase.from('invoices').insert([{ ...invoiceToInsert, number: formattedNum }]).select().single();
+        const payload = { ...invoiceToInsert, due_date: invoice.due_date || null, number: formattedNum };
+        const { data: newInv, error: insErr } = await supabase.from('invoices').insert([payload]).select().single();
         if (insErr) throw insErr;
         invId = newInv.id;
         localStorage.removeItem('invoice_draft');
       } else {
         await supabase.from('invoices').update({
           customer_id: invoice.customer_id, date: invoice.date,
-          due_date: invoice.due_date, discount: invoice.discount,
+          due_date: invoice.due_date || null, discount: invoice.discount,
           tax_rate: invoice.tax_rate, tax_type: invoice.tax_type, notes: invoice.notes
         }).eq('id', id);
       }
