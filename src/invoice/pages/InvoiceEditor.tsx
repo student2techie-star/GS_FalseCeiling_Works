@@ -977,7 +977,7 @@ export default function InvoiceEditor() {
 
             {/* Footer Section - Pushed to bottom via mt-auto if 1 page */}
             <div className="mt-auto pt-8 break-inside-avoid">
-              <div className="border-t border-gray-200 pt-4 grid grid-cols-12 gap-4 text-[10px]">
+              <div className="border-t border-gray-200 pt-4 grid grid-cols-12 gap-4 text-[10px] print:break-inside-avoid">
                 <div className="col-span-4 space-y-3">
                   <div>
                     <h4 className="font-bold text-gray-700 uppercase mb-1 text-[9px]">Bank Details</h4>
@@ -1012,6 +1012,7 @@ export default function InvoiceEditor() {
                 </div>
 
                 <div className="col-span-3 flex flex-col items-end justify-end text-center pb-2">
+                  <div className="mb-1" style={{ fontFamily: 'Brush Script MT, cursive', fontSize: '22px', color: '#1e3a8a', transform: 'rotate(-5deg)' }}>GS Decors</div>
                   <div className="w-32 border-b border-gray-400 mb-2"></div>
                   <p className="font-bold text-gray-700">Authorized Signatory</p>
                   <p className="text-gray-500 text-[8px]">G S Decors & Enterprises</p>
