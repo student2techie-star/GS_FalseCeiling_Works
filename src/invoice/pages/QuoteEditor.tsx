@@ -526,7 +526,7 @@ export default function QuoteEditor() {
       if (itemsToInsert.length > 0) await supabase.from('quotation_items').insert(itemsToInsert);
 
       toast.success('Quotation saved successfully!');
-      if (isNew) navigate(`/invoice/quotes/${qId}`, { replace: true });
+      if (isNew) navigate(`/admin/quotes/${qId}`, { replace: true });
     } catch (err: any) {
       toast.error('Failed to save: ' + err.message);
     } finally {
@@ -544,7 +544,7 @@ export default function QuoteEditor() {
         {/* Topbar */}
         <div className="glass rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/60 p-4 mb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shrink-0">
           <div className="flex items-center gap-3">
-            <button onClick={() => navigate('/invoice/quotes')} className="p-2 hover:bg-white rounded-xl transition-colors text-slate-500">
+            <button onClick={() => navigate('/admin/quotes')} className="p-2 hover:bg-white rounded-xl transition-colors text-slate-500">
               <ArrowLeft className="w-5 h-5" />
             </button>
             <h2 className="font-bold font-heading text-xl text-primary">
@@ -558,7 +558,7 @@ export default function QuoteEditor() {
             {!isNew && (
               <>
                 <button 
-                  onClick={() => navigate(`/invoice/invoices/new?from_quote=${id}`)}
+                  onClick={() => navigate(`/admin/invoice/new?from_quote=${id}`)}
                   className="bg-emerald-500 text-white px-3 py-1.5 text-sm rounded-lg font-bold flex items-center gap-1.5 hover:bg-emerald-600 transition-all shadow-sm"
                 >
                   <Plus className="w-3.5 h-3.5" /> Convert to Invoice

@@ -84,7 +84,7 @@ export default function CustomerLedger() {
   return (
     <div className="max-w-6xl mx-auto space-y-6 pb-20 print:bg-white print:p-0">
       <div className="flex items-center gap-4 hide-on-print">
-        <button onClick={() => navigate('/invoice/customers')} className="p-2 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors">
+        <button onClick={() => navigate('/admin/customers')} className="p-2 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors">
           <ArrowLeft className="w-5 h-5 text-slate-500" />
         </button>
         <h1 className="text-3xl font-bold font-heading text-slate-800">Customer Ledger</h1>
@@ -163,7 +163,7 @@ export default function CustomerLedger() {
                     <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
                       <div>
                         <div className="flex items-center gap-3 mb-1">
-                          <button onClick={() => navigate(`/invoice/invoices/${inv.id}`)} className="font-bold text-[var(--blue)] hover:underline">
+                          <button onClick={() => navigate(`/admin/invoice/${inv.id}`)} className="font-bold text-[var(--blue)] hover:underline">
                             {inv.number}
                           </button>
                           <span className={`text-[10px] font-black tracking-wider uppercase px-2 py-0.5 rounded-full ${
@@ -222,7 +222,7 @@ export default function CustomerLedger() {
                 {quotes.map(q => (
                   <div key={q.id} className="p-4 sm:p-6 hover:bg-slate-50 transition-colors flex justify-between items-center">
                     <div>
-                      <button onClick={() => navigate(`/invoice/quotes/${q.id}`)} className="font-bold text-[var(--blue)] hover:underline block mb-1">
+                      <button onClick={() => navigate(`/admin/quotes/${q.id}`)} className="font-bold text-[var(--blue)] hover:underline block mb-1">
                         {q.number}
                       </button>
                       <div className="text-xs font-medium text-slate-500">

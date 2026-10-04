@@ -54,7 +54,7 @@ export default function Quotes() {
           <p className="text-[var(--slate)] text-sm mt-1">Manage draft and sent quotes for false ceiling projects.</p>
         </div>
         <button 
-          onClick={() => navigate('/invoice/quotes/new')}
+          onClick={() => navigate('/admin/quotes/new')}
           className="bg-[var(--blue)] text-[var(--paper)] px-5 py-2.5 rounded-2xl font-medium text-sm flex items-center gap-2 hover:bg-[var(--blue)]/90 transition-all shadow-sm shrink-0"
         >
           <Plus className="w-4 h-4" /> New Quotation
@@ -99,7 +99,7 @@ export default function Quotes() {
                 quotes.map(qt => (
                   <tr key={qt.id} className="hover:bg-blue-50/30 transition-colors">
                     <td className="px-6 py-4 font-bold text-[var(--ink)]">
-                      <Link to={`/invoice/quotes/${qt.id}`} className="hover:text-[var(--blue)] transition-colors">
+                      <Link to={`/admin/quotes/${qt.id}`} className="hover:text-[var(--blue)] transition-colors">
                         {qt.number}
                       </Link>
                     </td>
@@ -116,7 +116,7 @@ export default function Quotes() {
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <Link to={`/invoice/quotes/${qt.id}`} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-[var(--blue)] hover:bg-blue-50 transition-colors">
+                      <Link to={`/admin/quotes/${qt.id}`} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-[var(--blue)] hover:bg-blue-50 transition-colors">
                         <FileText className="w-3.5 h-3.5" /> Edit / View
                       </Link>
                     </td>

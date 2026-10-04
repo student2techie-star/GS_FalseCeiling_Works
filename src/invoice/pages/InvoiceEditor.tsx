@@ -560,7 +560,7 @@ export default function InvoiceEditor() {
       }
 
       toast.success('Invoice saved successfully!');
-      if (isNew) navigate(`/invoice/invoices/${invId}`, { replace: true });
+      if (isNew) navigate(`/admin/invoice/${invId}`, { replace: true });
     } catch (err: any) {
       toast.error('Failed to save: ' + err.message);
     } finally {
@@ -614,7 +614,7 @@ export default function InvoiceEditor() {
         {/* Topbar */}
         <div className="glass rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/60 p-4 mb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shrink-0">
           <div className="flex items-center gap-3">
-            <button onClick={() => navigate('/invoice/invoices')} className="p-2 hover:bg-white rounded-xl transition-colors text-slate-500">
+            <button onClick={() => navigate('/admin/invoice')} className="p-2 hover:bg-white rounded-xl transition-colors text-slate-500">
               <ArrowLeft className="w-5 h-5" />
             </button>
             <h2 className="font-bold font-heading text-xl text-primary">
