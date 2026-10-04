@@ -915,7 +915,7 @@ export default function InvoiceEditor() {
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.05] z-0">
             <img src="/GS_FalseCeiling_Works/logo.png" alt="Watermark" className="w-[80%] max-w-md grayscale" />
           </div>
-          <div className="relative z-10 min-h-[270mm] flex flex-col">
+          <div className="relative z-10 flex flex-col">
             <div>
               <div className="text-center border-b border-gray-200 pb-4 mb-4 flex flex-col items-center">
                 <img src="/GS_FalseCeiling_Works/logo.png" alt="GS Decors" className="h-10 w-auto mb-2" />
@@ -975,8 +975,8 @@ export default function InvoiceEditor() {
             )}
             </div>
 
-            {/* Footer Section - Pushed to bottom via mt-auto if 1 page */}
-            <div className="mt-auto pt-8 break-inside-avoid">
+            {/* Footer Section */}
+            <div className="mt-8 break-inside-avoid">
               <div className="border-t border-gray-200 pt-4 grid grid-cols-12 gap-4 text-[10px] print:break-inside-avoid">
                 <div className="col-span-4 space-y-3">
                   <div>
