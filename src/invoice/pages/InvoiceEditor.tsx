@@ -383,13 +383,41 @@ export default function InvoiceEditor() {
   const [customers, setCustomers] = useState<any[]>([]);
   const [templates, setTemplates] = useState<any[]>([]);
 
-  const [invoice, setInvoice] = useState<any>({
-    number: 'Draft', customer_id: '',
-    date: new Date().toISOString().split('T')[0],
-    due_date: '', discount: 0, tax_rate: 0, tax_type: 'IGST', notes: ''
+  const [invoice, setInvoice] = useState<any>(() => {
+    if (isNew) {
+      try {
+        const draft = localStorage.getItem('invoice_draft');
+        if (draft) {
+          const parsed = JSON.parse(draft);
+          if (parsed.invoice) return parsed.invoice;
+        }
+      } catch(e) {}
+    }
+    return {
+      number: 'Draft', customer_id: '',
+      date: new Date().toISOString().split('T')[0],
+      due_date: '', discount: 0, tax_rate: 0, tax_type: 'IGST', notes: ''
+    };
   });
 
-  const [rooms, setRooms] = useState<{ name: string; items: any[] }[]>([]);
+  const [rooms, setRooms] = useState<{ name: string; items: any[] }[]>(() => {
+    if (isNew) {
+      try {
+        const draft = localStorage.getItem('invoice_draft');
+        if (draft) {
+          const parsed = JSON.parse(draft);
+          if (parsed.rooms && parsed.rooms.length > 0) return parsed.rooms;
+        }
+      } catch(e) {}
+    }
+    return [];
+  });
+
+  useEffect(() => {
+    if (isNew) {
+      localStorage.setItem('invoice_draft', JSON.stringify({ invoice, rooms }));
+    }
+  }, [invoice, rooms, isNew]);
 
   const [payments, setPayments] = useState<any[]>([]);
 
@@ -397,7 +425,7 @@ export default function InvoiceEditor() {
     fetchInitialData();
     if (!isNew) {
       fetchInvoiceData();
-    } else if (fromQuoteId) {
+    } else if (fromQuoteId && !localStorage.getItem('invoice_draft')) {
       fetchQuoteData();
     }
   }, [id, fromQuoteId]);
@@ -437,7 +465,14 @@ export default function InvoiceEditor() {
     const { data: tData } = await supabase.from('item_templates').select('*').order('name');
     if (tData) setTemplates(tData);
     const { data: pData } = await supabase.from('business_profile').select('default_tax_rate, terms').single();
-    if (pData && isNew) setInvoice((i: any) => ({ ...i, tax_rate: pData.default_tax_rate, notes: pData.terms }));
+    if (pData && isNew) {
+      setInvoice((i: any) => {
+        if (!i.notes && i.tax_rate === 0) {
+          return { ...i, tax_rate: pData.default_tax_rate, notes: pData.terms };
+        }
+        return i;
+      });
+    }
   };
 
   const fetchInvoiceData = async () => {
@@ -527,6 +562,7 @@ export default function InvoiceEditor() {
         const { data: newInv, error: insErr } = await supabase.from('invoices').insert([{ ...invoiceToInsert, number: formattedNum }]).select().single();
         if (insErr) throw insErr;
         invId = newInv.id;
+        localStorage.removeItem('invoice_draft');
       } else {
         await supabase.from('invoices').update({
           customer_id: invoice.customer_id, date: invoice.date,

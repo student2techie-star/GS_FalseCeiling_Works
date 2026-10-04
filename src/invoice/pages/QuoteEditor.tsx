@@ -387,19 +387,47 @@ export default function QuoteEditor() {
   const [customers, setCustomers] = useState<any[]>([]);
   const [templates, setTemplates] = useState<any[]>([]);
 
-  const [quote, setQuote] = useState<any>({
-    number: 'Draft',
-    customer_id: '',
-    date: new Date().toISOString().split('T')[0],
-    valid_until: '',
-    status: 'Draft',
-    discount: 0,
-    tax_rate: 0,
-    tax_type: 'IGST',
-    notes: ''
+  const [quote, setQuote] = useState<any>(() => {
+    if (isNew) {
+      try {
+        const draft = localStorage.getItem('quote_draft');
+        if (draft) {
+          const parsed = JSON.parse(draft);
+          if (parsed.quote) return parsed.quote;
+        }
+      } catch(e) {}
+    }
+    return {
+      number: 'Draft',
+      customer_id: '',
+      date: new Date().toISOString().split('T')[0],
+      valid_until: '',
+      status: 'Draft',
+      discount: 0,
+      tax_rate: 0,
+      tax_type: 'IGST',
+      notes: ''
+    };
   });
 
-  const [rooms, setRooms] = useState<{ name: string; items: any[] }[]>([]);
+  const [rooms, setRooms] = useState<{ name: string; items: any[] }[]>(() => {
+    if (isNew) {
+      try {
+        const draft = localStorage.getItem('quote_draft');
+        if (draft) {
+          const parsed = JSON.parse(draft);
+          if (parsed.rooms && parsed.rooms.length > 0) return parsed.rooms;
+        }
+      } catch(e) {}
+    }
+    return [];
+  });
+
+  useEffect(() => {
+    if (isNew) {
+      localStorage.setItem('quote_draft', JSON.stringify({ quote, rooms }));
+    }
+  }, [quote, rooms, isNew]);
 
   useEffect(() => {
     fetchInitialData();
@@ -412,7 +440,14 @@ export default function QuoteEditor() {
     const { data: tData } = await supabase.from('item_templates').select('*').order('name');
     if (tData) setTemplates(tData);
     const { data: pData } = await supabase.from('business_profile').select('default_tax_rate, terms').single();
-    if (pData && isNew) setQuote((q: any) => ({ ...q, tax_rate: pData.default_tax_rate, notes: pData.terms }));
+    if (pData && isNew) {
+      setQuote((q: any) => {
+        if (!q.notes && q.tax_rate === 0) {
+          return { ...q, tax_rate: pData.default_tax_rate, notes: pData.terms };
+        }
+        return q;
+      });
+    }
   };
 
   const fetchQuoteData = async () => {
@@ -502,6 +537,7 @@ export default function QuoteEditor() {
         const { data: newQ, error: insErr } = await supabase.from('quotations').insert([{ ...quoteToInsert, number: formattedNum }]).select().single();
         if (insErr) throw insErr;
         qId = newQ.id;
+        localStorage.removeItem('quote_draft');
       } else {
         await supabase.from('quotations').update({
           customer_id: quote.customer_id, date: quote.date,
