@@ -62,7 +62,7 @@ export default function InvoiceApp() {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    navigate('/invoice');
+    navigate('/admin');
   };
 
   if (loading) {
@@ -78,14 +78,14 @@ export default function InvoiceApp() {
   }
 
   const navItems = [
-    { name: 'Dashboard', path: '/invoice', icon: LayoutDashboard },
-    { name: 'Quotes', path: '/invoice/quotes', icon: FileText },
-    { name: 'Invoices', path: '/invoice/invoices', icon: Receipt },
-    { name: 'Customers', path: '/invoice/customers', icon: Users },
-    { name: 'Products', path: '/invoice/products', icon: Package },
-    { name: 'Expenses', path: '/invoice/expenses', icon: TrendingDown },
-    { name: 'Enquiries', path: '/invoice/enquiries', icon: MessageSquare },
-    { name: 'Settings', path: '/invoice/settings', icon: SettingsIcon },
+    { name: 'Dashboard', path: '/admin', icon: LayoutDashboard },
+    { name: 'Quotes', path: '/admin/quotes', icon: FileText },
+    { name: 'Invoices', path: '/admin/invoice', icon: Receipt },
+    { name: 'Customers', path: '/admin/customers', icon: Users },
+    { name: 'Products', path: '/admin/products', icon: Package },
+    { name: 'Expenses', path: '/admin/expenses', icon: TrendingDown },
+    { name: 'Enquiries', path: '/admin/enquiries', icon: MessageSquare },
+    { name: 'Settings', path: '/admin/settings', icon: SettingsIcon },
   ];
 
   return (
@@ -116,7 +116,7 @@ export default function InvoiceApp() {
                 const Icon = item.icon;
                 const isActive =
                   location.pathname === item.path ||
-                  (item.path !== '/invoice' && location.pathname.startsWith(item.path));
+                  (item.path !== '/admin' && location.pathname.startsWith(item.path));
                 return (
                   <Link
                     key={item.name}
@@ -178,7 +178,7 @@ export default function InvoiceApp() {
                 const Icon = item.icon;
                 const isActive =
                   location.pathname === item.path ||
-                  (item.path !== '/invoice' && location.pathname.startsWith(item.path));
+                  (item.path !== '/admin' && location.pathname.startsWith(item.path));
                 return (
                   <Link
                     key={item.name}
@@ -225,8 +225,8 @@ export default function InvoiceApp() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/quotes" element={<Quotes />} />
             <Route path="/quotes/:id" element={<QuoteEditor />} />
-            <Route path="/invoices" element={<Invoices />} />
-            <Route path="/invoices/:id" element={<InvoiceEditor />} />
+            <Route path="/invoice" element={<Invoices />} />
+            <Route path="/invoice/:id" element={<InvoiceEditor />} />
             <Route path="/customers" element={<Customers />} />
             <Route path="/customers/:id" element={<CustomerLedger />} />
             <Route path="/expenses" element={<Expenses />} />

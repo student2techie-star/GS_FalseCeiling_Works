@@ -1,7 +1,8 @@
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from 'react-hot-toast';
+import ErrorBoundary from './components/ErrorBoundary';
 import PublicLayout from './site/PublicLayout';
 import Home from './site/pages/Home';
 import About from './site/pages/About';
@@ -15,10 +16,11 @@ const InvoiceApp = lazy(() => import('./invoice/InvoiceApp'));
 
 export default function App() {
   return (
-    <HelmetProvider>
-      <HashRouter>
-        <Routes>
-          <Route path="/" element={<PublicLayout />}>
+    <ErrorBoundary>
+      <HelmetProvider>
+        <BrowserRouter basename={import.meta.env.BASE_URL}>
+          <Routes>
+            <Route path="/" element={<PublicLayout />}>
             <Route index element={<Home />} />
             <Route path="about" element={<About />} />
             <Route path="products" element={<Products />} />
@@ -29,16 +31,17 @@ export default function App() {
           </Route>
           
           <Route 
-            path="/invoice/*" 
+            path="/admin/*" 
             element={
               <Suspense fallback={<div className="h-screen w-full flex items-center justify-center bg-[var(--plaster)]">Loading...</div>}>
                 <InvoiceApp />
               </Suspense>
             } 
           />
-        </Routes>
-      </HashRouter>
-      <Toaster position="bottom-right" />
-    </HelmetProvider>
+          </Routes>
+        </BrowserRouter>
+        <Toaster position="bottom-right" />
+      </HelmetProvider>
+    </ErrorBoundary>
   );
 }
