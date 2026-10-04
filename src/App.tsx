@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from 'react-hot-toast';
@@ -16,7 +16,7 @@ const InvoiceApp = lazy(() => import('./invoice/InvoiceApp'));
 export default function App() {
   return (
     <HelmetProvider>
-      <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <HashRouter basename={import.meta.env.BASE_URL}>
         <Routes>
           <Route path="/" element={<PublicLayout />}>
             <Route index element={<Home />} />
@@ -37,7 +37,7 @@ export default function App() {
             } 
           />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
       <Toaster position="bottom-right" />
     </HelmetProvider>
   );
