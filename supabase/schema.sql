@@ -1,5 +1,13 @@
 -- GS False Ceiling Works - Supabase Schema
--- Run this in the Supabase SQL Editor
+-- ==========================================
+-- NEW SUPABASE PROJECT SETUP INSTRUCTIONS
+-- ==========================================
+-- 1. Update Environment Variables: Go to .env and set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to the new project's credentials.
+-- 2. Create the Admin User: Run your local app (`npm run dev`), go to `/admin`, and "Sign Up" the admin user.
+-- 3. Update the App Owner ID: Go to Supabase Dashboard -> Authentication -> Users. Copy the new User UID. Paste it on line 22 below (in the app_owner insert statement).
+-- 4. Run the Schema Script: Copy all this code and run it in the Supabase SQL Editor.
+-- 5. Create Storage Buckets: Go to Storage in Supabase. Create two buckets named 'logos' and 'works'. Make sure both are marked as "Public".
+-- ==========================================
 
 -- 1. App Owner (Only one user allowed)
 create table public.app_owner (
