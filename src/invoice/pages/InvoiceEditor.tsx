@@ -381,7 +381,6 @@ export default function InvoiceEditor() {
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
   const [customers, setCustomers] = useState<any[]>([]);
-  const [sites, setSites] = useState<any[]>([]);
   const [templates, setTemplates] = useState<any[]>([]);
 
   const [invoice, setInvoice] = useState<any>({
@@ -416,8 +415,7 @@ export default function InvoiceEditor() {
         tax_type: qData.tax_type,
         notes: qData.notes
       }));
-      const { data: sData } = await supabase.from('sites').select('*').eq('customer_id', qData.customer_id);
-      if (sData) setSites(sData);
+
 
       const { data: iData } = await supabase.from('quotation_items').select('*').eq('quotation_id', fromQuoteId).order('sort_order');
       if (iData) {
@@ -447,8 +445,6 @@ export default function InvoiceEditor() {
     const { data: invData } = await supabase.from('invoices').select('*').eq('id', id).single();
     if (invData) {
       setInvoice(invData);
-      const { data: sData } = await supabase.from('sites').select('*').eq('customer_id', invData.customer_id);
-      if (sData) setSites(sData);
       const { data: iData } = await supabase.from('invoice_items').select('*').eq('invoice_id', id).order('sort_order');
       if (iData) {
         const grouped = iData.reduce((acc: any, item: any) => {
@@ -532,7 +528,7 @@ export default function InvoiceEditor() {
         invId = newInv.id;
       } else {
         await supabase.from('invoices').update({
-          customer_id: invoice.customer_id, site_id: invoice.site_id, date: invoice.date,
+          customer_id: invoice.customer_id, date: invoice.date,
           due_date: invoice.due_date, discount: invoice.discount,
           tax_rate: invoice.tax_rate, tax_type: invoice.tax_type, notes: invoice.notes
         }).eq('id', id);
@@ -839,10 +835,7 @@ export default function InvoiceEditor() {
                   customers={customers}
                   value={invoice.customer_id}
                   onChange={id => {
-                    const c = customers.find(x => x.id === id);
-                    const cSites = c ? (c.sites || []) : [];
-                    setSites(cSites);
-                    setInvoice((prev: any) => ({ ...prev, customer_id: id, site_id: cSites.length > 0 ? cSites[0].id : '' }));
+                    setInvoice((prev: any) => ({ ...prev, customer_id: id }));
                   }}
                   onCustomerAdded={c => {
                     setCustomers((prev: any[]) => {
@@ -850,22 +843,13 @@ export default function InvoiceEditor() {
                       if (exists) return prev.map(x => x.id === c.id ? c : x);
                       return [c, ...prev];
                     });
-                    const cSites = c.sites || [];
-                    setSites(cSites);
-                    setInvoice((prev: any) => ({ 
-                      ...prev, 
-                      customer_id: c.id,
-                      site_id: cSites.length > 0 ? cSites[0].id : prev.site_id 
-                    }));
+                    setInvoice((prev: any) => ({ ...prev, customer_id: c.id }));
                   }}
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold text-slate-500 mb-1">Site</label>
-                <select value={invoice.site_id || ''} onChange={e => setInvoice({ ...invoice, site_id: e.target.value })} className="w-full border border-[var(--line)] rounded-xl px-3 py-2 text-sm bg-white focus:outline-none">
-                  <option value="">No site</option>
-                  {sites.map(s => <option key={s.id} value={s.id}>{s.project_name}</option>)}
-                </select>
+                <label className="block text-xs font-bold text-slate-500 mb-1">Site Location</label>
+                <input type="text" readOnly value={customers.find(c => c.id === invoice.customer_id)?.address || ''} className="w-full border border-[var(--line)] rounded-xl px-3 py-2 text-sm bg-slate-50 text-slate-500 focus:outline-none cursor-not-allowed" />
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-500 mb-1">Invoice Date</label>
@@ -903,7 +887,7 @@ export default function InvoiceEditor() {
               <div>
                 <p className="text-gray-500 uppercase text-[9px] font-bold">Bill To</p>
                 <p className="font-bold">{customers.find(c => c.id === invoice.customer_id)?.name || 'Customer Name'}</p>
-                <p>{sites.find(s => s.id === invoice.site_id)?.project_name || ''}</p>
+                <p>{customers.find(c => c.id === invoice.customer_id)?.address || ''}</p>
               </div>
               <div className="text-right">
                 <p><span className="text-gray-500">Invoice No:</span> <span className="font-bold">{isNew ? 'DRAFT' : invoice.number}</span></p>

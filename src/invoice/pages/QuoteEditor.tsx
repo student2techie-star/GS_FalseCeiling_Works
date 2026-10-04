@@ -385,7 +385,6 @@ export default function QuoteEditor() {
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
   const [customers, setCustomers] = useState<any[]>([]);
-  const [sites, setSites] = useState<any[]>([]);
   const [templates, setTemplates] = useState<any[]>([]);
 
   const [quote, setQuote] = useState<any>({
@@ -422,8 +421,6 @@ export default function QuoteEditor() {
     const { data: qData } = await supabase.from('quotations').select('*').eq('id', id).single();
     if (qData) {
       setQuote(qData);
-      const { data: sData } = await supabase.from('sites').select('*').eq('customer_id', qData.customer_id);
-      if (sData) setSites(sData);
       const { data: iData } = await supabase.from('quotation_items').select('*').eq('quotation_id', id).order('sort_order');
       if (iData) {
         const grouped = iData.reduce((acc: any, item: any) => {
@@ -507,7 +504,7 @@ export default function QuoteEditor() {
         qId = newQ.id;
       } else {
         await supabase.from('quotations').update({
-          customer_id: quote.customer_id, site_id: quote.site_id, date: quote.date,
+          customer_id: quote.customer_id, date: quote.date,
           valid_until: quote.valid_until, status: quote.status, discount: quote.discount,
           tax_rate: quote.tax_rate, tax_type: quote.tax_type, notes: quote.notes
         }).eq('id', id);
@@ -755,10 +752,7 @@ export default function QuoteEditor() {
                   customers={customers}
                   value={quote.customer_id}
                   onChange={id => {
-                    const c = customers.find(x => x.id === id);
-                    const cSites = c ? (c.sites || []) : [];
-                    setSites(cSites);
-                    setQuote((prev: any) => ({ ...prev, customer_id: id, site_id: cSites.length > 0 ? cSites[0].id : '' }));
+                    setQuote((prev: any) => ({ ...prev, customer_id: id }));
                   }}
                   onCustomerAdded={c => {
                     setCustomers((prev: any[]) => {
@@ -766,22 +760,13 @@ export default function QuoteEditor() {
                       if (exists) return prev.map(x => x.id === c.id ? c : x);
                       return [c, ...prev];
                     });
-                    const cSites = c.sites || [];
-                    setSites(cSites);
-                    setQuote((prev: any) => ({ 
-                      ...prev, 
-                      customer_id: c.id,
-                      site_id: cSites.length > 0 ? cSites[0].id : prev.site_id 
-                    }));
+                    setQuote((prev: any) => ({ ...prev, customer_id: c.id }));
                   }}
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold text-slate-500 mb-1">Site</label>
-                <select value={quote.site_id || ''} onChange={e => setQuote({ ...quote, site_id: e.target.value })} className="w-full border border-[var(--line)] rounded-xl px-3 py-2 text-sm bg-white focus:outline-none">
-                  <option value="">No site</option>
-                  {sites.map(s => <option key={s.id} value={s.id}>{s.project_name}</option>)}
-                </select>
+                <label className="block text-xs font-bold text-slate-500 mb-1">Site Location</label>
+                <input type="text" readOnly value={customers.find(c => c.id === quote.customer_id)?.address || ''} className="w-full border border-[var(--line)] rounded-xl px-3 py-2 text-sm bg-slate-50 text-slate-500 focus:outline-none cursor-not-allowed" />
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-500 mb-1">Date</label>
@@ -826,7 +811,7 @@ export default function QuoteEditor() {
             <div>
               <p className="text-gray-500 uppercase text-[9px] font-bold">To</p>
               <p className="font-bold">{customers.find(c => c.id === quote.customer_id)?.name || 'Customer Name'}</p>
-              <p>{sites.find(s => s.id === quote.site_id)?.project_name || ''}</p>
+              <p>{customers.find(c => c.id === quote.customer_id)?.address || ''}</p>
             </div>
             <div className="text-right">
               <p><span className="text-gray-500">Quote No:</span> <span className="font-bold">{isNew ? 'DRAFT' : quote.number}</span></p>
