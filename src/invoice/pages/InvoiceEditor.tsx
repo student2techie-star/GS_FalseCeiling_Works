@@ -384,7 +384,7 @@ export default function InvoiceEditor() {
   const [templates, setTemplates] = useState<any[]>([]);
 
   const [invoice, setInvoice] = useState<any>({
-    number: 'Draft', customer_id: '', site_id: '',
+    number: 'Draft', customer_id: '',
     date: new Date().toISOString().split('T')[0],
     due_date: '', discount: 0, tax_rate: 0, tax_type: 'IGST', notes: ''
   });
@@ -523,7 +523,8 @@ export default function InvoiceEditor() {
         const { data: numData, error: rpcErr } = await supabase.rpc('get_next_doc_number', { doc_kind: 'INVOICE', fy });
         if (rpcErr) throw rpcErr;
         const formattedNum = `GSFC/INV/${fy}/${numData.toString().padStart(3, '0')}`;
-        const { data: newInv, error: insErr } = await supabase.from('invoices').insert([{ ...invoice, number: formattedNum }]).select().single();
+        const { site_id, ...invoiceToInsert } = invoice;
+        const { data: newInv, error: insErr } = await supabase.from('invoices').insert([{ ...invoiceToInsert, number: formattedNum }]).select().single();
         if (insErr) throw insErr;
         invId = newInv.id;
       } else {

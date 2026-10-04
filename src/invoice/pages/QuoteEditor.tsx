@@ -390,7 +390,6 @@ export default function QuoteEditor() {
   const [quote, setQuote] = useState<any>({
     number: 'Draft',
     customer_id: '',
-    site_id: '',
     date: new Date().toISOString().split('T')[0],
     valid_until: '',
     status: 'Draft',
@@ -499,7 +498,8 @@ export default function QuoteEditor() {
         const { data: numData, error: rpcErr } = await supabase.rpc('get_next_doc_number', { doc_kind: 'QUOTATION', fy });
         if (rpcErr) throw rpcErr;
         const formattedNum = `GSFC/QT/${fy}/${numData.toString().padStart(3, '0')}`;
-        const { data: newQ, error: insErr } = await supabase.from('quotations').insert([{ ...quote, number: formattedNum }]).select().single();
+        const { site_id, ...quoteToInsert } = quote;
+        const { data: newQ, error: insErr } = await supabase.from('quotations').insert([{ ...quoteToInsert, number: formattedNum }]).select().single();
         if (insErr) throw insErr;
         qId = newQ.id;
       } else {
