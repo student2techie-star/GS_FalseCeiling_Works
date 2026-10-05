@@ -5,6 +5,7 @@ import { supabase } from '../../lib/supabase';
 import { Plus, Trash2, Save, Download, ArrowLeft, Calculator, CreditCard, Search, CheckCircle2, MessageCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { toWords } from 'number-to-words';
+import signatureImg from '../../assets/signature.png';
 
 function numberToWordsIndian(num: number): string {
   if (num === 0) return 'Zero Rupees Only';
@@ -1012,7 +1013,7 @@ export default function InvoiceEditor() {
                 </div>
 
                 <div className="col-span-3 flex flex-col items-end justify-end text-center pb-2">
-                  <img src="/GS_FalseCeiling_Works/signature.jpg" alt="Signature" className="h-12 object-contain mix-blend-multiply -mb-2" />
+                  <img src={signatureImg} alt="Signature" className="h-12 object-contain mix-blend-multiply -mb-2" />
                   <div className="w-32 border-b border-gray-400 mb-2"></div>
                   <p className="font-bold text-gray-700">Authorized Signatory</p>
                   <p className="text-gray-500 text-[8px]">G S Decors & Enterprises</p>
