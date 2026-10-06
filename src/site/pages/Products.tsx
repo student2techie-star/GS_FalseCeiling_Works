@@ -64,24 +64,12 @@ export default function Products() {
                     src={product.image} 
                     alt={product.name}
                     loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-primary shadow-sm">
                     {product.category}
                   </div>
-                </div>
-                <div className="p-6 flex flex-col flex-grow">
-                  <h3 className="font-heading font-bold text-xl text-primary mb-3">{product.name}</h3>
-                  <p className="text-slate-500 text-sm flex-grow mb-6">{product.description}</p>
-                  
-                  <a 
-                    href={`https://wa.me/919159523147?text=Hello%20G%20S%20Decors%20%26%20Enterprises%2C%20I%20am%20interested%20in%20${encodeURIComponent(product.name)}.%20Please%20share%20the%20available%20options%20and%20price%20details.`}
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-accent text-white py-3 rounded-xl font-semibold hover:shadow-lg hover:-translate-y-0.5 transition-all"
-                  >
-                    <MessageCircle className="w-4 h-4" /> Enquire on WhatsApp
-                  </a>
                 </div>
               </div>
             ))}

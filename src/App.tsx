@@ -6,7 +6,8 @@ import ErrorBoundary from './components/ErrorBoundary';
 import PublicLayout from './site/PublicLayout';
 import Home from './site/pages/Home';
 import About from './site/pages/About';
-import Products from './site/pages/Products';
+// Lazy loaded Products
+const Products = lazy(() => import('./site/pages/Products'));
 import Works from './site/pages/Works';
 import Services from './site/pages/Services';
 import Contact from './site/pages/Contact';
@@ -23,7 +24,11 @@ export default function App() {
             <Route path="/" element={<PublicLayout />}>
             <Route index element={<Home />} />
             <Route path="about" element={<About />} />
-            <Route path="products" element={<Products />} />
+            <Route path="products" element={
+              <Suspense fallback={<div className="h-screen w-full flex items-center justify-center">Loading Products...</div>}>
+                <Products />
+              </Suspense>
+            } />
             <Route path="works" element={<Works />} />
             <Route path="services" element={<Services />} />
             <Route path="contact" element={<Contact />} />
