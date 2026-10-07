@@ -17,17 +17,63 @@ const productFolders = [
   'Interior Ceiling flowers & Cornice models'
 ];
 
+// Map actual folder names to good SEO categories and keywords
+const seoMapping = {
+  '2x2_PVC_Gypsum_ceiling_tiles_output': {
+    category: 'PVC Gypsum Ceiling Tiles',
+    slug: 'pvc-gypsum-ceiling-tiles',
+    title: 'PVC Gypsum Ceiling Tile Design'
+  },
+  'CeilingPanels_Output': {
+    category: 'Modern Ceiling Panels',
+    slug: 'modern-ceiling-panels',
+    title: 'Modern Ceiling Panel Design'
+  },
+  'False_ceiling_outputs': {
+    category: 'Designer False Ceilings',
+    slug: 'designer-false-ceilings',
+    title: 'Designer False Ceiling'
+  },
+  'WallPanels': {
+    category: 'Decorative Wall Panels',
+    slug: 'decorative-wall-panels',
+    title: 'Decorative Wall Panel Design'
+  },
+  'CeilingPanels': {
+    category: 'Premium Ceiling Panels',
+    slug: 'premium-ceiling-panels',
+    title: 'Premium Ceiling Panel Design'
+  },
+  'Ceiling channels': {
+    category: 'Ceiling Channels & Accessories',
+    slug: 'ceiling-channels-accessories',
+    title: 'Ceiling Channel Accessory'
+  },
+  'Dual_Wall_ceiling_Panel': {
+    category: 'Dual Wall & Ceiling Panels',
+    slug: 'dual-wall-ceiling-panels',
+    title: 'Dual Wall and Ceiling Panel Design'
+  },
+  'Interior Ceiling flowers & Cornice models': {
+    category: 'Ceiling Flowers & Cornices',
+    slug: 'ceiling-flowers-and-cornices',
+    title: 'Interior Ceiling Flower and Cornice Design'
+  }
+};
+
+
 function toSeoName(folder, index, ext) {
-  const baseName = folder.toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '');
-  return `${baseName}-design-ideas-${index}${ext}`;
+  const slug = seoMapping[folder]?.slug || folder.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  return `${slug}-ideas-${index}${ext}`;
 }
 
 function toSeoTitle(folder, index) {
-  const baseName = folder.replace(/_/g, ' ')
-    .replace(/&/g, 'and');
-  return `${baseName} Design ${index}`;
+  const title = seoMapping[folder]?.title || folder.replace(/_/g, ' ');
+  return `${title} ${index}`;
+}
+
+function toSeoCategory(folder) {
+  return seoMapping[folder]?.category || folder.replace(/_/g, ' ');
 }
 
 function processFolder(folder, prefixId) {
@@ -37,15 +83,22 @@ function processFolder(folder, prefixId) {
   const files = fs.readdirSync(dirPath).filter(f => f.match(/\.(jpg|jpeg|png|webp)$/i));
   const renamedFiles = [];
   
+  // Sort files to have consistent indexing
+  files.sort();
+  
   let i = 1;
   for (const file of files) {
     const ext = path.extname(file);
-    // Only rename if it's not already SEO optimized (simple heuristic: has WhatsApp or spaces)
+    const slug = seoMapping[folder]?.slug || folder.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    
+    // We want to force a rename to the newest SEO format if it's not already exactly matching our new format
     let newFileName = file;
-    if (file.includes('WhatsApp') || file.includes(' ') || file.includes('(')) {
+    const expectedPrefix = `${slug}-ideas-`;
+    
+    if (!file.startsWith(expectedPrefix)) {
        newFileName = toSeoName(folder, i, ext);
        
-       // Handle collisions if any
+       // Handle collisions if any (e.g. if we are renaming multiple things and one happens to match)
        while (fs.existsSync(path.join(dirPath, newFileName)) && newFileName !== file) {
          i++;
          newFileName = toSeoName(folder, i, ext);
@@ -72,7 +125,7 @@ for (const folder of galleryFolders) {
     galleryItems.push({
       id: gId,
       title: toSeoTitle(folder, gId),
-      category: folder.replace(/_/g, ' '),
+      category: toSeoCategory(folder),
       image: `new URL('../../assets/${folder}/${fileInfo.new}', import.meta.url).href`,
       alt: toSeoTitle(folder, gId)
     });
@@ -80,7 +133,7 @@ for (const folder of galleryFolders) {
   }
 }
 
-let galleryCategories = ["All", ...galleryFolders.map(f => f.replace(/_/g, ' '))];
+let galleryCategories = ["All", ...galleryFolders.map(f => toSeoCategory(f))];
 
 let galleryContent = `export type GalleryItem = {
   id: number;
@@ -115,15 +168,15 @@ for (const folder of productFolders) {
     productItems.push({
       id: `prod-${pId}`,
       name: toSeoTitle(folder, pId),
-      category: folder.replace(/_/g, ' '),
-      description: `Premium quality ${folder.replace(/_/g, ' ')} for residential and commercial spaces. Upgrade your interior with our modern designs.`,
+      category: toSeoCategory(folder),
+      description: `Premium quality ${toSeoCategory(folder).toLowerCase()} for residential and commercial spaces. Upgrade your interior with our modern designs.`,
       image: `new URL('../../assets/${folder}/${fileInfo.new}', import.meta.url).href`
     });
     pId++;
   }
 }
 
-let productCategories = ["All", ...productFolders.map(f => f.replace(/_/g, ' '))];
+let productCategories = ["All", ...productFolders.map(f => toSeoCategory(f))];
 
 let productContent = `export type Product = {
   id: string;
