@@ -115,7 +115,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h3 className="font-heading font-bold text-lg mb-1 text-primary">Call Now</h3>
-                  <p className="text-slate-500 group-hover:text-accent transition-colors font-medium">+91 91595 23147</p>
+                  <p className="text-slate-500 group-hover:text-accent transition-colors font-medium">+91 78260 89418</p>
                 </div>
               </a>
 
@@ -125,7 +125,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h3 className="font-heading font-bold text-lg mb-1 text-primary">WhatsApp Us</h3>
-                  <p className="text-slate-500 group-hover:text-emerald-500 transition-colors font-medium">+91 91595 23147</p>
+                  <p className="text-slate-500 group-hover:text-emerald-500 transition-colors font-medium">+91 78260 89418</p>
                 </div>
               </a>
 
@@ -181,7 +181,7 @@ export default function Contact() {
                 {errorMsg && (
                   <div className="bg-red-50 border border-red-100 p-4 rounded-xl text-red-700 text-sm animate-fade-in">
                     {errorMsg}
-                    <p className="mt-2 font-medium">Please call us directly at +91 91595 23147.</p>
+                    <p className="mt-2 font-medium">Please call us directly at +91 78260 89418.</p>
                   </div>
                 )}
 

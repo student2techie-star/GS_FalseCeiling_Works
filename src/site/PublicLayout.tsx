@@ -114,7 +114,7 @@ export default function PublicLayout() {
           <div>
             <h4 className="font-heading font-semibold text-lg mb-6 text-white">Contact</h4>
             <ul className="space-y-4 text-sm text-slate-300">
-              <li className="flex items-center gap-2"><Phone className="w-4 h-4 text-[var(--cove)]" /> +91 91595 23147</li>
+              <li className="flex items-center gap-2"><Phone className="w-4 h-4 text-[var(--cove)]" /> +91 78260 89418</li>
               <li>No. 3/74, Main Road, Mungil Thottam,<br/>Opposite Palpannai, Koranad,<br/>Mayiladuthurai, Tamil Nadu – 609001</li>
             </ul>
           </div>

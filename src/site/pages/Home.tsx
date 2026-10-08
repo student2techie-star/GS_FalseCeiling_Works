@@ -140,8 +140,6 @@ export default function Home() {
             <BeforeAfterSlider 
               beforeImage={beforeImageLocal}
               afterImage={afterImage48}
-              beforeAlt="Plain Ceiling"
-              afterAlt="GS False Ceiling"
               className="aspect-[16/9] shadow-2xl rounded-2xl overflow-hidden"
             />
           </div>

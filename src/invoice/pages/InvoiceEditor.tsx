@@ -991,7 +991,7 @@ export default function InvoiceEditor() {
                   <div>
                     <h4 className="font-bold text-gray-700 uppercase mb-1 text-[9px]">Contact Info</h4>
                     <p className="text-gray-600 leading-tight">
-                      Phone: <span className="font-medium text-black">+91 91595 23147</span><br />
+                      Phone: <span className="font-medium text-black">+91 78260 89418</span><br />
                       Address: <span className="font-medium text-black">Koranad, Mayiladuthurai</span>
                     </p>
                   </div>
