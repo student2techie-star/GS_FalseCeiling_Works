@@ -109,7 +109,7 @@ export default function Contact() {
             </p>
 
             <div className="space-y-6">
-              <a href="tel:+919159523147" className="flex items-center gap-6 group p-4 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-300 border border-transparent hover:border-line">
+              <a href="tel:+917826089418" className="flex items-center gap-6 group p-4 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-300 border border-transparent hover:border-line">
                 <div className="w-14 h-14 bg-gradient-to-br from-primary to-accent flex items-center justify-center rounded-full text-white shadow-md group-hover:scale-110 transition-transform shrink-0">
                   <Phone className="w-6 h-6" />
                 </div>
@@ -119,7 +119,7 @@ export default function Contact() {
                 </div>
               </a>
 
-              <a href="https://wa.me/919159523147?text=Hello%20G%20S%20Decors%20%26%20Enterprises%2C%20I%20would%20like%20to%20know%20more%20about%20your%20ceiling%20and%20interior%20decoration%20products." target="_blank" rel="noopener noreferrer" className="flex items-center gap-6 group p-4 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-300 border border-transparent hover:border-line">
+              <a href="https://wa.me/917826089418?text=Hello%20G%20S%20Decors%20%26%20Enterprises%2C%20I%20would%20like%20to%20know%20more%20about%20your%20ceiling%20and%20interior%20decoration%20products." target="_blank" rel="noopener noreferrer" className="flex items-center gap-6 group p-4 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-300 border border-transparent hover:border-line">
                 <div className="w-14 h-14 bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center rounded-full text-white shadow-md group-hover:scale-110 transition-transform shrink-0">
                   <MessageCircle className="w-6 h-6" />
                 </div>

@@ -52,8 +52,10 @@ export default function Services() {
         </div>
       </section>
 
+
+
       {/* Services Grid */}
-      <section className="py-24 px-6 bg-[var(--plaster)] min-h-screen">
+      <section className="py-24 px-6 bg-[var(--plaster)]">
         <div className="max-w-[1200px] mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {SERVICES.map((svc) => (
@@ -66,7 +68,7 @@ export default function Services() {
                 </p>
                 
                 <a 
-                  href={`https://wa.me/919159523147?text=Hello%20G%20S%20Decors%20%26%20Enterprises%2C%20I%20would%20like%20to%20know%20more%20about%20your%20${encodeURIComponent(svc.title)}%20services.`}
+                  href={`https://wa.me/917826089418?text=Hello%20G%20S%20Decors%20%26%20Enterprises%2C%20I%20would%20like%20to%20know%20more%20about%20your%20${encodeURIComponent(svc.title)}%20services.`}
                   target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-[var(--plaster)] text-[var(--primary)] font-semibold px-6 py-3 rounded-full hover:bg-[var(--line)] transition-colors self-start mt-auto"
                 >

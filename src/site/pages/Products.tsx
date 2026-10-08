@@ -1,9 +1,9 @@
 import { Helmet } from 'react-helmet-async';
 import { products, productCategories } from '../data/products';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { MessageCircle } from 'lucide-react';
+import { MessageCircle, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
@@ -11,10 +11,37 @@ function cn(...inputs: (string | undefined | null | false)[]) {
 
 export default function Products() {
   const [activeCategory, setActiveCategory] = useState('All');
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const filteredProducts = activeCategory === 'All' 
     ? products 
     : products.filter(p => p.category === activeCategory);
+
+  const openLightbox = (index: number) => setLightboxIndex(index);
+  const closeLightbox = () => setLightboxIndex(null);
+
+  const nextImage = useCallback(() => {
+    if (lightboxIndex !== null) {
+      setLightboxIndex((lightboxIndex + 1) % filteredProducts.length);
+    }
+  }, [lightboxIndex, filteredProducts.length]);
+
+  const prevImage = useCallback(() => {
+    if (lightboxIndex !== null) {
+      setLightboxIndex((lightboxIndex - 1 + filteredProducts.length) % filteredProducts.length);
+    }
+  }, [lightboxIndex, filteredProducts.length]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (lightboxIndex === null) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxIndex, nextImage, prevImage]);
 
   return (
     <>
@@ -57,8 +84,8 @@ export default function Products() {
 
           {/* Products Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredProducts.map(product => (
-              <div key={product.id} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group border border-line hover:border-transparent">
+            {filteredProducts.map((product, idx) => (
+              <button key={product.id} onClick={() => openLightbox(idx)} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group border border-line hover:border-transparent text-left outline-none focus-visible:ring-2 focus-visible:ring-primary">
                 <div className="aspect-[4/3] overflow-hidden bg-slate-100 relative">
                   <img 
                     src={product.image} 
@@ -71,7 +98,7 @@ export default function Products() {
                     {product.category}
                   </div>
                 </div>
-              </div>
+              </button>
             ))}
             
             {filteredProducts.length === 0 && (
@@ -84,6 +111,49 @@ export default function Products() {
           
         </div>
       </section>
+
+      {/* Lightbox */}
+      {lightboxIndex !== null && (
+        <div className="fixed inset-0 z-[100] bg-slate-900/95 flex items-center justify-center backdrop-blur-sm">
+          <button 
+            onClick={closeLightbox}
+            className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors z-50 bg-black/20 p-2 rounded-full hover:bg-black/40"
+            aria-label="Close lightbox"
+          >
+            <X className="w-8 h-8" />
+          </button>
+          
+          <button 
+            onClick={prevImage}
+            className="absolute left-6 text-white/50 hover:text-white transition-colors p-3 z-50 bg-black/20 rounded-full hover:bg-black/40"
+            aria-label="Previous image"
+          >
+            <ChevronLeft className="w-8 h-8" />
+          </button>
+          
+          <div className="max-w-6xl w-full px-16 aspect-video flex flex-col items-center justify-center relative">
+             <div className="w-full h-full flex items-center justify-center overflow-hidden rounded-xl">
+                <img 
+                 src={filteredProducts[lightboxIndex].image} 
+                 alt={filteredProducts[lightboxIndex].name}
+                 className="max-w-full max-h-[85vh] object-contain shadow-2xl"
+               />
+             </div>
+             <div className="absolute bottom-4 bg-black/60 backdrop-blur-md px-6 py-3 rounded-full text-white text-center shadow-xl">
+               <p className="font-semibold">{filteredProducts[lightboxIndex].name}</p>
+               <p className="text-xs text-white/80 mt-1">{filteredProducts[lightboxIndex].category}</p>
+             </div>
+          </div>
+
+          <button 
+            onClick={nextImage}
+            className="absolute right-6 text-white/50 hover:text-white transition-colors p-3 z-50 bg-black/20 rounded-full hover:bg-black/40"
+            aria-label="Next image"
+          >
+            <ChevronRight className="w-8 h-8" />
+          </button>
+        </div>
+      )}
     </>
   );
 }

@@ -54,11 +54,11 @@ export default function PublicLayout() {
           </nav>
 
           <div className="hidden md:flex items-center gap-3">
-            <a href="tel:+919159523147" className="group flex items-center gap-2 px-4 py-2 text-sm font-semibold text-[var(--primary)] rounded-full hover:bg-[var(--line)] transition-colors">
+            <a href="tel:+917826089418" className="group flex items-center gap-2 px-4 py-2 text-sm font-semibold text-[var(--primary)] rounded-full hover:bg-[var(--line)] transition-colors">
               <Phone className="w-4 h-4 group-hover:animate-bounce" />
               <span>Call</span>
             </a>
-            <a href="https://wa.me/919159523147?text=Hello%20G%20S%20Decors%20%26%20Enterprises%2C%20I%20would%20like%20to%20know%20more%20about%20your%20ceiling%20and%20interior%20decoration%20products." target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 px-5 py-2 text-sm font-semibold bg-gradient-to-r from-primary to-accent text-white rounded-full hover:shadow-lg hover:shadow-accent/20 transition-all hover:-translate-y-0.5">
+            <a href="https://wa.me/917826089418?text=Hello%20G%20S%20Decors%20%26%20Enterprises%2C%20I%20would%20like%20to%20know%20more%20about%20your%20ceiling%20and%20interior%20decoration%20products." target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 px-5 py-2 text-sm font-semibold bg-gradient-to-r from-primary to-accent text-white rounded-full hover:shadow-lg hover:shadow-accent/20 transition-all hover:-translate-y-0.5">
               <span>WhatsApp</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
@@ -137,10 +137,10 @@ export default function PublicLayout() {
       {/* Mobile Sticky Bar - Glass effect */}
       <div className="md:hidden fixed bottom-4 left-4 right-4 z-50">
         <div className="glass-dark rounded-full p-2 flex gap-2">
-          <a href="tel:+919159523147" className="flex-1 flex justify-center items-center gap-2 py-3 rounded-full font-semibold text-sm hover:bg-white/10 transition-colors">
+          <a href="tel:+917826089418" className="flex-1 flex justify-center items-center gap-2 py-3 rounded-full font-semibold text-sm hover:bg-white/10 transition-colors">
             <Phone className="w-4 h-4" /> Call
           </a>
-          <a href="https://wa.me/919159523147?text=Hello%20G%20S%20Decors%20%26%20Enterprises%2C%20I%20would%20like%20to%20know%20more%20about%20your%20ceiling%20and%20interior%20decoration%20products." target="_blank" rel="noopener noreferrer" className="flex-1 flex justify-center items-center gap-2 py-3 bg-gradient-to-r from-primary to-accent text-white rounded-full font-semibold text-sm shadow-lg">
+          <a href="https://wa.me/917826089418?text=Hello%20G%20S%20Decors%20%26%20Enterprises%2C%20I%20would%20like%20to%20know%20more%20about%20your%20ceiling%20and%20interior%20decoration%20products." target="_blank" rel="noopener noreferrer" className="flex-1 flex justify-center items-center gap-2 py-3 bg-gradient-to-r from-primary to-accent text-white rounded-full font-semibold text-sm shadow-lg">
             <MessageCircle className="w-4 h-4" /> WhatsApp
           </a>
         </div>
@@ -148,7 +148,7 @@ export default function PublicLayout() {
 
       {/* Desktop Floating WhatsApp Button */}
       <a 
-        href="https://wa.me/919159523147?text=Hello%20G%20S%20Decors%20%26%20Enterprises%2C%20I%20would%20like%20to%20know%20more%20about%20your%20ceiling%20and%20interior%20decoration%20products." 
+        href="https://wa.me/917826089418?text=Hello%20G%20S%20Decors%20%26%20Enterprises%2C%20I%20would%20like%20to%20know%20more%20about%20your%20ceiling%20and%20interior%20decoration%20products." 
         target="_blank" 
         rel="noopener noreferrer" 
         className="hidden md:flex fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 hover:shadow-xl transition-all duration-300 group"

@@ -23,3 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 temp_gh_pages
+
+# Agent Configs
+.agent/
+.agents/
+.gemini/
+.gsd/
