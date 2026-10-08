@@ -11,7 +11,7 @@ const SERVICES = [
   {
     id: 'false-ceiling-materials',
     title: 'False Ceiling Materials',
-    desc: 'Supply of suitable false-ceiling materials for different project requirements. We offer gypsum boards, PVC panels, Armstrong grids, and mineral fibre tiles.',
+    desc: 'Supply of suitable false-ceiling materials for different project requirements. We offer gypsum boards, PVC panels, and mineral fibre tiles.',
     color: 'from-blue-500 to-cyan-500'
   },
   {

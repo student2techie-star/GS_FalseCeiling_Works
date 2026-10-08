@@ -163,11 +163,10 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               { title: 'PVC False Ceiling', desc: 'Practical ceiling solution suitable for a variety of interior applications.', color: 'from-blue-500 to-cyan-500', link: 'pvc-false-ceiling' },
               { title: 'Gypsum Boards', desc: 'High-quality gypsum boards for seamless, elegant ceilings.', color: 'from-purple-500 to-pink-500', link: 'gypsum-ceiling' },
-              { title: 'Armstrong Systems', desc: 'Premium modular ceiling systems offering superior acoustics.', color: 'from-amber-500 to-orange-500', link: 'armstrong-ceiling' },
               { title: 'Interior Materials', desc: 'Complete range of grid systems and decorative interior materials.', color: 'from-emerald-500 to-teal-500', link: 'interior-materials' }
             ].map((service, i) => (
               <div 

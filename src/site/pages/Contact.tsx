@@ -225,7 +225,6 @@ export default function Contact() {
                     <option value="">Select a service (Optional)</option>
                     <option value="pvc-false-ceiling">PVC False Ceiling</option>
                     <option value="gypsum-ceiling">Gypsum Ceiling Boards</option>
-                    <option value="armstrong-ceiling">Armstrong Ceiling Systems</option>
                     <option value="mineral-fibre-ceiling">Mineral Fibre Ceiling</option>
                     <option value="interior-materials">Interior Decoration Materials</option>
                     <option value="other">Other</option>
