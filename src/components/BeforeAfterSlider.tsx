@@ -22,6 +22,9 @@ export default function BeforeAfterSlider({
   className
 }: BeforeAfterSliderProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const [isToggled, setIsToggled] = useState(false);
+
+  const showAfter = isHovered || isToggled;
 
   return (
     <div
@@ -31,8 +34,7 @@ export default function BeforeAfterSlider({
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onTouchStart={() => setIsHovered(true)}
-      onTouchEnd={() => setIsHovered(false)}
+      onClick={() => setIsToggled(!isToggled)}
     >
       {/* After Image (Background) */}
       <img
@@ -42,13 +44,13 @@ export default function BeforeAfterSlider({
         draggable={false}
       />
       
-      {/* Before Image (Foreground, fades out on hover) */}
+      {/* Before Image (Foreground, fades out on hover/tap) */}
       <img
         src={beforeImage}
         alt={beforeAlt}
         className={cn(
           "absolute inset-0 w-full h-full object-cover pointer-events-none transition-opacity duration-700 ease-in-out",
-          isHovered ? "opacity-0" : "opacity-100"
+          showAfter ? "opacity-0" : "opacity-100"
         )}
         draggable={false}
       />
@@ -56,8 +58,8 @@ export default function BeforeAfterSlider({
       {/* Badges */}
       <div 
         className={cn(
-          "absolute top-4 left-4 bg-slate-800/90 backdrop-blur-sm text-white text-sm font-semibold px-4 py-1.5 rounded-full pointer-events-none z-30 shadow-md transition-opacity duration-500",
-          isHovered ? "opacity-0" : "opacity-100"
+          "absolute top-4 left-4 bg-slate-800/90 backdrop-blur-sm text-white text-xs md:text-sm font-semibold px-3 py-1 md:px-4 md:py-1.5 rounded-full pointer-events-none z-30 shadow-md transition-opacity duration-500",
+          showAfter ? "opacity-0" : "opacity-100"
         )}
       >
         {beforeAlt || "Before"}
@@ -65,8 +67,8 @@ export default function BeforeAfterSlider({
 
       <div 
         className={cn(
-          "absolute top-4 right-4 bg-primary text-slate-900 text-sm font-bold px-4 py-1.5 rounded-full pointer-events-none z-30 shadow-[0_0_15px_rgba(251,191,36,0.3)] transition-all duration-500",
-          isHovered ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+          "absolute top-4 right-4 bg-primary text-slate-900 text-xs md:text-sm font-bold px-3 py-1 md:px-4 md:py-1.5 rounded-full pointer-events-none z-30 shadow-[0_0_15px_rgba(251,191,36,0.3)] transition-all duration-500",
+          showAfter ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
         )}
       >
         {afterAlt || "After"}
@@ -75,10 +77,10 @@ export default function BeforeAfterSlider({
       {/* Hover Instruction Overlay */}
       <div className={cn(
         "absolute inset-0 flex items-center justify-center bg-black/20 pointer-events-none transition-opacity duration-500",
-        isHovered ? "opacity-0" : "opacity-100"
+        showAfter ? "opacity-0" : "opacity-100"
       )}>
-        <div className="bg-white/90 backdrop-blur-md text-slate-900 text-sm md:text-base font-bold px-6 py-3 rounded-full shadow-2xl whitespace-nowrap border border-white/50 shadow-[0_10px_40px_rgba(0,0,0,0.2)]">
-          HOVER TO REVEAL AFTER
+        <div className="bg-white/90 backdrop-blur-md text-slate-900 text-xs md:text-base font-bold px-4 py-2 md:px-6 md:py-3 rounded-full shadow-2xl whitespace-nowrap border border-white/50 shadow-[0_10px_40px_rgba(0,0,0,0.2)]">
+          HOVER OR TAP TO REVEAL
         </div>
       </div>
     </div>
