@@ -6,7 +6,7 @@ export default function About() {
     <>
       <Helmet>
         <title>About G S Decors & Enterprises | Mayiladuthurai</title>
-        <meta name="description" content="Learn about G S Decors & Enterprises, an established ceiling and interior decoration materials business in Koranad, Mayiladuthurai." />
+        <meta name="description" content="Learn about G S Decors & Enterprises, an established ceiling and interior decoration materials business in Mayiladuthurai." />
       </Helmet>
 
       {/* Hero */}
@@ -14,7 +14,7 @@ export default function About() {
         <div className="max-w-[800px] mx-auto text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">About G S Decors & Enterprises</h1>
           <p className="text-lg md:text-xl opacity-80 leading-relaxed">
-            G S Decors & Enterprises is an established business based in Koranad, Mayiladuthurai, offering ceiling and interior-decoration materials for residential, commercial and professional requirements. Established in 1996, the business has served customers in the interior and ceiling-materials segment over the years.
+            G S Decors & Enterprises is an established business based in Mayiladuthurai, offering ceiling and interior-decoration materials for residential, commercial and professional requirements. Established in 1996, the business has served customers in the interior and ceiling-materials segment over the years.
           </p>
         </div>
       </section>
@@ -79,7 +79,7 @@ export default function About() {
             <h3 className="font-bold text-xl mb-2 text-[var(--primary)]">G S Decors & Enterprises</h3>
             <p className="text-[var(--slate)] text-center">
               No. 3/74, Main Road, Mungil Thottam,<br />
-              Opposite Palpannai, Koranad,<br />
+              Opposite to Mayiladuthurai District Collectorate,<br />
               Mayiladuthurai, Tamil Nadu – 609001
             </p>
           </div>

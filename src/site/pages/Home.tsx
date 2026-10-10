@@ -29,7 +29,7 @@ export default function Home() {
     <>
       <Helmet>
         <title>G S Decors & Enterprises | Ceiling & Interior Materials in Mayiladuthurai</title>
-        <meta name="description" content="G S Decors & Enterprises in Koranad, Mayiladuthurai offers ceiling and interior decoration materials for residential, commercial and professional requirements." />
+        <meta name="description" content="G S Decors & Enterprises in Mayiladuthurai offers ceiling and interior decoration materials for residential, commercial and professional requirements." />
         <script type="application/ld+json">
           {`
             {
@@ -42,7 +42,7 @@ export default function Home() {
               "telephone": "+917826089418",
               "address": {
                 "@type": "PostalAddress",
-                "streetAddress": "No. 3/74, Main Road, Mungil Thottam, Opposite Palpannai, Koranad",
+                "streetAddress": "No. 3/74, Main Road, Mungil Thottam, Opposite to Mayiladuthurai District Collectorate",
                 "addressLocality": "Mayiladuthurai",
                 "addressRegion": "Tamil Nadu",
                 "postalCode": "609001",

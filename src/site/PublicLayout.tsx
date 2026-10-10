@@ -115,13 +115,13 @@ export default function PublicLayout() {
             <h4 className="font-heading font-semibold text-lg mb-6 text-white">Contact</h4>
             <ul className="space-y-4 text-sm text-slate-300">
               <li className="flex items-center gap-2"><Phone className="w-4 h-4 text-[var(--cove)]" /> +91 78260 89418</li>
-              <li>No. 3/74, Main Road, Mungil Thottam,<br/>Opposite Palpannai, Koranad,<br/>Mayiladuthurai, Tamil Nadu – 609001</li>
+              <li>No. 3/74, Main Road, Mungil Thottam,<br/>Opposite to Mayiladuthurai District Collectorate,<br/>Mayiladuthurai, Tamil Nadu – 609001</li>
             </ul>
           </div>
           <div>
             <h4 className="font-heading font-semibold text-lg mb-6 text-white">Service Areas</h4>
             <p className="text-sm text-slate-300 leading-relaxed">
-              Mayiladuthurai, Koranad, and surrounding districts.
+              Mayiladuthurai and surrounding districts.
             </p>
           </div>
         </div>

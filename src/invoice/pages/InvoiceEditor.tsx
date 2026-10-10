@@ -992,7 +992,7 @@ export default function InvoiceEditor() {
                     <h4 className="font-bold text-gray-700 uppercase mb-1 text-[9px]">Contact Info</h4>
                     <p className="text-gray-600 leading-tight">
                       Phone: <span className="font-medium text-black">+91 78260 89418</span><br />
-                      Address: <span className="font-medium text-black">Koranad, Mayiladuthurai</span>
+                      Address: <span className="font-medium text-black">Opposite to Mayiladuthurai District Collectorate, Mayiladuthurai</span>
                     </p>
                   </div>
                 </div>
@@ -1020,7 +1020,7 @@ export default function InvoiceEditor() {
                 </div>
               </div>
               <div className="mt-6 text-center text-gray-400 text-[8px]">
-                Thank you for your business! &bull; G S Decors & Enterprises, Koranad, Mayiladuthurai
+                Thank you for your business! &bull; G S Decors & Enterprises, Opposite to Mayiladuthurai District Collectorate, Mayiladuthurai
               </div>
             </div>
           </div>

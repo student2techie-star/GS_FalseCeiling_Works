@@ -85,7 +85,7 @@ export default function Contact() {
     <>
       <Helmet>
         <title>Contact G S Decors & Enterprises | Mayiladuthurai</title>
-        <meta name="description" content="Contact G S Decors & Enterprises in Koranad, Mayiladuthurai for ceiling and interior decoration product enquiries." />
+        <meta name="description" content="Contact G S Decors & Enterprises in Mayiladuthurai for ceiling and interior decoration product enquiries." />
       </Helmet>
 
       <section className="py-24 px-6 relative overflow-hidden">
@@ -129,14 +129,14 @@ export default function Contact() {
                 </div>
               </a>
 
-              <a href="https://maps.google.com/?q=G+S+Decors+%26+Enterprises,+Koranad,+Mayiladuthurai,+Tamil+Nadu" target="_blank" rel="noopener noreferrer" className="flex items-center gap-6 group p-4 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-300 border border-transparent hover:border-line">
+              <a href="https://maps.google.com/?q=G+S+Decors+%26+Enterprises,+Opposite+to+Mayiladuthurai+District+Collectorate,+Mayiladuthurai,+Tamil+Nadu" target="_blank" rel="noopener noreferrer" className="flex items-center gap-6 group p-4 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-300 border border-transparent hover:border-line">
                 <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center rounded-full text-white shadow-sm group-hover:scale-110 transition-transform shrink-0">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                 </div>
                 <div>
                   <h3 className="font-heading font-bold text-lg mb-1 text-primary">Get Directions</h3>
                   <p className="text-slate-500 group-hover:text-accent transition-colors text-sm">
-                    No. 3/74, Main Road, Mungil Thottam,<br/>Opposite Palpannai, Koranad
+                    No. 3/74, Main Road, Mungil Thottam,<br/>Opposite to Mayiladuthurai District Collectorate
                   </p>
                 </div>
               </a>
