@@ -1,17 +1,17 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from 'react-hot-toast';
 import ErrorBoundary from './components/ErrorBoundary';
+import ScrollToTop from './components/ScrollToTop';
 import PublicLayout from './site/PublicLayout';
 import Home from './site/pages/Home';
-import About from './site/pages/About';
-// Lazy loaded Products
+const About = lazy(() => import('./site/pages/About'));
 const Products = lazy(() => import('./site/pages/Products'));
-import Works from './site/pages/Works';
-import Services from './site/pages/Services';
-import Contact from './site/pages/Contact';
-import NotFound from './site/pages/NotFound';
+const Works = lazy(() => import('./site/pages/Works'));
+const Services = lazy(() => import('./site/pages/Services'));
+const Contact = lazy(() => import('./site/pages/Contact'));
+const NotFound = lazy(() => import('./site/pages/NotFound'));
 
 const InvoiceApp = lazy(() => import('./invoice/InvoiceApp'));
 
@@ -20,19 +20,18 @@ export default function App() {
     <ErrorBoundary>
       <HelmetProvider>
         <BrowserRouter basename={import.meta.env.BASE_URL}>
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<PublicLayout />}>
             <Route index element={<Home />} />
-            <Route path="about" element={<About />} />
-            <Route path="products" element={
-              <Suspense fallback={<div className="h-screen w-full flex items-center justify-center">Loading Products...</div>}>
-                <Products />
-              </Suspense>
-            } />
-            <Route path="works" element={<Works />} />
-            <Route path="services" element={<Services />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="*" element={<NotFound />} />
+            <Route element={<Suspense fallback={<div className="h-screen w-full flex items-center justify-center">Loading...</div>}><Outlet /></Suspense>}>
+              <Route path="about" element={<About />} />
+              <Route path="products" element={<Products />} />
+              <Route path="works" element={<Works />} />
+              <Route path="services" element={<Services />} />
+              <Route path="contact" element={<Contact />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
           </Route>
           
           <Route 

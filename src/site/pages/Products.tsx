@@ -1,4 +1,5 @@
-import { Helmet } from 'react-helmet-async';
+import SEO from '../../components/SEO';
+import Lightbox from '../../components/Lightbox';
 import { products, productCategories } from '../data/products';
 import { useState, useEffect, useCallback } from 'react';
 import { clsx } from 'clsx';
@@ -45,10 +46,12 @@ export default function Products() {
 
   return (
     <>
-      <Helmet>
-        <title>Ceiling & Interior Products | G S Decors & Enterprises</title>
-        <meta name="description" content="Explore ceiling and interior decoration products available from G S Decors & Enterprises in Mayiladuthurai." />
-      </Helmet>
+      <SEO 
+        title="Ceiling & Interior Products | G S Decors & Enterprises | Mayiladuthurai, Karaikal"
+        description="Explore top-quality ceiling and interior decoration products available from G S Decors & Enterprises in Mayiladuthurai, Kumbakonam, Sirkazhi, and Karaikal. PVC, Gypsum, and more."
+        keywords="False ceiling products Mayiladuthurai, Gypsum boards Kumbakonam, PVC ceiling panels Sirkazhi, Interior decoration materials Karaikal, G S Decors products, Tamil Nadu false ceiling materials"
+        url="https://gsdecors.com/products"
+      />
 
       {/* Page Header */}
       <section className="pt-24 pb-16 px-6 bg-primary text-white">
@@ -113,47 +116,18 @@ export default function Products() {
       </section>
 
       {/* Lightbox */}
-      {lightboxIndex !== null && (
-        <div className="fixed inset-0 z-[100] bg-slate-900/95 flex items-center justify-center backdrop-blur-sm">
-          <button 
-            onClick={closeLightbox}
-            className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors z-50 bg-black/20 p-2 rounded-full hover:bg-black/40"
-            aria-label="Close lightbox"
-          >
-            <X className="w-8 h-8" />
-          </button>
-          
-          <button 
-            onClick={prevImage}
-            className="absolute left-6 text-white/50 hover:text-white transition-colors p-3 z-50 bg-black/20 rounded-full hover:bg-black/40"
-            aria-label="Previous image"
-          >
-            <ChevronLeft className="w-8 h-8" />
-          </button>
-          
-          <div className="max-w-6xl w-full px-16 aspect-video flex flex-col items-center justify-center relative">
-             <div className="w-full h-full flex items-center justify-center overflow-hidden rounded-xl">
-                <img 
-                 src={filteredProducts[lightboxIndex].image} 
-                 alt={filteredProducts[lightboxIndex].name}
-                 className="max-w-full max-h-[85vh] object-contain shadow-2xl"
-               />
-             </div>
-             <div className="absolute bottom-4 bg-black/60 backdrop-blur-md px-6 py-3 rounded-full text-white text-center shadow-xl">
-               <p className="font-semibold">{filteredProducts[lightboxIndex].name}</p>
-               <p className="text-xs text-white/80 mt-1">{filteredProducts[lightboxIndex].category}</p>
-             </div>
-          </div>
-
-          <button 
-            onClick={nextImage}
-            className="absolute right-6 text-white/50 hover:text-white transition-colors p-3 z-50 bg-black/20 rounded-full hover:bg-black/40"
-            aria-label="Next image"
-          >
-            <ChevronRight className="w-8 h-8" />
-          </button>
-        </div>
-      )}
+      <Lightbox
+        isOpen={lightboxIndex !== null}
+        onClose={closeLightbox}
+        onNext={nextImage}
+        onPrev={prevImage}
+        hasNext={true}
+        hasPrev={true}
+        imageSrc={lightboxIndex !== null ? filteredProducts[lightboxIndex].image : ''}
+        imageAlt={lightboxIndex !== null ? filteredProducts[lightboxIndex].name : ''}
+        title={lightboxIndex !== null ? filteredProducts[lightboxIndex].name : ''}
+        subtitle={lightboxIndex !== null ? filteredProducts[lightboxIndex].category : ''}
+      />
     </>
   );
 }

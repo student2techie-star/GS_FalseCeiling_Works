@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
+import SEO from '../../components/SEO';
 import { useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -83,10 +83,12 @@ export default function Contact() {
 
   return (
     <>
-      <Helmet>
-        <title>Contact G S Decors & Enterprises | Mayiladuthurai</title>
-        <meta name="description" content="Contact G S Decors & Enterprises in Mayiladuthurai for ceiling and interior decoration product enquiries." />
-      </Helmet>
+      <SEO 
+        title="Contact G S Decors & Enterprises | False Ceiling Dealers in Mayiladuthurai"
+        description="Contact G S Decors & Enterprises in Mayiladuthurai for ceiling and interior decoration product enquiries. We serve Mayiladuthurai, Kumbakonam, Sirkazhi, and Karaikal."
+        keywords="Contact G S Decors, False ceiling dealers Mayiladuthurai, Interior material supplier contact Tamil Nadu, PVC ceiling shop Kumbakonam, Gypsum board store Sirkazhi"
+        url="https://gsdecors.com/contact"
+      />
 
       <section className="py-24 px-6 relative overflow-hidden">
         {/* Background Decorative Elements */}

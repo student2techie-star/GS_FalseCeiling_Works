@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronRight, Phone, MessageCircle, Star, Shield, PenTool } from 'lucide-react';
-import { Helmet } from 'react-helmet-async';
+import SEO from '../../components/SEO';
 import { useEffect, useState } from 'react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -27,38 +27,45 @@ export default function Home() {
 
   return (
     <>
-      <Helmet>
-        <title>G S Decors & Enterprises | Ceiling & Interior Materials in Mayiladuthurai</title>
-        <meta name="description" content="G S Decors & Enterprises in Mayiladuthurai offers ceiling and interior decoration materials for residential, commercial and professional requirements." />
-        <script type="application/ld+json">
-          {`
-            {
-              "@context": "https://schema.org",
-              "@type": "LocalBusiness",
-              "name": "G S Decors & Enterprises",
-              "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800",
-              "@id": "",
-              "url": "",
-              "telephone": "+917826089418",
-              "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "No. 3/74, Main Road, Mungil Thottam, Opposite to Mayiladuthurai District Collectorate",
-                "addressLocality": "Mayiladuthurai",
-                "addressRegion": "Tamil Nadu",
-                "postalCode": "609001",
-                "addressCountry": "IN"
-              }
-            }
-          `}
-        </script>
-      </Helmet>
+      <SEO 
+        title="G S Decors & Enterprises | False Ceiling & Interior Designers in Mayiladuthurai, Kumbakonam"
+        description="Top-rated false ceiling contractors & interior designers in Mayiladuthurai, Tamil Nadu. G S Decors & Enterprises offers PVC, Gypsum, Grid ceiling materials & installation services in Kumbakonam, Sirkazhi, and Karaikal."
+        keywords="False ceiling Mayiladuthurai, Interior designers in Mayiladuthurai, PVC ceiling contractors, Gypsum ceiling Kumbakonam, Grid ceiling Sirkazhi, G S Decors & Enterprises, Tamil Nadu, Mayiladuthurai District Collectorate, interior decoration materials, home interiors Mayiladuthurai"
+        url="https://gsdecors.com/"
+      />
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-24 px-6 overflow-hidden min-h-[90vh] flex items-center">
-        {/* Background elements */}
-        <div className="absolute inset-0 bg-[var(--plaster)] z-[-2]" />
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-primary/5 to-accent/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 z-[-1] animate-pulse duration-[10s]" />
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-accent/5 to-transparent rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 z-[-1]" />
+        {/* Bubble Animation Styles */}
+        <style>{`
+          @keyframes float-around {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0, 0) scale(1); }
+          }
+          .ambient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: float-around infinite ease-in-out;
+            z-index: -2;
+            pointer-events: none;
+          }
+        `}</style>
+
+        {/* Rich Background Effects */}
+        <div className="absolute inset-0 bg-slate-50 z-[-4]" />
+        
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#cbd5e1_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e1_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-40 z-[-3]" />
+
+        {/* Large Ambient Blurred Orbs */}
+        <div className="ambient-orb bg-blue-400 w-[400px] h-[400px] -top-[100px] -left-[100px]" style={{ animationDuration: '15s', animationDelay: '0s' }} />
+        <div className="ambient-orb bg-amber-300 w-[500px] h-[500px] top-[20%] right-[-150px]" style={{ animationDuration: '20s', animationDelay: '5s' }} />
+        <div className="ambient-orb bg-emerald-300 w-[300px] h-[300px] bottom-[-50px] left-[30%]" style={{ animationDuration: '18s', animationDelay: '2s' }} />
+        <div className="ambient-orb bg-purple-300 w-[350px] h-[350px] top-[10%] left-[40%]" style={{ animationDuration: '22s', animationDelay: '7s' }} />
         
         <div className="max-w-[1200px] mx-auto grid lg:grid-cols-2 gap-16 items-center w-full">
           <div className={cn("transition-all duration-1000", isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10")}>
@@ -76,29 +83,20 @@ export default function Home() {
             <p className="text-lg md:text-xl text-slate-600 mb-10 max-w-lg leading-relaxed font-body">
               Explore quality ceiling and interior decoration materials for residential, commercial and professional projects in Mayiladuthurai.
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-3 md:gap-4">
               <Link 
                 to="/products" 
-                className="bg-primary text-white px-8 py-4 rounded-full font-semibold hover:shadow-xl hover:shadow-primary/20 transition-all hover:-translate-y-1 inline-flex items-center gap-2 group"
+                className="bg-primary text-white px-6 py-3 md:px-8 md:py-4 rounded-full font-semibold hover:shadow-xl hover:shadow-primary/20 transition-all hover:-translate-y-1 inline-flex items-center gap-2 group text-sm md:text-base"
               >
                 Explore Products
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link 
                 to="/contact" 
-                className="bg-white/50 backdrop-blur-md border border-slate-200 text-primary px-8 py-4 rounded-full font-semibold hover:bg-white transition-all shadow-sm hover:shadow-md inline-flex items-center gap-2"
+                className="bg-white/50 backdrop-blur-md border border-slate-200 text-primary px-6 py-3 md:px-8 md:py-4 rounded-full font-semibold hover:bg-white transition-all shadow-sm hover:shadow-md inline-flex items-center gap-2 text-sm md:text-base"
               >
                 Get a Quote
               </Link>
-              <a 
-                href="https://wa.me/917826089418?text=Hello%20G%20S%20Decors%20%26%20Enterprises%2C%20I%20would%20like%20to%20know%20more%20about%20your%20ceiling%20and%20interior%20decoration%20products." 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="bg-white/50 backdrop-blur-md border border-white text-primary px-8 py-4 rounded-full font-semibold hover:bg-white transition-all shadow-sm hover:shadow-md inline-flex items-center gap-2 group"
-              >
-                <MessageCircle className="w-5 h-5 group-hover:scale-110 transition-transform text-accent" />
-                WhatsApp Us
-              </a>
             </div>
             
             <div className="mt-12 flex items-center gap-6 text-sm font-medium text-slate-500">
@@ -140,7 +138,7 @@ export default function Home() {
             <BeforeAfterSlider 
               beforeImage={beforeImageLocal}
               afterImage={afterImage48}
-              className="aspect-[16/9] shadow-2xl rounded-2xl overflow-hidden"
+              className="aspect-[4/3] md:aspect-[16/9] shadow-2xl rounded-2xl overflow-hidden"
             />
           </div>
         </div>

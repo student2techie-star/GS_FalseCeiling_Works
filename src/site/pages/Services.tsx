@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+import SEO from '../../components/SEO';
 import { MessageCircle } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -37,10 +37,12 @@ const SERVICES = [
 export default function Services() {
   return (
     <>
-      <Helmet>
-        <title>Ceiling & Interior Services | G S Decors & Enterprises</title>
-        <meta name="description" content="Explore ceiling and interior material solutions from G S Decors & Enterprises in Mayiladuthurai." />
-      </Helmet>
+      <SEO 
+        title="Ceiling & Interior Services | G S Decors & Enterprises | Mayiladuthurai, Sirkazhi"
+        description="Explore professional ceiling and interior material solutions from G S Decors & Enterprises in Mayiladuthurai, Kumbakonam, Sirkazhi, and Karaikal."
+        keywords="False ceiling services Mayiladuthurai, Interior material suppliers Tamil Nadu, PVC wall panels Sirkazhi, Gypsum contractors Kumbakonam, Grid ceiling Karaikal, home decor Mayiladuthurai"
+        url="https://gsdecors.com/services"
+      />
 
       {/* Page Header */}
       <section className="pt-24 pb-16 px-6 bg-[var(--ink)] text-[var(--paper)]">

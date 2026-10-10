@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Helmet } from 'react-helmet-async';
+import SEO from '../../components/SEO';
+import Lightbox from '../../components/Lightbox';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -45,10 +46,12 @@ export default function Works() {
 
   return (
     <>
-      <Helmet>
-        <title>Gallery & Projects | G S Decors & Enterprises</title>
-        <meta name="description" content="Explore our portfolio of completed false ceiling, interior decoration, and material supply projects." />
-      </Helmet>
+      <SEO 
+        title="Gallery & Projects | False Ceiling Works in Mayiladuthurai, Kumbakonam"
+        description="Explore our portfolio of completed false ceiling, interior decoration, and material supply projects in Mayiladuthurai, Kumbakonam, Sirkazhi, and Karaikal."
+        keywords="False ceiling works Mayiladuthurai, interior projects Kumbakonam, PVC ceiling gallery Sirkazhi, Gypsum projects Karaikal, G S Decors completed projects, Tamil Nadu ceiling installations"
+        url="https://gsdecors.com/works"
+      />
 
       <section className="bg-[var(--ink)] text-[var(--paper)] py-16 px-6">
         <div className="max-w-[1200px] mx-auto text-center">
@@ -111,47 +114,18 @@ export default function Works() {
       </section>
 
       {/* Lightbox */}
-      {lightboxIndex !== null && (
-        <div className="fixed inset-0 z-[100] bg-[var(--ink)] flex items-center justify-center">
-          <button 
-            onClick={closeLightbox}
-            className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors"
-            aria-label="Close lightbox"
-          >
-            <X className="w-8 h-8" />
-          </button>
-          
-          <button 
-            onClick={prevImage}
-            className="absolute left-6 text-white/50 hover:text-white transition-colors p-2"
-            aria-label="Previous image"
-          >
-            <ChevronLeft className="w-10 h-10" />
-          </button>
-          
-          <div className="max-w-5xl w-full px-16 aspect-video flex flex-col items-center justify-center relative">
-             <div className="w-full h-full bg-slate-800 flex items-center justify-center text-white/50 overflow-hidden">
-                <img 
-                 src={filteredWorks[lightboxIndex].image} 
-                 alt={filteredWorks[lightboxIndex].alt}
-                 className="max-w-full max-h-[80vh] object-contain"
-               />
-             </div>
-             <div className="absolute bottom-[-40px] text-white text-center w-full">
-               <p className="font-medium">{filteredWorks[lightboxIndex].title}</p>
-               <p className="text-sm text-white/70">{filteredWorks[lightboxIndex].category}</p>
-             </div>
-          </div>
-
-          <button 
-            onClick={nextImage}
-            className="absolute right-6 text-white/50 hover:text-white transition-colors p-2"
-            aria-label="Next image"
-          >
-            <ChevronRight className="w-10 h-10" />
-          </button>
-        </div>
-      )}
+      <Lightbox
+        isOpen={lightboxIndex !== null}
+        onClose={closeLightbox}
+        onNext={nextImage}
+        onPrev={prevImage}
+        hasNext={true}
+        hasPrev={true}
+        imageSrc={lightboxIndex !== null ? filteredWorks[lightboxIndex].image : ''}
+        imageAlt={lightboxIndex !== null ? filteredWorks[lightboxIndex].alt : ''}
+        title={lightboxIndex !== null ? filteredWorks[lightboxIndex].title : ''}
+        subtitle={lightboxIndex !== null ? filteredWorks[lightboxIndex].category : ''}
+      />
     </>
   );
 }

@@ -1,13 +1,15 @@
-import { Helmet } from 'react-helmet-async';
+import SEO from '../../components/SEO';
 import { CheckCircle2 } from 'lucide-react';
 
 export default function About() {
   return (
     <>
-      <Helmet>
-        <title>About G S Decors & Enterprises | Mayiladuthurai</title>
-        <meta name="description" content="Learn about G S Decors & Enterprises, an established ceiling and interior decoration materials business in Mayiladuthurai." />
-      </Helmet>
+      <SEO 
+        title="About G S Decors & Enterprises | False Ceiling Contractors Mayiladuthurai"
+        description="Learn about G S Decors & Enterprises, an established ceiling and interior decoration materials business in Mayiladuthurai serving Kumbakonam, Sirkazhi, and Karaikal since 1996."
+        keywords="About G S Decors, False ceiling contractors Mayiladuthurai, Interior decoration business Tamil Nadu, Ceiling materials supplier Kumbakonam, Sirkazhi interior projects"
+        url="https://gsdecors.com/about"
+      />
 
       {/* Hero */}
       <section className="bg-[var(--ink)] text-[var(--paper)] py-20 px-6">

@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/GS_FalseCeiling_Works/dev-sw.js?dev-sw', { scope: '/GS_FalseCeiling_Works/', type: 'classic' })
