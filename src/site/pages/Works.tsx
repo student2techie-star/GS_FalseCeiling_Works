@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import SEO from '../../components/SEO';
 import Lightbox from '../../components/Lightbox';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { galleryItems, galleryCategories } from '../data/gallery';
