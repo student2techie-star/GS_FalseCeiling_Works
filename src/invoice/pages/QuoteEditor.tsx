@@ -837,12 +837,12 @@ export default function QuoteEditor() {
         </div>
         <div className="flex-1 overflow-y-auto p-8 text-[11px] font-body bg-white text-black relative pdf-preview-container print:overflow-visible print:p-0" style={{ zoom: 0.8 }}>
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.05] z-0">
-            <img src="/GS_FalseCeiling_Works/logo.png" alt="Watermark" className="w-[80%] max-w-md grayscale" />
+            <img src="/logo.png" alt="Watermark" className="w-[80%] max-w-md grayscale" />
           </div>
           <div className="relative z-10 flex flex-col">
             <div>
               <div className="text-center border-b border-gray-200 pb-4 mb-4">
-                <img src="/GS_FalseCeiling_Works/logo.png" alt="GS Decors" className="h-10 w-auto mb-2 mx-auto" />
+                <img src="/logo.png" alt="GS Decors" className="h-10 w-auto mb-2 mx-auto" />
                 <h1 className="text-xl font-bold uppercase tracking-widest">Quotation</h1>
               </div>
           <div className="flex justify-between mb-6">

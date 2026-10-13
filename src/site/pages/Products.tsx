@@ -49,7 +49,7 @@ export default function Products() {
         title="Ceiling & Interior Products | G S Decors & Enterprises | Mayiladuthurai, Karaikal"
         description="Explore top-quality ceiling and interior decoration products available from G S Decors & Enterprises in Mayiladuthurai, Kumbakonam, Sirkazhi, and Karaikal. PVC, Gypsum, and more."
         keywords="False ceiling products Mayiladuthurai, Gypsum boards Kumbakonam, PVC ceiling panels Sirkazhi, Interior decoration materials Karaikal, G S Decors products, Tamil Nadu false ceiling materials"
-        url="https://gsdecors.com/products"
+        url="https://gsdecors.in/products"
       />
 
       {/* Page Header */}

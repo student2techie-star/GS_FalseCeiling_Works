@@ -49,7 +49,7 @@ export default function Works() {
         title="Gallery & Projects | False Ceiling Works in Mayiladuthurai, Kumbakonam"
         description="Explore our portfolio of completed false ceiling, interior decoration, and material supply projects in Mayiladuthurai, Kumbakonam, Sirkazhi, and Karaikal."
         keywords="False ceiling works Mayiladuthurai, interior projects Kumbakonam, PVC ceiling gallery Sirkazhi, Gypsum projects Karaikal, G S Decors completed projects, Tamil Nadu ceiling installations"
-        url="https://gsdecors.com/works"
+        url="https://gsdecors.in/works"
       />
 
       <section className="bg-[var(--ink)] text-[var(--paper)] py-16 px-6">

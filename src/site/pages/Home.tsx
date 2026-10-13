@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, ChevronRight, Phone, MessageCircle, Star, Shield, PenTool } from 'lucide-react';
 import SEO from '../../components/SEO';
 import { useEffect, useState } from 'react';
@@ -16,6 +16,7 @@ function cn(...inputs: (string | undefined | null | false)[]) {
 }
 
 export default function Home() {
+  const navigate = useNavigate();
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -31,7 +32,7 @@ export default function Home() {
         title="G S Decors & Enterprises | False Ceiling & Interior Designers in Mayiladuthurai, Kumbakonam"
         description="Top-rated false ceiling contractors & interior designers in Mayiladuthurai, Tamil Nadu. G S Decors & Enterprises offers PVC, Gypsum, Grid ceiling materials & installation services in Kumbakonam, Sirkazhi, and Karaikal."
         keywords="False ceiling Mayiladuthurai, Interior designers in Mayiladuthurai, PVC ceiling contractors, Gypsum ceiling Kumbakonam, Grid ceiling Sirkazhi, G S Decors & Enterprises, Tamil Nadu, Mayiladuthurai District Collectorate, interior decoration materials, home interiors Mayiladuthurai"
-        url="https://gsdecors.com/"
+        url="https://gsdecors.in/"
       />
 
       {/* Hero Section */}
@@ -169,7 +170,7 @@ export default function Home() {
             ].map((service, i) => (
               <div 
                 key={i} 
-                onClick={() => window.location.href = '/GS_FalseCeiling_Works/products'}
+                onClick={() => navigate('/products')}
                 className="group relative p-8 rounded-3xl bg-plaster hover:bg-white transition-all duration-300 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border border-transparent hover:border-line overflow-hidden flex flex-col h-full cursor-pointer"
               >
                 <div className={cn("absolute top-0 left-0 w-full h-1 bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity", service.color)} />

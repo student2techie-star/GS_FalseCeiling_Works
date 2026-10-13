@@ -32,5 +32,5 @@ export default defineConfig({
       }
     })
   ],
-  base: '/GS_FalseCeiling_Works/',
+  base: '/',
 });

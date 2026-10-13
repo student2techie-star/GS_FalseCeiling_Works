@@ -87,7 +87,7 @@ export default function Contact() {
         title="Contact G S Decors & Enterprises | False Ceiling Dealers in Mayiladuthurai"
         description="Contact G S Decors & Enterprises in Mayiladuthurai for ceiling and interior decoration product enquiries. We serve Mayiladuthurai, Kumbakonam, Sirkazhi, and Karaikal."
         keywords="Contact G S Decors, False ceiling dealers Mayiladuthurai, Interior material supplier contact Tamil Nadu, PVC ceiling shop Kumbakonam, Gypsum board store Sirkazhi"
-        url="https://gsdecors.com/contact"
+        url="https://gsdecors.in/contact"
       />
 
       <section className="py-24 px-6 relative overflow-hidden">

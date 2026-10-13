@@ -15,14 +15,14 @@ export default function SEO({
   title, 
   description, 
   keywords, 
-  url = "https://gsdecors.com", 
+  url = "https://gsdecors.in", 
   image,
   type = "website",
   children 
 }: SEOProps) {
   
   // Ensure we provide an absolute URL for Open Graph images
-  const ogImageUrl = image || `https://gsdecors.com${defaultOgImage}`;
+  const ogImageUrl = image || `https://gsdecors.in${defaultOgImage}`;
 
   return (
     <Helmet>

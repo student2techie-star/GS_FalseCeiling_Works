@@ -41,7 +41,7 @@ export default function Services() {
         title="Ceiling & Interior Services | G S Decors & Enterprises | Mayiladuthurai, Sirkazhi"
         description="Explore professional ceiling and interior material solutions from G S Decors & Enterprises in Mayiladuthurai, Kumbakonam, Sirkazhi, and Karaikal."
         keywords="False ceiling services Mayiladuthurai, Interior material suppliers Tamil Nadu, PVC wall panels Sirkazhi, Gypsum contractors Kumbakonam, Grid ceiling Karaikal, home decor Mayiladuthurai"
-        url="https://gsdecors.com/services"
+        url="https://gsdecors.in/services"
       />
 
       {/* Page Header */}

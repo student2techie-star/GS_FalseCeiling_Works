@@ -27,7 +27,7 @@ export default function PublicLayout() {
       <div className="fixed top-0 left-0 right-0 z-50 px-4 pt-4 pb-2">
         <header className="max-w-[1200px] mx-auto glass rounded-full h-16 flex items-center justify-between px-6 transition-all duration-300 shadow-sm border border-white/40">
           <Link to="/" className="flex items-center gap-2 md:gap-3">
-            <img src="/GS_FalseCeiling_Works/logo.png" alt="G S Decors & Enterprises Logo" className="h-8 md:h-10 w-auto object-contain" />
+            <img src="/logo.png" alt="G S Decors & Enterprises Logo" className="h-8 md:h-10 w-auto object-contain" />
             <span className="font-heading font-extrabold text-base md:text-xl tracking-tight text-gradient">
               <span className="md:hidden">G S Decors</span>
               <span className="hidden md:inline">G S Decors & Enterprises</span>
@@ -105,7 +105,7 @@ export default function PublicLayout() {
         <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="md:col-span-2">
             <Link to="/" className="flex items-center mb-6">
-              <img src="/GS_FalseCeiling_Works/logo.png" alt="G S Decors & Enterprises" className="h-12 w-auto object-contain brightness-0 invert" />
+              <img src="/logo.png" alt="G S Decors & Enterprises" className="h-12 w-auto object-contain brightness-0 invert" />
             </Link>
             <p className="text-sm text-slate-300 max-w-sm leading-relaxed">
               Ceiling and interior decoration materials for residential, commercial and professional requirements. Your trusted partner in Mayiladuthurai since 1996.
